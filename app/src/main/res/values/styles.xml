@@ -12,6 +12,7 @@
         <item name="windowNoTitle">false</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
     </style>
     <style name="WindowAnimationTransition">
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>

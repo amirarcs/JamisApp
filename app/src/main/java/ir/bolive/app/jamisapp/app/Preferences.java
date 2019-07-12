@@ -9,6 +9,7 @@ public class Preferences  {
     private static final String KEY_PASSWORD ="pass";
     private static final String KEY_FULLNAME="fullname";
     private static final String KEY_USERNAME="username";
+    private static final String KEY_ISLOGGEDIN="isloggedin";
     private static final int PRIVATE_MODE=0;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
@@ -35,6 +36,13 @@ public class Preferences  {
     }
     public void setKeyUsername(String imei){
         editor.putString(KEY_USERNAME,imei);
+        editor.commit();
+    }
+    public boolean getKeyIsloggedin() {
+        return preferences.getBoolean(KEY_ISLOGGEDIN,false);
+    }
+    public void setKeyIsloggedin(boolean isloggedin){
+        editor.putBoolean(KEY_ISLOGGEDIN,isloggedin);
         editor.commit();
     }
     public String getKeyPass() {

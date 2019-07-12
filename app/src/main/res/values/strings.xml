@@ -4,13 +4,18 @@
     <string name="company_brand">Version 1.0.0 \n Powered By Bipital.com</string>
     <string name="login">ورود</string>
     <string name="exit">خروج</string>
+    <string name="signup">ثبت نام</string>
     <string name="newPatient">ثبت مشخصات بیمار</string>
     <string name="displayPatients">نمایش لیست بیماران</string>
     <string name="backUpRestore">پشتیان گیری و بازگردانی</string>
     <string name="drname">نام و نام خانوادگی</string>
     <string name="nationalCode">کد ملی</string>
+    <string name="username">نام کاربری(کد ملی)</string>
     <string name="password">رمز عبور</string>
     <string name="Confirmpassword">تکرار رمز عبور</string>
+    <string name="goToSignup">حساب کاربری ندارید؟ اینجا کلیک کنید</string>
     <string name="goToLogin">حساب کاربری دارید؟ اینجا کلیک کنید</string>
+    <string name="lostPassword">رمز عبورم را فراموش کردم</string>
     <!--Messages-->
+    <string name="tapToClose">برای خروج دوبار دکمه بازگشت را فشار دهید</string>
 </resources>
