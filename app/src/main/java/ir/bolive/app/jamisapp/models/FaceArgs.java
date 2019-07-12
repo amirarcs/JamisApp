@@ -16,8 +16,14 @@ public class FaceArgs {
     }
     // زاویه گوش
     float x_ear,y_ear;
+
+    //زاویه چشم
     float x_eye,y_eye;
+
+    //زاویه ابرو
     float x_eyebrow,y_eyebrow;
+
+    //نوک استخوان راموس
     float x_ramus,y_ramus;
 
     public float getUpper_central_ans() {
