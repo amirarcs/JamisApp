@@ -1,4 +1,5 @@
 <resources>
+    <!--Object Titles-->
     <string name="app_name">Jami\'s App</string>
     <string name="company_brand">Version 1.0.0 \n Powered By Bipital.com</string>
     <string name="login">ورود</string>
@@ -6,4 +7,10 @@
     <string name="newPatient">ثبت مشخصات بیمار</string>
     <string name="displayPatients">نمایش لیست بیماران</string>
     <string name="backUpRestore">پشتیان گیری و بازگردانی</string>
+    <string name="drname">نام و نام خانوادگی</string>
+    <string name="nationalCode">کد ملی</string>
+    <string name="password">رمز عبور</string>
+    <string name="Confirmpassword">تکرار رمز عبور</string>
+    <string name="goToLogin">حساب کاربری دارید؟ اینجا کلیک کنید</string>
+    <!--Messages-->
 </resources>
