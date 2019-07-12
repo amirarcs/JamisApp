@@ -26,6 +26,16 @@ public class FaceArgs {
     //نوک استخوان راموس
     float x_ramus,y_ramus;
 
+    int pid_fk;
+
+    public int getPid_fk() {
+        return pid_fk;
+    }
+
+    public void setPid_fk(int pid_fk) {
+        this.pid_fk = pid_fk;
+    }
+
     public float getUpper_central_ans() {
         return upper_central_ans;
     }
