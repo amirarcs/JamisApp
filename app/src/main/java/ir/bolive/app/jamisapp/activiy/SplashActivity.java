@@ -1,10 +1,13 @@
-package ir.bolive.app.jamisapp;
+package ir.bolive.app.jamisapp.activiy;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import ir.bolive.app.jamisapp.R;
+
+public class SplashActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

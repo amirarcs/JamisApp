@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#19CAFF"
-    tools:context=".MainActivity">
+    tools:context=".activiy.SplashActivity">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -32,7 +32,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline"
-        app:srcCompat="@drawable/ic_iconfinder_tooth_3522348" />
+        app:srcCompat="@drawable/ic_iconfinder_tooth_3522348"
+        tools:ignore="VectorDrawableCompat" />
 
     <TextView
         android:id="@+id/textView"
@@ -43,7 +44,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:gravity="center"
-        android:text="Version 1.0.0 \n Powered By Bipital.com"
+        android:text="@string/company_brand"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

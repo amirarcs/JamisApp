@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Jami\'s App</string>
+    <string name="company_brand">Version 1.0.0 \n Powered By Bipital.com</string>
+    <string name="login">ورود</string>
+    <string name="exit">خروج</string>
+    <string name="newPatient">ثبت مشخصات بیمار</string>
+    <string name="displayPatients">نمایش لیست بیماران</string>
+    <string name="backUpRestore">پشتیان گیری و بازگردانی</string>
 </resources>
