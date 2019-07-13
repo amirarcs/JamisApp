@@ -1,8 +1,20 @@
 package ir.bolive.app.jamisapp.models;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import java.io.Serializable;
+
+@Entity(tableName = "tbl_faceArgs")
 public class FaceArgs {
     //نوک انسیزال بالا و پایین
-    float upper_central_ans,lower_central_ans;
+    @PrimaryKey(autoGenerate = true)
+    int fid;
+
+
+    float upper_central_ans;
+
+    float lower_central_ans;
     //نوک جینجوال بالا و پایین
     float upper_ging, lower_ging;
 

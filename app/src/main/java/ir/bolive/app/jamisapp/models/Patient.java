@@ -1,7 +1,13 @@
 package ir.bolive.app.jamisapp.models;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName ="tbl_patient")
 public class Patient {
+    @PrimaryKey(autoGenerate =true)
     int pid;
+
     String fullname;
     String nationalcode;
     String phone;
