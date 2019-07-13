@@ -3,7 +3,6 @@ package ir.bolive.app.jamisapp.models;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.io.Serializable;
 
 @Entity(tableName = "tbl_faceArgs")
 public class FaceArgs {
@@ -21,11 +20,7 @@ public class FaceArgs {
     float midLine=0;
 
     //حالت چانه
-    public enum chinMode{
-        M,
-        SWALLOW,
-        SIMPLE
-    }
+    int chinMode;
     // زاویه گوش
     float x_ear,y_ear;
 

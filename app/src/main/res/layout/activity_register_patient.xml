@@ -1,6 +1,291 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary">
+    <include layout="@layout/toolbar"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:orientation="horizontal"
+        android:layout_weight="15">
+        <Button
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/btn_p_info"
+            android:text="Patient Info"/>
+        <Button
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/btn_p_face"
+            android:text="Patient's Face Args"/>
+        <Button
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/btn_p_images"
+            android:text="Patient's Face Image"/>
+    </LinearLayout>
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:orientation="vertical"
+        android:layout_weight="85">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:id="@+id/reg_personal_info"
+                android:gravity="center">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="32dip"
+                    android:layout_marginRight="32dip"
+                    android:layout_marginBottom="12dip"
+                    android:layout_height="wrap_content"
+                    android:hint="Patient Full Name"
+                    android:id="@+id/reg_pname"
+                    android:background="@drawable/text_back"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="32dip"
+                    android:layout_marginRight="32dip"
+                    android:layout_marginBottom="12dip"
+                    android:layout_height="wrap_content"
+                    android:hint="National Code"
+                    android:id="@+id/reg_ncode"
+                    android:background="@drawable/text_back"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="32dip"
+                    android:layout_marginRight="32dip"
+                    android:layout_marginBottom="12dip"
+                    android:layout_height="wrap_content"
+                    android:hint="Phone number"
+                    android:id="@+id/reg_phone"
+                    android:background="@drawable/text_back"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_marginLeft="32dip"
+                    android:layout_marginRight="32dip"
+                    android:layout_marginBottom="12dip"
+                    android:layout_height="wrap_content"
+                    android:hint="Reference Date"
+                    android:id="@+id/reg_rdate"
+                    android:background="@drawable/text_back"
+                    android:inputType="date"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/reg_btn_submit"
+                    android:text="submit"
+                     android:background="@drawable/round_button"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:id="@+id/reg_face_info"
+                android:paddingTop="38dip">
+
+                <ScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="32dip"
+                            android:layout_marginRight="32dip"
+                            android:layout_marginBottom="12dip"
+                            android:layout_height="wrap_content"
+                            android:hint="Upper Incisal"
+                            android:inputType="numberDecimal"
+                            android:id="@+id/reg_upper_inc"
+                            android:background="@drawable/text_back"/>
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="32dip"
+                            android:layout_marginRight="32dip"
+                            android:layout_marginBottom="12dip"
+                            android:layout_height="wrap_content"
+                            android:hint="Lower Incisal"
+                            android:inputType="numberDecimal"
+                            android:id="@+id/reg_lower_inc"
+                            android:background="@drawable/text_back"/>
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="32dip"
+                            android:layout_marginRight="32dip"
+                            android:layout_marginBottom="12dip"
+                            android:layout_height="wrap_content"
+                            android:hint="Upper gingival"
+                            android:id="@+id/reg_upper_ging"
+                            android:inputType="numberDecimal"
+                            android:background="@drawable/text_back"/>
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="32dip"
+                            android:layout_marginRight="32dip"
+                            android:layout_marginBottom="12dip"
+                            android:layout_height="wrap_content"
+                            android:hint="Lower gingival"
+                            android:id="@+id/reg_lower_ging"
+                            android:background="@drawable/text_back"
+                            android:inputType="numberDecimal"/>
+                        <androidx.appcompat.widget.AppCompatSpinner
+                            android:id="@+id/reg_chinmode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="32dip"
+                            android:layout_marginRight="32dip"
+                            android:layout_marginBottom="12dip"></androidx.appcompat.widget.AppCompatSpinner>
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="32dip"
+                            android:layout_marginRight="32dip"
+                            android:layout_marginBottom="12dip"
+                            android:layout_height="wrap_content"
+                            android:hint="Ear X Angle"
+                            android:id="@+id/reg_ear_x"
+                            android:background="@drawable/text_back"
+                            android:inputType="numberDecimal"/>
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="32dip"
+                            android:layout_marginRight="32dip"
+                            android:layout_marginBottom="12dip"
+                            android:layout_height="wrap_content"
+                            android:hint="Ear Y Angle"
+                            android:id="@+id/reg_ear_y"
+                            android:background="@drawable/text_back"/>
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="32dip"
+                            android:layout_marginRight="32dip"
+                            android:layout_marginBottom="12dip"
+                            android:layout_height="wrap_content"
+                            android:hint="Eye X Angle"
+                            android:id="@+id/reg_eye_x"
+                            android:background="@drawable/text_back"
+                            android:inputType="numberDecimal"/>
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="32dip"
+                            android:layout_marginRight="32dip"
+                            android:layout_marginBottom="12dip"
+                            android:layout_height="wrap_content"
+                            android:hint="Eye Y Angle"
+                            android:id="@+id/reg_eye_y"
+                            android:background="@drawable/text_back"/>
+
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="32dip"
+                            android:layout_marginRight="32dip"
+                            android:layout_marginBottom="12dip"
+                            android:layout_height="wrap_content"
+                            android:hint="Eyebrow X Angle"
+                            android:id="@+id/reg_eyebrow_x"
+                            android:background="@drawable/text_back"
+                            android:inputType="numberDecimal"/>
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="32dip"
+                            android:layout_marginRight="32dip"
+                            android:layout_marginBottom="12dip"
+                            android:layout_height="wrap_content"
+                            android:hint="Eyebrow Y Angle"
+                            android:id="@+id/reg_eyebrow_y"
+                            android:background="@drawable/text_back"
+                            android:inputType="numberDecimal"/>
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="32dip"
+                            android:layout_marginRight="32dip"
+                            android:layout_marginBottom="12dip"
+                            android:layout_height="wrap_content"
+                            android:hint="Ramus Bone X Angle"
+                            android:id="@+id/reg_ramus_x"
+                            android:background="@drawable/text_back"
+                            android:inputType="numberDecimal"/>
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_marginLeft="32dip"
+                            android:layout_marginRight="32dip"
+                            android:layout_marginBottom="12dip"
+                            android:layout_height="wrap_content"
+                            android:hint="Ramus Bone Y Angle"
+                            android:id="@+id/reg_ramus_y"
+                            android:background="@drawable/text_back"
+                            android:inputType="numberDecimal"/>
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/reg_btn_face_submit"
+                            android:text="submit"
+                            android:background="@drawable/round_button"
+                            android:textColor="@color/white"/>
+                    </LinearLayout>
+                </ScrollView>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:id="@+id/reg_face_img">
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="1"
+                    android:id="@+id/img_before"
+                    android:text="Before Image"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="1"
+                    android:id="@+id/img_mask"
+                    android:text="Image with mask"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="1"
+                    android:id="@+id/img_after"
+                    android:text="After Image"/>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+
 
 </LinearLayout>

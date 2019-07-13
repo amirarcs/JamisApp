@@ -30,11 +30,11 @@ public class MainActivity extends AppCompatActivity {
         init();
     }
     @OnClick(R.id.main_btn_reg_patient)
-    private void onRegClick(){
-        Intent intent=new Intent(MainActivity.this,MainActivity.class);
+    public void onRegClick(){
+        Intent intent=new Intent(MainActivity.this,RegisterActvity.class);
         startActivity(intent);
     }
     void init(){
-        this.setTitle("Main Page");
+
     }
 }

@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         preferences=new Preferences(this);
     }
     @OnClick(R.id.login_btnLogin)
-    private void onLoginClick(){
+    public void onLoginClick(){
         preferences.setKeyIsloggedin(true);
         preferences.setKeyUsername("admin");
         preferences.setKeyPass("1234");

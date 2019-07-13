@@ -9,9 +9,6 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     tools:context=".activiy.MainActivity">
-
-
-
     <LinearLayout
         android:id="@+id/main_btn_reg_patient"
         android:layout_width="0dp"

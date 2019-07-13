@@ -16,7 +16,7 @@ public interface PatientDAO {
     List<Patient> getAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertPatient(Patient patient);
+    long insertPatient(Patient patient);
 
     @Delete
     void deletePatient(Patient patient);

@@ -14,7 +14,7 @@
     <ImageView
         android:layout_width="@dimen/image_width"
         android:layout_height="@dimen/image_height"
-        android:src="@drawable/ic_person"
+        android:src="@mipmap/logotooth"
         android:layout_gravity="center"/>
      <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/login_txtUsername"
