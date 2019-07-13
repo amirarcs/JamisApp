@@ -1,10 +1,13 @@
 package ir.bolive.app.jamisapp.models;
 
+import android.content.Context;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "tbl_Gallery")
 public class Gallery {
+
     @PrimaryKey(autoGenerate = true)
     int gid;
 

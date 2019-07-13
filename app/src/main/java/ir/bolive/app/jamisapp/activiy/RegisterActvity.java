@@ -20,6 +20,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import ir.bolive.app.jamisapp.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -88,7 +89,18 @@ public class RegisterActvity extends AppCompatActivity {
         ButterKnife.bind(this);
         init();
     }
-
+    @OnClick(R.id.btn_p_face)
+    public void onPFaceClick(){
+        showPanel(2);
+    }
+    @OnClick(R.id.btn_p_info)
+    public void onPInfoClick(){
+        showPanel(1);
+    }
+    @OnClick(R.id.btn_p_images)
+    public void onPImageClick(){
+        showPanel(3);
+    }
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));

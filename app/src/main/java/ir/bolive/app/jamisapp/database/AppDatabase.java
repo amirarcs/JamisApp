@@ -7,7 +7,7 @@ import ir.bolive.app.jamisapp.models.FaceArgs;
 import ir.bolive.app.jamisapp.models.Gallery;
 import ir.bolive.app.jamisapp.models.Patient;
 
-@Database(entities = {Gallery.class, Patient.class, FaceArgs.class},version = 1)
+@Database(entities = {Gallery.class, Patient.class, FaceArgs.class},version = 1,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract GalleryDAO galleryDAO();
     public abstract PatientDAO patientDAO();

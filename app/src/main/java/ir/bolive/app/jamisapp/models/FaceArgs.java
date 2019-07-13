@@ -1,5 +1,7 @@
 package ir.bolive.app.jamisapp.models;
 
+import android.content.Context;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -8,7 +10,7 @@ import androidx.room.PrimaryKey;
 public class FaceArgs {
     //نوک انسیزال بالا و پایین
     @PrimaryKey(autoGenerate = true)
-    int fid;
+    public int fid;
 
 
     float upper_central_ans;
@@ -20,7 +22,7 @@ public class FaceArgs {
     float midLine=0;
 
     //حالت چانه
-    int chinMode;
+    public int chinMode;
     // زاویه گوش
     float x_ear,y_ear;
 
@@ -33,7 +35,7 @@ public class FaceArgs {
     //نوک استخوان راموس
     float x_ramus,y_ramus;
 
-    int pid_fk;
+    public int pid_fk;
 
     public int getPid_fk() {
         return pid_fk;
@@ -146,4 +148,5 @@ public class FaceArgs {
     public void setY_ramus(float y_ramus) {
         this.y_ramus = y_ramus;
     }
+
 }

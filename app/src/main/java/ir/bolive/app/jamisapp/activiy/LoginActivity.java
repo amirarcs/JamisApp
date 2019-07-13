@@ -34,9 +34,6 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.login_txtPassword)
     AppCompatEditText txtPassword;
 
-    //progress button
-    @BindView(R.id.signup_coordinator)
-    CoordinatorLayout coordinatorLayout;
 
     Preferences preferences;
     @Override
