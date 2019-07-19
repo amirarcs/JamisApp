@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.Toolbar android:layout_width="match_parent"
-    android:layout_height="?actionBarSize"
+<androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar_top"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?actionBarSize"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/gradient_back"
     app:subtitleTextColor="@color/white"
     app:titleTextColor="@color/colorAccent"
-    app:title="hello"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <TextView
+        android:id="@+id/toolbar_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/white" />
+</androidx.appcompat.widget.Toolbar>
