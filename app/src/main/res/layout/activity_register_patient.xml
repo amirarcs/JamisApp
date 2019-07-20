@@ -7,34 +7,42 @@
     <include layout="@layout/toolbar"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:orientation="horizontal"
-        android:layout_weight="15">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <Button
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/green_round_button"
+            android:textColor="@color/white"
             android:id="@+id/btn_p_info"
-            android:text="Patient Info"/>
+            android:layout_margin="2dp"
+            android:text="@string/patientInfo"/>
         <Button
             android:layout_width="0dip"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@drawable/green_round_button"
+            android:textColor="@color/white"
             android:id="@+id/btn_p_face"
-            android:text="Patient's Face Args"/>
+            android:layout_margin="2dp"
+            android:text="@string/faceArgs"/>
         <Button
             android:layout_width="0dip"
             android:layout_height="match_parent"
+            android:background="@drawable/green_round_button"
+            android:textColor="@color/white"
             android:layout_weight="1"
+            android:layout_margin="2dp"
             android:id="@+id/btn_p_images"
-            android:text="Patient's Face Image"/>
+            android:text="@string/faceImage"/>
     </LinearLayout>
 
         <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:orientation="vertical"
-        android:layout_weight="85">
+        android:layout_weight="90">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -50,8 +58,9 @@
                     android:layout_marginRight="32dip"
                     android:layout_marginBottom="12dip"
                     android:layout_height="wrap_content"
-                    android:hint="Patient Full Name"
+                    android:hint="@string/patientFullName"
                     android:id="@+id/reg_pname"
+                    android:inputType="text"
                     android:background="@drawable/text_back"/>
 
                 <EditText
@@ -60,8 +69,9 @@
                     android:layout_marginRight="32dip"
                     android:layout_marginBottom="12dip"
                     android:layout_height="wrap_content"
-                    android:hint="National Code"
+                    android:hint="@string/nationalCode"
                     android:id="@+id/reg_ncode"
+                    android:inputType="number"
                     android:background="@drawable/text_back"/>
 
                 <EditText
@@ -70,7 +80,8 @@
                     android:layout_marginRight="32dip"
                     android:layout_marginBottom="12dip"
                     android:layout_height="wrap_content"
-                    android:hint="Phone number"
+                    android:hint=""
+                    android:inputType="phone"
                     android:id="@+id/reg_phone"
                     android:background="@drawable/text_back"/>
 
@@ -252,34 +263,42 @@
                             android:textColor="@color/white"/>
                     </LinearLayout>
                 </ScrollView>
-
-
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="gone"
+                android:visibility="visible"
+                android:gravity="center"
                 android:id="@+id/reg_face_img">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/img_before"
+                        android:layout_width="@dimen/thumb_width"
+                        android:layout_height="@dimen/thumb_height"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_image"
+                        android:layout_weight="1"/>
+                    <ImageView
+                        android:id="@+id/img_mask"
+                        android:layout_width="@dimen/thumb_width"
+                        android:layout_height="@dimen/thumb_height"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_image"
+                        android:scaleType="fitXY"/>
+                    <ImageView
+                        android:id="@+id/img_after"
+                        android:layout_width="@dimen/thumb_width"
+                        android:layout_height="@dimen/thumb_height"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_image"
+                        android:scaleType="fitXY"/>
+                </LinearLayout>
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="0dip"
-                    android:layout_weight="1"
-                    android:id="@+id/img_before"
-                    android:text="Before Image"/>
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="0dip"
-                    android:layout_weight="1"
-                    android:id="@+id/img_mask"
-                    android:text="Image with mask"/>
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="0dip"
-                    android:layout_weight="1"
-                    android:id="@+id/img_after"
-                    android:text="After Image"/>
 
 
             </LinearLayout>

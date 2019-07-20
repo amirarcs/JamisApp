@@ -16,4 +16,6 @@
     <color name="grey_60">#666666</color>
     <color name="grey_80">#37474F</color>
     <color name="grey_90">#263238</color>
+    <color name="pink">#c2185b</color>
+    <color name="green">#00c853</color>
 </resources>

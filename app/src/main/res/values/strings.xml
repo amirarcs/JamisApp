@@ -18,4 +18,10 @@
     <string name="lostPassword">I Forgot My Password</string>
     <!--Messages-->
     <string name="tapToClose">Press Back Again To Exit!</string>
+    <!--Hints-->
+    <string name="patientInfo">Patient Info</string>
+    <string name="faceArgs">Patient\'s Face Args</string>
+    <string name="faceImage">Patient\'s Face Image</string>
+    <string name="patientFullName">Patient FullName</string>
+    <stirng name="phoneNumber">Phone Number</stirng>
 </resources>
