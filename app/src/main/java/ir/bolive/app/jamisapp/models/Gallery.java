@@ -9,11 +9,11 @@ import androidx.room.PrimaryKey;
 public class Gallery {
 
     @PrimaryKey(autoGenerate = true)
-    int gid;
+    public int gid;
 
-    String pid_fk;
-    String title;
-    String image;
+    public String pid_fk;
+    public String title;
+    public String image;
 
     public int getGid() {
         return gid;

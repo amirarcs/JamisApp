@@ -3,17 +3,18 @@ package ir.bolive.app.jamisapp.activiy;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.SpinnerAdapter;
+
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.appcompat.widget.ScrollingTabContainerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.bolive.app.jamisapp.R;
+import ir.bolive.app.jamisapp.models.FaceArgs;
+import ir.bolive.app.jamisapp.models.Gallery;
+import ir.bolive.app.jamisapp.models.Patient;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class RegisterActvity extends AppCompatActivity {
@@ -82,12 +86,31 @@ public class RegisterActvity extends AppCompatActivity {
     Button btnFaceSubmit;
 
     List<String> chinModes=new ArrayList<String>();
+
+    boolean editmode;
+    int chinmode,step;
+    Patient patient=new Patient();
+    FaceArgs faceArgs=new FaceArgs();
+    Gallery gallery=new Gallery();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_patient);
         ButterKnife.bind(this);
         init();
+    }
+    @OnClick(R.id.reg_btn_submit)
+    public void onSubmitClick(){
+        if(!txtPname.getText().toString().isEmpty()&&
+        !txtNcode.getText().toString().isEmpty()&&
+        !txtPhone.getText().toString().isEmpty()&&
+        txtRdate.getText().toString().isEmpty()&&
+        chinmode!=0){
+            String pname=txtPname.getText().toString();
+            String ncode=txtNcode.getText().toString();
+            String phone=txtPhone.getText().toString();
+            patient.setFullname(pname);
+        }
     }
     @OnClick(R.id.btn_p_face)
     public void onPFaceClick(){
@@ -108,11 +131,26 @@ public class RegisterActvity extends AppCompatActivity {
 
     //region Methods
     void init(){
+        chinModes.add("-Select Chin Mode -");
         chinModes.add("M");
         chinModes.add("Swallow");
         chinModes.add("Simple");
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,chinModes);
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,R.layout.row,chinModes);
         sp_chinmode.setAdapter(adapter);
+
+        sp_chinmode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i!=0){
+                    chinmode=i+1;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                chinmode=0;
+            }
+        });
     }
     void hideAll(){
         layoutFaceInfo.setVisibility(View.GONE);

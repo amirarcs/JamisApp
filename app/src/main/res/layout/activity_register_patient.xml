@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/reg_personal_info"
                 android:gravity="center">
 
@@ -80,7 +80,7 @@
                     android:layout_marginRight="32dip"
                     android:layout_marginBottom="12dip"
                     android:layout_height="wrap_content"
-                    android:hint=""
+                    android:hint="@string/phoneNumber"
                     android:inputType="phone"
                     android:id="@+id/reg_phone"
                     android:background="@drawable/text_back"/>
@@ -94,7 +94,7 @@
                     android:hint="Reference Date"
                     android:id="@+id/reg_rdate"
                     android:background="@drawable/text_back"
-                    android:inputType="date"/>
+                    android:inputType=""/>
 
                 <Button
                     android:layout_width="wrap_content"
@@ -105,170 +105,171 @@
                     android:textColor="@color/white"/>
 
             </LinearLayout>
+
+            <ScrollView
+                android:id="@+id/reg_face_info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:paddingTop="@dimen/global_padding">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="32dip"
+                        android:layout_marginRight="32dip"
+                        android:layout_marginBottom="12dip"
+                        android:layout_height="wrap_content"
+                        android:hint="Upper Incisal"
+                        android:inputType="numberDecimal"
+                        android:id="@+id/reg_upper_inc"
+                        android:background="@drawable/text_back"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="32dip"
+                        android:layout_marginRight="32dip"
+                        android:layout_marginBottom="12dip"
+                        android:layout_height="wrap_content"
+                        android:hint="Lower Incisal"
+                        android:inputType="numberDecimal"
+                        android:id="@+id/reg_lower_inc"
+                        android:background="@drawable/text_back"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="32dip"
+                        android:layout_marginRight="32dip"
+                        android:layout_marginBottom="12dip"
+                        android:layout_height="wrap_content"
+                        android:hint="Upper gingival"
+                        android:id="@+id/reg_upper_ging"
+                        android:inputType="numberDecimal"
+                        android:background="@drawable/text_back"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="32dip"
+                        android:layout_marginRight="32dip"
+                        android:layout_marginBottom="12dip"
+                        android:layout_height="wrap_content"
+                        android:hint="Lower gingival"
+                        android:id="@+id/reg_lower_ging"
+                        android:background="@drawable/text_back"
+                        android:inputType="numberDecimal"/>
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/reg_chinmode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dip"
+                        android:layout_marginRight="32dip"
+                        android:layout_marginBottom="12dip"
+                        style="@style/Widget.AppCompat.TextView.SpinnerItem"/>
+
+                    <EditText
+                        android:id="@+id/reg_ear_x"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dip"
+                        android:layout_marginRight="32dip"
+                        android:layout_marginBottom="12dip"
+                        android:background="@drawable/text_back"
+                        android:hint="Ear X Angle"
+                        android:inputType="numberDecimal" />
+
+                    <EditText
+                        android:id="@+id/reg_ear_y"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dip"
+                        android:layout_marginRight="32dip"
+                        android:layout_marginBottom="12dip"
+                        android:background="@drawable/text_back"
+                        android:hint="Ear Y Angle" />
+
+                    <EditText
+                        android:id="@+id/reg_eye_x"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dip"
+                        android:layout_marginRight="32dip"
+                        android:layout_marginBottom="12dip"
+                        android:background="@drawable/text_back"
+                        android:hint="Eye X Angle"
+                        android:inputType="numberDecimal" />
+
+                    <EditText
+                        android:id="@+id/reg_eye_y"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dip"
+                        android:layout_marginRight="32dip"
+                        android:layout_marginBottom="12dip"
+                        android:background="@drawable/text_back"
+                        android:hint="Eye Y Angle" />
+
+                    <EditText
+                        android:id="@+id/reg_eyebrow_x"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dip"
+                        android:layout_marginRight="32dip"
+                        android:layout_marginBottom="12dip"
+                        android:background="@drawable/text_back"
+                        android:hint="Eyebrow X Angle"
+                        android:inputType="numberDecimal" />
+
+                    <EditText
+                        android:id="@+id/reg_eyebrow_y"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dip"
+                        android:layout_marginRight="32dip"
+                        android:layout_marginBottom="12dip"
+                        android:background="@drawable/text_back"
+                        android:hint="Eyebrow Y Angle"
+                        android:inputType="numberDecimal" />
+
+                    <EditText
+                        android:id="@+id/reg_ramus_x"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dip"
+                        android:layout_marginRight="32dip"
+                        android:layout_marginBottom="12dip"
+                        android:background="@drawable/text_back"
+                        android:hint="Ramus Bone X Angle"
+                        android:inputType="numberDecimal" />
+
+                    <EditText
+                        android:id="@+id/reg_ramus_y"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dip"
+                        android:layout_marginRight="32dip"
+                        android:layout_marginBottom="12dip"
+                        android:background="@drawable/text_back"
+                        android:hint="Ramus Bone Y Angle"
+                        android:inputType="numberDecimal" />
+
+                    <Button
+                        android:id="@+id/reg_btn_face_submit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/round_button"
+                        android:text="submit"
+                        android:textColor="@color/white" />
+                    </LinearLayout>
+                </ScrollView>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:visibility="gone"
-                android:id="@+id/reg_face_info"
-                android:paddingTop="38dip">
-
-                <ScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center">
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_marginLeft="32dip"
-                            android:layout_marginRight="32dip"
-                            android:layout_marginBottom="12dip"
-                            android:layout_height="wrap_content"
-                            android:hint="Upper Incisal"
-                            android:inputType="numberDecimal"
-                            android:id="@+id/reg_upper_inc"
-                            android:background="@drawable/text_back"/>
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_marginLeft="32dip"
-                            android:layout_marginRight="32dip"
-                            android:layout_marginBottom="12dip"
-                            android:layout_height="wrap_content"
-                            android:hint="Lower Incisal"
-                            android:inputType="numberDecimal"
-                            android:id="@+id/reg_lower_inc"
-                            android:background="@drawable/text_back"/>
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_marginLeft="32dip"
-                            android:layout_marginRight="32dip"
-                            android:layout_marginBottom="12dip"
-                            android:layout_height="wrap_content"
-                            android:hint="Upper gingival"
-                            android:id="@+id/reg_upper_ging"
-                            android:inputType="numberDecimal"
-                            android:background="@drawable/text_back"/>
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_marginLeft="32dip"
-                            android:layout_marginRight="32dip"
-                            android:layout_marginBottom="12dip"
-                            android:layout_height="wrap_content"
-                            android:hint="Lower gingival"
-                            android:id="@+id/reg_lower_ging"
-                            android:background="@drawable/text_back"
-                            android:inputType="numberDecimal"/>
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/reg_chinmode"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="32dip"
-                            android:layout_marginRight="32dip"
-                            android:layout_marginBottom="12dip"
-                            style="@style/Widget.AppCompat.TextView.SpinnerItem"/>
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_marginLeft="32dip"
-                            android:layout_marginRight="32dip"
-                            android:layout_marginBottom="12dip"
-                            android:layout_height="wrap_content"
-                            android:hint="Ear X Angle"
-                            android:id="@+id/reg_ear_x"
-                            android:background="@drawable/text_back"
-                            android:inputType="numberDecimal"/>
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_marginLeft="32dip"
-                            android:layout_marginRight="32dip"
-                            android:layout_marginBottom="12dip"
-                            android:layout_height="wrap_content"
-                            android:hint="Ear Y Angle"
-                            android:id="@+id/reg_ear_y"
-                            android:background="@drawable/text_back"/>
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_marginLeft="32dip"
-                            android:layout_marginRight="32dip"
-                            android:layout_marginBottom="12dip"
-                            android:layout_height="wrap_content"
-                            android:hint="Eye X Angle"
-                            android:id="@+id/reg_eye_x"
-                            android:background="@drawable/text_back"
-                            android:inputType="numberDecimal"/>
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_marginLeft="32dip"
-                            android:layout_marginRight="32dip"
-                            android:layout_marginBottom="12dip"
-                            android:layout_height="wrap_content"
-                            android:hint="Eye Y Angle"
-                            android:id="@+id/reg_eye_y"
-                            android:background="@drawable/text_back"/>
-
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_marginLeft="32dip"
-                            android:layout_marginRight="32dip"
-                            android:layout_marginBottom="12dip"
-                            android:layout_height="wrap_content"
-                            android:hint="Eyebrow X Angle"
-                            android:id="@+id/reg_eyebrow_x"
-                            android:background="@drawable/text_back"
-                            android:inputType="numberDecimal"/>
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_marginLeft="32dip"
-                            android:layout_marginRight="32dip"
-                            android:layout_marginBottom="12dip"
-                            android:layout_height="wrap_content"
-                            android:hint="Eyebrow Y Angle"
-                            android:id="@+id/reg_eyebrow_y"
-                            android:background="@drawable/text_back"
-                            android:inputType="numberDecimal"/>
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_marginLeft="32dip"
-                            android:layout_marginRight="32dip"
-                            android:layout_marginBottom="12dip"
-                            android:layout_height="wrap_content"
-                            android:hint="Ramus Bone X Angle"
-                            android:id="@+id/reg_ramus_x"
-                            android:background="@drawable/text_back"
-                            android:inputType="numberDecimal"/>
-                        <EditText
-                            android:layout_width="match_parent"
-                            android:layout_marginLeft="32dip"
-                            android:layout_marginRight="32dip"
-                            android:layout_marginBottom="12dip"
-                            android:layout_height="wrap_content"
-                            android:hint="Ramus Bone Y Angle"
-                            android:id="@+id/reg_ramus_y"
-                            android:background="@drawable/text_back"
-                            android:inputType="numberDecimal"/>
-                        <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/reg_btn_face_submit"
-                            android:text="submit"
-                            android:background="@drawable/round_button"
-                            android:textColor="@color/white"/>
-                    </LinearLayout>
-                </ScrollView>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:visibility="visible"
                 android:gravity="center"
                 android:id="@+id/reg_face_img">
                 <LinearLayout
@@ -277,21 +278,21 @@
                     android:layout_gravity="center"
                     android:orientation="horizontal">
                     <ImageView
-                        android:id="@+id/img_before"
+                        android:id="@+id/reg_img_before"
                         android:layout_width="@dimen/thumb_width"
                         android:layout_height="@dimen/thumb_height"
                         android:scaleType="fitXY"
                         android:src="@drawable/ic_image"
                         android:layout_weight="1"/>
                     <ImageView
-                        android:id="@+id/img_mask"
+                        android:id="@+id/reg_img_mask"
                         android:layout_width="@dimen/thumb_width"
                         android:layout_height="@dimen/thumb_height"
                         android:layout_weight="1"
                         android:src="@drawable/ic_image"
                         android:scaleType="fitXY"/>
                     <ImageView
-                        android:id="@+id/img_after"
+                        android:id="@+id/reg_img_after"
                         android:layout_width="@dimen/thumb_width"
                         android:layout_height="@dimen/thumb_height"
                         android:layout_weight="1"

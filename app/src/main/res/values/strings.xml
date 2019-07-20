@@ -23,5 +23,5 @@
     <string name="faceArgs">Patient\'s Face Args</string>
     <string name="faceImage">Patient\'s Face Image</string>
     <string name="patientFullName">Patient FullName</string>
-    <stirng name="phoneNumber">Phone Number</stirng>
+    <string name="phoneNumber">Phone Number</string>
 </resources>

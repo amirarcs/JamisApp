@@ -13,27 +13,27 @@ public class FaceArgs {
     public int fid;
 
 
-    float upper_central_ans;
+    public float upper_central_ans;
 
-    float lower_central_ans;
+    public float lower_central_ans;
     //نوک جینجوال بالا و پایین
-    float upper_ging, lower_ging;
+    public float upper_ging, lower_ging;
 
-    float midLine=0;
+    public float midLine=0;
 
     //حالت چانه
-    public int chinMode;
+    public  int chinMode;
     // زاویه گوش
-    float x_ear,y_ear;
+    public float x_ear,y_ear;
 
     //زاویه چشم
-    float x_eye,y_eye;
+    public float x_eye,y_eye;
 
     //زاویه ابرو
-    float x_eyebrow,y_eyebrow;
+    public float x_eyebrow,y_eyebrow;
 
     //نوک استخوان راموس
-    float x_ramus,y_ramus;
+    public float x_ramus,y_ramus;
 
     public int pid_fk;
 
