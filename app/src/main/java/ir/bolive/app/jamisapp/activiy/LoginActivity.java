@@ -51,12 +51,6 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent=new Intent(LoginActivity.this,MainActivity.class);
         this.finish();
         startActivity(intent);
-        // add patient
-        Executor executor= Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            DatabaseClient databaseClient=DatabaseClient.getInstance(getApplicationContext());
-            //databaseClient.getAppDatabase().patientDAO().insertPatient();
-        });
     }
     @Override
     protected void attachBaseContext(Context newBase) {

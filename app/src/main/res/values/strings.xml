@@ -16,6 +16,10 @@
     <string name="goToSignup">Dont have an account? Click Here</string>
     <string name="goToLogin">Already have an account? Click Here</string>
     <string name="lostPassword">I Forgot My Password</string>
+    <string name="menuRegister">Register New Patient</string>
+    <string name="menuDisplay">Display Patients Information</string>
+    <string name="menuEdit">Edit Patient Information</string>
+    <string name="menuBackUp">BackUp And Restore</string>
     <!--Messages-->
     <string name="tapToClose">Press Back Again To Exit!</string>
     <!--Hints-->
@@ -24,4 +28,5 @@
     <string name="faceImage">Patient\'s Face Image</string>
     <string name="patientFullName">Patient FullName</string>
     <string name="phoneNumber">Phone Number</string>
+    <string name="searchPatients">Search Patients</string>
 </resources>

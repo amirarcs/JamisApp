@@ -1,28 +1,36 @@
 package ir.bolive.app.jamisapp.activiy;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatSpinner;
-import androidx.appcompat.widget.ScrollingTabContainerView;
+import androidx.appcompat.widget.Toolbar;
+
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.bolive.app.jamisapp.R;
+import ir.bolive.app.jamisapp.database.DatabaseClient;
 import ir.bolive.app.jamisapp.models.FaceArgs;
 import ir.bolive.app.jamisapp.models.Gallery;
 import ir.bolive.app.jamisapp.models.Patient;
@@ -85,13 +93,23 @@ public class RegisterActvity extends AppCompatActivity {
     @BindView(R.id.reg_btn_face_submit)
     Button btnFaceSubmit;
 
+    @BindView(R.id.toolbar_top)
+    Toolbar toolbar;
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
+
     List<String> chinModes=new ArrayList<String>();
 
     boolean editmode;
     int chinmode,step;
+    int mYear,mMonth,mDay;
+    long patientId;
     Patient patient=new Patient();
     FaceArgs faceArgs=new FaceArgs();
-    Gallery gallery=new Gallery();
+    Gallery galleryBefore=new Gallery();
+    Gallery galleryMask=new Gallery();
+    Gallery galleryAfter=new Gallery();
+    //region Override Methods
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,17 +117,36 @@ public class RegisterActvity extends AppCompatActivity {
         ButterKnife.bind(this);
         init();
     }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+
+
+    //endregion
+    //region Events
+    @OnClick(R.id.reg_btn_face_submit)
+    public void onFaceSubmit(){
+
+    }
     @OnClick(R.id.reg_btn_submit)
     public void onSubmitClick(){
         if(!txtPname.getText().toString().isEmpty()&&
-        !txtNcode.getText().toString().isEmpty()&&
-        !txtPhone.getText().toString().isEmpty()&&
-        txtRdate.getText().toString().isEmpty()&&
-        chinmode!=0){
+                !txtNcode.getText().toString().isEmpty()&&
+                !txtPhone.getText().toString().isEmpty()&&
+                txtRdate.getText().toString().isEmpty()&&
+                chinmode!=0){
             String pname=txtPname.getText().toString();
             String ncode=txtNcode.getText().toString();
             String phone=txtPhone.getText().toString();
+            String refDate=txtRdate.getText().toString();
             patient.setFullname(pname);
+            patient.setNationalcode(ncode);
+            patient.setPhone(phone);
+            patient.setRefdate(refDate);
+            showPanel(2);
         }
     }
     @OnClick(R.id.btn_p_face)
@@ -124,20 +161,45 @@ public class RegisterActvity extends AppCompatActivity {
     public void onPImageClick(){
         showPanel(3);
     }
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    @OnClick(R.id.reg_rdate)
+    public void onRefDateClick(){
+        final Calendar calendar=Calendar.getInstance();
+        mYear=calendar.get(Calendar.YEAR);
+        mMonth=calendar.get(Calendar.MONTH);
+        mDay=calendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog pickerDialog=new DatePickerDialog(getApplicationContext(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
+                txtRdate.setText(year+"/"+(monthOfYear+1)+"/"+dayOfMonth);
+            }
+        },mYear,mMonth,mDay);
+        pickerDialog.show();
     }
-
+    //endregion
+    //region DBMethods
+    private void SaveData(){
+        Executor executor= Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            DatabaseClient databaseClient=DatabaseClient.getInstance(getApplicationContext());
+            patientId=databaseClient.getAppDatabase().patientDAO().insertPatient(patient);
+            databaseClient.getAppDatabase().faceArgDAO().insertFaceArgs(faceArgs);
+            databaseClient.getAppDatabase().galleryDAO().insertGallery(galleryBefore);
+            databaseClient.getAppDatabase().galleryDAO().insertGallery(galleryMask);
+            databaseClient.getAppDatabase().galleryDAO().insertGallery(galleryAfter);
+        });
+    }
+    //endregion
     //region Methods
     void init(){
+        setSupportActionBar(toolbar);
+        toolbarTitle.setText(getString(R.string.menuRegister));
+        // *********setup spinner**************
         chinModes.add("-Select Chin Mode -");
         chinModes.add("M");
         chinModes.add("Swallow");
         chinModes.add("Simple");
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,R.layout.row,chinModes);
         sp_chinmode.setAdapter(adapter);
-
         sp_chinmode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -151,11 +213,34 @@ public class RegisterActvity extends AppCompatActivity {
                 chinmode=0;
             }
         });
+        //*****************************
+
+    }
+    void disbleAll(){
+        btnPatient.setEnabled(false);
+        btnPatientFace.setEnabled(false);
+        btnImages.setEnabled(false);
     }
     void hideAll(){
         layoutFaceInfo.setVisibility(View.GONE);
         layoutImageInfo.setVisibility(View.GONE);
         layoutPersonalInfo.setVisibility(View.GONE);
+    }
+    void enableTab(int which){
+        switch (which){
+            case 1:
+                disbleAll();
+                btnPatient.setEnabled(true);
+                break;
+            case 2:
+                disbleAll();
+                btnPatientFace.setEnabled(true);
+                break;
+            case 3:
+                disbleAll();
+                btnImages.setEnabled(true);
+                break;
+        }
     }
     void showPanel(int which){
         switch (which){

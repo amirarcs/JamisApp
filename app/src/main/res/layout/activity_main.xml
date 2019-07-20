@@ -1,180 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/main_content"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".activiy.MainActivity">
-    <LinearLayout
-        android:id="@+id/main_btn_reg_patient"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/border_btn"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/guideline5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/logo_reg_patient"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="16dip"
-            android:background="@drawable/add_patient" />
-
-        <TextView
-            android:id="@+id/txt_reg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="8dip"
-            android:layout_marginRight="8dip"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Register patient\ninformation"
-            android:textColor="#ffffff"
-            android:textSize="30sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/main_btn_search"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/border_btn"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/guideline8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline5">
-
-        <TextView
-            android:id="@+id/logo_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="16dip"
-            android:background="@drawable/search" />
-
-        <TextView
-            android:id="@+id/txt_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="8dip"
-            android:layout_marginRight="8dip"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Showing patient\ninformation"
-            android:textColor="#ffffff"
-            android:textSize="30sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/main_btn_edit"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/border_btn"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/guideline9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline8">
-
-        <TextView
-            android:id="@+id/logo_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="16dip"
-            android:background="@drawable/edit" />
-
-        <TextView
-            android:id="@+id/txt_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="8dip"
-            android:layout_marginRight="8dip"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Editing information"
-            android:textColor="#ffffff"
-            android:textSize="30sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/main_btn_backup"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/border_btn"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline9">
-
-        <TextView
-            android:id="@+id/logo_backup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="16dip"
-            android:background="@drawable/backup_restore" />
-
-        <TextView
-            android:id="@+id/txt_backup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="8dip"
-            android:layout_marginRight="8dip"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Backup and restore"
-            android:textColor="#ffffff"
-            android:textSize="30sp" />
-    </LinearLayout>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline5"
-        android:layout_width="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <RelativeLayout
+        android:id="@+id/main_content"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="151dp" />
+        android:layout_gravity="center_vertical"
+        tools:context=".activiy.MainActivity">
+        <LinearLayout
+            android:id="@+id/main_btn_reg_patient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/border_btn"
+            android:orientation="horizontal"
+            android:layout_alignParentTop="true">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+            <TextView
+                android:id="@+id/logo_reg_patient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dip"
+                android:background="@drawable/add_patient" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/txt_reg"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/menuRegister"
+                android:textColor="#ffffff"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_btn_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/border_btn"
+            android:orientation="horizontal"
+            android:layout_below="@id/main_btn_reg_patient">
+
+            <TextView
+                android:id="@+id/logo_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dip"
+                android:background="@drawable/search" />
+
+            <TextView
+                android:id="@+id/txt_search"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/menuDisplay"
+                android:textColor="#ffffff"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_btn_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/border_btn"
+            android:orientation="horizontal"
+            android:layout_below="@id/main_btn_search"
+            >
+
+            <TextView
+                android:id="@+id/logo_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dip"
+                android:background="@drawable/edit" />
+
+            <TextView
+                android:id="@+id/txt_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/menuEdit"
+                android:textColor="#ffffff"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_btn_backup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/border_btn"
+            android:orientation="horizontal"
+            android:layout_below="@id/main_btn_edit"
+            >
+
+            <TextView
+                android:id="@+id/logo_backup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="16dip"
+                android:background="@drawable/backup_restore" />
+
+            <TextView
+                android:id="@+id/txt_backup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/menuBackUp"
+                android:textColor="#ffffff"
+                android:textSize="30sp" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
