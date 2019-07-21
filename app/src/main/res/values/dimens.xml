@@ -15,9 +15,13 @@
     <dimen name="big_padding">25dp</dimen>
 
     <dimen name="local_padding">10dp</dimen>
+    <dimen name="mid_margin">10dp</dimen>
     <dimen name="tiny_Padding">5dp</dimen>
     <dimen name="tiny_Margin">5dp</dimen>
+    <dimen name="very_tiny_Padding">2dp</dimen>
+    <dimen name="very_tiny_Margin">2dp</dimen>
 
     <dimen name="textViewTopMargin">10dp</dimen>
     <dimen name="textViewMargin">25dp</dimen>
+    <dimen name="cardMinHeight">100dp</dimen>
 </resources>

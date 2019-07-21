@@ -123,8 +123,6 @@ public class RegisterActvity extends AppCompatActivity {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-
-
     //endregion
     //region Events
     @OnClick(R.id.reg_btn_face_submit)
