@@ -2,6 +2,8 @@ package ir.bolive.app.jamisapp.util;
 
 import android.graphics.Bitmap;
 
+import java.io.ByteArrayOutputStream;
+
 public class Tools {
     public static Bitmap image_resize(Bitmap image) {
         int width = image.getWidth();
@@ -28,7 +30,6 @@ public class Tools {
                 width = maxWidth;
             }
         }
-
 
         return Bitmap.createScaledBitmap(image, width, height, true);
     }

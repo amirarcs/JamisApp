@@ -39,6 +39,7 @@ import com.github.rubensousa.bottomsheetbuilder.BottomSheetMenuDialog;
 import com.github.rubensousa.bottomsheetbuilder.adapter.BottomSheetItemClickListener;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -174,15 +175,22 @@ public class RegisterActvity extends AppCompatActivity {
             Bitmap photo=null;
             photo=(Bitmap)data.getExtras().get("data");
             photo=Tools.image_resize(photo);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            photo.recycle();
             switch (req_code){
                 case 1:
                     img_before.setImageBitmap(photo);
+                    galleryBefore.setImage(byteArray);
                     break;
                 case 2:
                     img_mask.setImageBitmap(photo);
+                    galleryMask.setImage(byteArray);
                     break;
                 case 3:
                     img_after.setImageBitmap(photo);
+                    galleryAfter.setImage(byteArray);
                     break;
             }
         }
