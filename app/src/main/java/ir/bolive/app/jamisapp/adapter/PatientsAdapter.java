@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,6 +23,7 @@ import ir.bolive.app.jamisapp.models.Patient;
 public class PatientsAdapter extends RecyclerView.Adapter<PatientsAdapter.ViewHolder> {
     ArrayList<Patient> patientList=new ArrayList<Patient>();
     Context context;
+    int lastposition=-1;
     public PatientsAdapter(ArrayList<Patient> patients,Context context) {
         this.patientList=patients;
         this.context=context;
@@ -35,12 +38,29 @@ public class PatientsAdapter extends RecyclerView.Adapter<PatientsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+        holder.txtPname.setText(String.format("%s",patientList.get(position).getFullname()));
+        holder.txtNationalCode.setText(String.format("%s:%s",context.getResources().getString(R.string.nationalCode),patientList.get(position).getNationalcode()));
+        holder.txtRefDate.setText(String.format("%s:%s",context.getResources().getString(R.string.patientRefDate),patientList.get(position).getRefdate()));
+        loadAnimation(holder.itemView,position);
     }
 
     @Override
     public int getItemCount() {
         return patientList.size();
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
+        super.onViewDetachedFromWindow(holder);
+        ((ViewHolder)holder).clearAnimation();
+    }
+
+    private void loadAnimation(View view, int pos){
+        if(pos>lastposition){
+            Animation fadeinAnim= AnimationUtils.loadAnimation(context,android.R.anim.fade_in);
+            view.startAnimation(fadeinAnim);
+            lastposition=pos;
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

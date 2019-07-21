@@ -11,7 +11,7 @@ public class Controller extends Application {
         super.onCreate();
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
         .setFontAttrId(R.attr.font)
-        .setDefaultFontPath("b.ttf")
+        .setDefaultFontPath("opensans.ttf")
         .build());
     }
 }

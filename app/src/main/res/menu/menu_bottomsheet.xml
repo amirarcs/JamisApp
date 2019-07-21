@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/sheet_del" android:title="@string/remove" android:icon="@drawable/eraser" />
+    <item android:id="@+id/sheet_show" android:title="@string/showImage" android:icon="@drawable/image_show" />
+    <item android:id="@+id/sheet_pick" android:title="@string/camera" android:icon="@drawable/image_pick" />
+</menu>

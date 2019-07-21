@@ -1,9 +1,14 @@
 package ir.bolive.app.jamisapp.activiy;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,15 +18,24 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+
+import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder;
+import com.github.rubensousa.bottomsheetbuilder.BottomSheetMenuDialog;
+import com.github.rubensousa.bottomsheetbuilder.adapter.BottomSheetItemClickListener;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,6 +47,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.bolive.app.jamisapp.R;
+import ir.bolive.app.jamisapp.app.PermissionCheck;
 import ir.bolive.app.jamisapp.database.DatabaseClient;
 import ir.bolive.app.jamisapp.models.FaceArgs;
 import ir.bolive.app.jamisapp.models.Gallery;
@@ -54,6 +69,8 @@ public class RegisterActvity extends AppCompatActivity {
     LinearLayout layoutFaceInfo;
     @BindView(R.id.reg_face_img)
     LinearLayout layoutImageInfo;
+    @BindView(R.id.reg_coordiantor)
+    CoordinatorLayout coordinatorLayout;
 
     @BindView(R.id.reg_pname)
     EditText txtPname;
@@ -108,6 +125,7 @@ public class RegisterActvity extends AppCompatActivity {
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
 
+    int req_code = 0;
     List<String> chinModes=new ArrayList<String>();
 
     boolean editmode;
@@ -119,6 +137,8 @@ public class RegisterActvity extends AppCompatActivity {
     Gallery galleryBefore=new Gallery();
     Gallery galleryMask=new Gallery();
     Gallery galleryAfter=new Gallery();
+
+    Bitmap bitmap1=null,bitmap2=null,bitmap3=null;
     //region Override Methods
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -133,11 +153,35 @@ public class RegisterActvity extends AppCompatActivity {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        for(int i=0;i<grantResults.length;i++){
+            if(grantResults[i] == -1){
+                Toast.makeText(RegisterActvity.this,R.string.givePermissions, Toast.LENGTH_LONG).show();
+                finish();
+                return;
+            }
+        }
+    }
+
     //endregion
     //region Events
     @OnClick(R.id.reg_btn_face_submit)
     public void onFaceSubmit(){
+        if(!txtUpInc.getText().toString().isEmpty()&&
+                !txtLowerInc.getText().toString().isEmpty()&&
+                !txtUpging.getText().toString().isEmpty()&&
+                txtLowerging.getText().toString().isEmpty()&&
+                txtEye_x.getText().toString().isEmpty()&&
+                txtEye_y.getText().toString().isEmpty()){
 
+
+            showPanel(3);
+        }
+        else{
+            Snackbar.make(coordinatorLayout,R.string.enterAllfields,Snackbar.LENGTH_SHORT).show();
+        }
     }
     @OnClick(R.id.reg_btn_submit)
     public void onSubmitClick(){
@@ -155,6 +199,9 @@ public class RegisterActvity extends AppCompatActivity {
             patient.setPhone(phone);
             patient.setRefdate(refDate);
             showPanel(2);
+        }
+        else{
+            Snackbar.make(coordinatorLayout,R.string.enterAllfields,Snackbar.LENGTH_SHORT).show();
         }
     }
     @OnClick(R.id.btn_p_face)
@@ -222,7 +269,21 @@ public class RegisterActvity extends AppCompatActivity {
             }
         });
         //*****************************
+        checkPermission();
 
+    }
+    void checkPermission(){
+        final  List<String> permission_needed = new ArrayList<>();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if(!PermissionCheck.isCameraGranted(RegisterActvity.this)){
+                permission_needed.add(Manifest.permission.CAMERA);
+            }
+            if(permission_needed.size()>0){
+                String [] permissions =new String[permission_needed.size()];
+                permission_needed.toArray(permissions);
+                ActivityCompat.requestPermissions(RegisterActvity.this,permissions,100);
+            }
+        }
     }
     void disbleAll(){
         btnPatient.setEnabled(false);
@@ -288,6 +349,83 @@ public class RegisterActvity extends AppCompatActivity {
         img_after.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_image));
         img_before.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_image));
         img_mask.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_image));
+    }
+    void bottomSheet(){
+        BottomSheetMenuDialog dialog=new BottomSheetBuilder(getApplicationContext(),R.style.AppTheme_BottomSheetDialog)
+                .setMode(BottomSheetBuilder.MODE_GRID)
+                .setMenu(R.menu.menu_bottomsheet)
+                .setItemClickListener(new BottomSheetItemClickListener() {
+                    @Override
+                    public void onBottomSheetItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.sheet_del:
+                                break;
+                            case R.id.sheet_pick:
+                                break;
+                            case R.id.sheet_show:
+                                break;
+                        }
+                    }
+                })
+                .createDialog();
+        dialog.show();
+    }
+    void showImage(){
+        Drawable drawable =null;
+        boolean show=false;
+        switch (req_code){
+            case 1:
+                drawable=img_before.getDrawable();
+                if(bitmap1 != null)
+                    show=true;
+                break;
+
+            case 2:
+                drawable =img_mask.getDrawable();
+                if(bitmap2 != null)
+                    show =true;
+                break;
+
+            case 3:
+                drawable =img_after.getDrawable();
+                if(bitmap3!=null)
+                    show=true;
+                break;
+        }
+
+        if(show == false){
+            Snackbar.make(coordinatorLayout,R.string.noImagetoShow,Snackbar.LENGTH_SHORT).show();
+            return;
+        }
+
+        Dialog dialog=new Dialog(RegisterActvity.this);
+        dialog.setCancelable(true);
+        dialog.setContentView(R.layout.dialog_show);
+        ImageView imageView =(ImageView)dialog.findViewById(R.id.dialog_img);
+        imageView.setImageDrawable(drawable);
+        dialog.show();
+    }
+    void delImage(){
+        switch (req_code){
+            case 1:
+                bitmap1=null;
+                img_before.setImageResource(R.drawable.ic_image);
+                break;
+
+            case 2:
+                bitmap2=null;
+                img_mask.setImageResource(R.drawable.ic_image);
+                break;
+
+            case 3:
+                bitmap3=null;
+                img_after.setImageResource(R.drawable.ic_image);
+                break;
+
+        }
+    }
+    void addImage(){
+
     }
     //endregion
 }

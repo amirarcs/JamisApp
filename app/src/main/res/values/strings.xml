@@ -20,8 +20,14 @@
     <string name="menuDisplay">Display Patients Information</string>
     <string name="menuEdit">Edit Patient Information</string>
     <string name="menuBackUp">BackUp And Restore</string>
+    <string name="camera">Camera</string>
+    <string name="showImage">Show</string>
+    <string name="remove">Remove</string>
     <!--Messages-->
     <string name="tapToClose">Press Back Again To Exit!</string>
+    <string name="noImagetoShow">There\'s no image to show</string>
+    <string name="givePermissions">Please give permissions to continue</string>
+    <string name="enterAllfields">Enter All Fields And Try Again!</string>
     <!--Hints-->
     <string name="patientInfo">Patient Info</string>
     <string name="faceArgs">Patient\'s Face Args</string>
