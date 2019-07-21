@@ -12,7 +12,7 @@ public class Gallery {
     @PrimaryKey(autoGenerate = true)
     private int gid;
 
-    private String pid_fk;
+    private long pid_fk;
     private String title;
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
     private byte[] image;
@@ -25,11 +25,11 @@ public class Gallery {
         this.gid = gid;
     }
 
-    public String getPid_fk() {
+    public long getPid_fk() {
         return pid_fk;
     }
 
-    public void setPid_fk(String pid_fk) {
+    public void setPid_fk(long pid_fk) {
         this.pid_fk = pid_fk;
     }
 

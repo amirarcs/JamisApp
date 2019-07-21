@@ -34,6 +34,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent=new Intent(MainActivity.this,RegisterActvity.class);
         startActivity(intent);
     }
+    @OnClick(R.id.main_btn_search)
+    public void onSearchClick(){
+        Intent intent=new Intent(MainActivity.this,DisplayPatientsActivity.class);
+        startActivity(intent);
+    }
     void init(){
 
     }

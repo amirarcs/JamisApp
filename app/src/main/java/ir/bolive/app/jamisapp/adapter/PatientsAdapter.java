@@ -21,10 +21,10 @@ import ir.bolive.app.jamisapp.R;
 import ir.bolive.app.jamisapp.models.Patient;
 
 public class PatientsAdapter extends RecyclerView.Adapter<PatientsAdapter.ViewHolder> {
-    ArrayList<Patient> patientList=new ArrayList<Patient>();
+    List<Patient> patientList;
     Context context;
     int lastposition=-1;
-    public PatientsAdapter(ArrayList<Patient> patients,Context context) {
+    public PatientsAdapter(List<Patient> patients,Context context) {
         this.patientList=patients;
         this.context=context;
     }

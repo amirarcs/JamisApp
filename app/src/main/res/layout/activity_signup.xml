@@ -13,7 +13,7 @@
         android:padding="@dimen/big_padding">
         <ImageView
             android:layout_width="@dimen/image_width"
-            android:layout_height="@dimen/image_height"
+            android:layout_height="@dimen/img_height"
             android:src="@drawable/ic_signup"
             android:layout_gravity="center"/>
 

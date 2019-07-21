@@ -12,6 +12,21 @@ public class FaceArgs {
     @PrimaryKey(autoGenerate = true)
     private int fid;
 
+    public int getFid() {
+        return fid;
+    }
+
+    public void setFid(int fid) {
+        this.fid = fid;
+    }
+
+    public int getChinMode() {
+        return chinMode;
+    }
+
+    public void setChinMode(int chinMode) {
+        this.chinMode = chinMode;
+    }
 
     private float upper_central_ans;
 
@@ -35,13 +50,13 @@ public class FaceArgs {
     //نوک استخوان راموس
     private float x_ramus,y_ramus;
 
-    private int pid_fk;
+    private long pid_fk;
 
-    public int getPid_fk() {
+    public long getPid_fk() {
         return pid_fk;
     }
 
-    public void setPid_fk(int pid_fk) {
+    public void setPid_fk(long pid_fk) {
         this.pid_fk = pid_fk;
     }
 

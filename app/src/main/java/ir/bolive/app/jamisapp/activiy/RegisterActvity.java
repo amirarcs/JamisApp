@@ -1,9 +1,11 @@
 package ir.bolive.app.jamisapp.activiy;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -52,6 +54,7 @@ import ir.bolive.app.jamisapp.database.DatabaseClient;
 import ir.bolive.app.jamisapp.models.FaceArgs;
 import ir.bolive.app.jamisapp.models.Gallery;
 import ir.bolive.app.jamisapp.models.Patient;
+import ir.bolive.app.jamisapp.util.Tools;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class RegisterActvity extends AppCompatActivity {
@@ -126,9 +129,9 @@ public class RegisterActvity extends AppCompatActivity {
     TextView toolbarTitle;
 
     int req_code = 0;
+    int CAMERA_REQUEST=200;
     List<String> chinModes=new ArrayList<String>();
 
-    boolean editmode;
     int chinmode,step;
     int mYear,mMonth,mDay;
     long patientId;
@@ -165,18 +168,70 @@ public class RegisterActvity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode==CAMERA_REQUEST && resultCode== Activity.RESULT_OK){
+            Bitmap photo=null;
+            photo=(Bitmap)data.getExtras().get("data");
+            photo=Tools.image_resize(photo);
+            switch (req_code){
+                case 1:
+                    img_before.setImageBitmap(photo);
+                    break;
+                case 2:
+                    img_mask.setImageBitmap(photo);
+                    break;
+                case 3:
+                    img_after.setImageBitmap(photo);
+                    break;
+            }
+        }
+    }
+
     //endregion
     //region Events
+    @OnClick(R.id.reg_img_before)
+    public void onImgBeforeClick(){
+        req_code=1;
+        bottomSheet();
+    }
+    @OnClick(R.id.reg_img_mask)
+    public void onImgMaskClick(){
+        req_code=2;
+        bottomSheet();
+    }
+    @OnClick(R.id.reg_img_after)
+    public void onImgAfterClick(){
+        req_code=3;
+        bottomSheet();
+    }
     @OnClick(R.id.reg_btn_face_submit)
     public void onFaceSubmit(){
         if(!txtUpInc.getText().toString().isEmpty()&&
                 !txtLowerInc.getText().toString().isEmpty()&&
                 !txtUpging.getText().toString().isEmpty()&&
-                txtLowerging.getText().toString().isEmpty()&&
-                txtEye_x.getText().toString().isEmpty()&&
-                txtEye_y.getText().toString().isEmpty()){
-
-
+                !txtLowerging.getText().toString().isEmpty()&&
+                !txtEye_x.getText().toString().isEmpty()&&
+                !txtEye_y.getText().toString().isEmpty()&&
+                !txtEyebrow_y.getText().toString().isEmpty()&&
+                !txtEyebrow_x.getText().toString().isEmpty()&&
+                !txtRamus_y.getText().toString().isEmpty()&&
+                !txtRamus_x.getText().toString().isEmpty()&&
+                !txtEar_y.getText().toString().isEmpty()&&
+                !txtEar_x.getText().toString().isEmpty()){
+            faceArgs.setUpper_central_ans(Float.parseFloat(txtUpInc.getText().toString()));
+            faceArgs.setLower_central_ans(Float.parseFloat(txtLowerInc.getText().toString()));
+            faceArgs.setUpper_ging(Float.parseFloat(txtUpging.getText().toString()));
+            faceArgs.setLower_ging(Float.parseFloat(txtLowerging.getText().toString()));
+            faceArgs.setX_eye(Float.parseFloat(txtEye_x.getText().toString()));
+            faceArgs.setY_eye(Float.parseFloat(txtEye_y.getText().toString()));
+            faceArgs.setX_ear(Float.parseFloat(txtEar_x.getText().toString()));
+            faceArgs.setY_ear(Float.parseFloat(txtEar_y.getText().toString()));
+            faceArgs.setX_eyebrow(Float.parseFloat(txtEyebrow_x.getText().toString()));
+            faceArgs.setY_eyebrow(Float.parseFloat(txtEyebrow_y.getText().toString()));
+            faceArgs.setX_ramus(Float.parseFloat(txtRamus_x.getText().toString()));
+            faceArgs.setY_ramus(Float.parseFloat(txtRamus_y.getText().toString()));
+            faceArgs.setMidLine(0f);
             showPanel(3);
         }
         else{
@@ -233,15 +288,43 @@ public class RegisterActvity extends AppCompatActivity {
     //endregion
     //region DBMethods
     private void SaveData(){
-        Executor executor= Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            DatabaseClient databaseClient=DatabaseClient.getInstance(getApplicationContext());
-            patientId=databaseClient.getAppDatabase().patientDAO().insertPatient(patient);
-            databaseClient.getAppDatabase().faceArgDAO().insertFaceArgs(faceArgs);
-            databaseClient.getAppDatabase().galleryDAO().insertGallery(galleryBefore);
-            databaseClient.getAppDatabase().galleryDAO().insertGallery(galleryMask);
-            databaseClient.getAppDatabase().galleryDAO().insertGallery(galleryAfter);
-        });
+        try{
+            Executor executor= Executors.newSingleThreadExecutor();
+            executor.execute(() -> {
+                DatabaseClient databaseClient=DatabaseClient.getInstance(getApplicationContext());
+                patientId=databaseClient.getAppDatabase().patientDAO().insertPatient(patient);
+                faceArgs.setPid_fk(patientId);
+                galleryBefore.setPid_fk(patientId);
+                galleryAfter.setPid_fk(patientId);
+                galleryMask.setPid_fk(patientId);
+            });
+            Executor executorFace= Executors.newSingleThreadExecutor();
+            executorFace.execute(()->{
+                DatabaseClient databaseClient=DatabaseClient.getInstance(getApplicationContext());
+                databaseClient.getAppDatabase().faceArgDAO().insertFaceArgs(faceArgs);
+            });
+            Executor executorImage1= Executors.newSingleThreadExecutor();
+            executorImage1.execute(()->{
+                DatabaseClient databaseClient=DatabaseClient.getInstance(getApplicationContext());
+                databaseClient.getAppDatabase().galleryDAO().insertGallery(galleryBefore);
+            });
+            Executor executorImage2= Executors.newSingleThreadExecutor();
+            executorImage2.execute(()->{
+                DatabaseClient databaseClient=DatabaseClient.getInstance(getApplicationContext());
+                databaseClient.getAppDatabase().galleryDAO().insertGallery(galleryMask);
+            });
+            Executor executorImage3= Executors.newSingleThreadExecutor();
+            executorImage3.execute(()->{
+                DatabaseClient databaseClient=DatabaseClient.getInstance(getApplicationContext());
+                databaseClient.getAppDatabase().galleryDAO().insertGallery(galleryAfter);
+            });
+            Snackbar.make(coordinatorLayout,R.string.successMessage,Snackbar.LENGTH_SHORT).show();
+            clearAll();
+        }
+        catch (Exception ex){
+            Snackbar.make(coordinatorLayout,R.string.failureMessage,Snackbar.LENGTH_SHORT).show();
+        }
+
     }
     //endregion
     //region Methods
@@ -349,6 +432,8 @@ public class RegisterActvity extends AppCompatActivity {
         img_after.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_image));
         img_before.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_image));
         img_mask.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_image));
+        showPanel(1);
+        txtPname.requestFocus();
     }
     void bottomSheet(){
         BottomSheetMenuDialog dialog=new BottomSheetBuilder(getApplicationContext(),R.style.AppTheme_BottomSheetDialog)
@@ -359,10 +444,13 @@ public class RegisterActvity extends AppCompatActivity {
                     public void onBottomSheetItemClick(MenuItem item) {
                         switch (item.getItemId()){
                             case R.id.sheet_del:
+                                delImage();
                                 break;
                             case R.id.sheet_pick:
+                                startCamera();
                                 break;
                             case R.id.sheet_show:
+                                showImage();
                                 break;
                         }
                     }
@@ -424,8 +512,9 @@ public class RegisterActvity extends AppCompatActivity {
 
         }
     }
-    void addImage(){
-
+    void startCamera(){
+        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(cameraIntent, CAMERA_REQUEST);
     }
     //endregion
 }

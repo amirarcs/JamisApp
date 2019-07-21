@@ -28,6 +28,8 @@
     <string name="noImagetoShow">There\'s no image to show</string>
     <string name="givePermissions">Please give permissions to continue</string>
     <string name="enterAllfields">Enter All Fields And Try Again!</string>
+    <string name="successMessage">Operation Completed Successfully!</string>
+    <string name="failureMessage">Operation Failed By Error!</string>
     <!--Hints-->
     <string name="patientInfo">Patient Info</string>
     <string name="faceArgs">Patient\'s Face Args</string>
@@ -51,4 +53,9 @@
     <string name="next">Next</string>
     <string name="submit">Submit</string>
     <string name="StoreAll">Store Patient Data</string>
+    <!--Titles-->
+    <string name="titleRegister">Register New Patient</string>
+    <string name="titleDisplay">Patients List</string>
+    <string name="titleEdit">Edit User</string>
+    <string name="titleExport">Export Data</string>
 </resources>
