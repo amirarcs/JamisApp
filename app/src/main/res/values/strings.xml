@@ -30,4 +30,19 @@
     <string name="patientRefDate">Reference Date</string>
     <string name="phoneNumber">Phone Number</string>
     <string name="searchPatients">Search Patients</string>
+    <string name="upperIncisal">Upper Incisal</string>
+    <string name="lowerIncisal">Lower Incisal</string>
+    <string name="uppergingival">Upper gingival</string>
+    <string name="lowergingival">Lower gingival</string>
+    <string name="earXAngle">Ear X Angle</string>
+    <string name="earYAngle">Ear Y Angle</string>
+    <string name="eyeXAngle">Eye X Angle</string>
+    <string name="eyeYAngle">Eye Y Angle</string>
+    <string name="eyebrowXAngle">Eyebrow X Angle</string>
+    <string name="eyebrowYAngle">Eyebrow Y Angle</string>
+    <string name="ramusBoneXAngle">Ramus Bone X Angle</string>
+    <string name="ramusBoneYAngle">Ramus Bone Y Angle</string>
+    <string name="next">Next</string>
+    <string name="submit">Submit</string>
+    <string name="StoreAll">Store Patient Data</string>
 </resources>

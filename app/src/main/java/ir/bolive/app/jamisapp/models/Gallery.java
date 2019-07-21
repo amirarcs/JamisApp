@@ -2,6 +2,7 @@ package ir.bolive.app.jamisapp.models;
 
 import android.content.Context;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -9,11 +10,12 @@ import androidx.room.PrimaryKey;
 public class Gallery {
 
     @PrimaryKey(autoGenerate = true)
-    public int gid;
+    private int gid;
 
-    public String pid_fk;
-    public String title;
-    public String image;
+    private String pid_fk;
+    private String title;
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
+    private byte[] image;
 
     public int getGid() {
         return gid;
@@ -39,11 +41,11 @@ public class Gallery {
         this.title = title;
     }
 
-    public String getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 }

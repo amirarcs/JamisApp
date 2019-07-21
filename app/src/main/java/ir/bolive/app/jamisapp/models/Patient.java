@@ -9,12 +9,12 @@ import androidx.room.PrimaryKey;
 public class Patient {
 
     @PrimaryKey(autoGenerate =true)
-    public int pid;
+    private int pid;
 
-    public String fullname;
-    public String nationalcode;
-    public String phone;
-    public String refdate;
+    private String fullname;
+    private String nationalcode;
+    private String phone;
+    private String refdate;
 
     public int getPid() {
         return pid;

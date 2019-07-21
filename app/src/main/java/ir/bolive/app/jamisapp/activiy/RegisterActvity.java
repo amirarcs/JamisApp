@@ -2,6 +2,7 @@ package ir.bolive.app.jamisapp.activiy;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 
 import java.util.ArrayList;
@@ -87,6 +90,13 @@ public class RegisterActvity extends AppCompatActivity {
     EditText txtRamus_y;
     @BindView(R.id.reg_chinmode)
     AppCompatSpinner sp_chinmode;
+
+    @BindView(R.id.reg_img_before)
+    ImageView img_before;
+    @BindView(R.id.reg_img_after)
+    ImageView img_after;
+    @BindView(R.id.reg_img_mask)
+    ImageView img_mask;
 
     @BindView(R.id.reg_btn_submit)
     Button btnSubmit;
@@ -255,6 +265,29 @@ public class RegisterActvity extends AppCompatActivity {
                 layoutImageInfo.setVisibility(View.VISIBLE);
                 break;
         }
+    }
+    void clearAll(){
+        txtRdate.setText("");
+        txtPhone.setText("");
+        txtNcode.setText("");
+        txtPname.setText("");
+
+        txtEar_x.setText("");
+        txtEar_y.setText("");
+        txtEye_y.setText("");
+        txtEye_x.setText("");
+        txtEyebrow_x.setText("");
+        txtEyebrow_y.setText("");
+        txtLowerging.setText("");
+        txtUpging.setText("");
+        txtUpInc.setText("");
+        txtLowerInc.setText("");
+        txtRamus_x.setText("");
+        txtRamus_y.setText("");
+
+        img_after.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_image));
+        img_before.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_image));
+        img_mask.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_image));
     }
     //endregion
 }

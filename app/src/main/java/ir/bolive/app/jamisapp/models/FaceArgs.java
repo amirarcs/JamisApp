@@ -10,32 +10,32 @@ import androidx.room.PrimaryKey;
 public class FaceArgs {
     //نوک انسیزال بالا و پایین
     @PrimaryKey(autoGenerate = true)
-    public int fid;
+    private int fid;
 
 
-    public float upper_central_ans;
+    private float upper_central_ans;
 
-    public float lower_central_ans;
+    private float lower_central_ans;
     //نوک جینجوال بالا و پایین
-    public float upper_ging, lower_ging;
+    private float upper_ging, lower_ging;
 
-    public float midLine=0;
+    private float midLine=0;
 
     //حالت چانه
-    public  int chinMode;
+    private  int chinMode;
     // زاویه گوش
-    public float x_ear,y_ear;
+    private float x_ear,y_ear;
 
     //زاویه چشم
-    public float x_eye,y_eye;
+    private float x_eye,y_eye;
 
     //زاویه ابرو
-    public float x_eyebrow,y_eyebrow;
+    private float x_eyebrow,y_eyebrow;
 
     //نوک استخوان راموس
-    public float x_ramus,y_ramus;
+    private float x_ramus,y_ramus;
 
-    public int pid_fk;
+    private int pid_fk;
 
     public int getPid_fk() {
         return pid_fk;
