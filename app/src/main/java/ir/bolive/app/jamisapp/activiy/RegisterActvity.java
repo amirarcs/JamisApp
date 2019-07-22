@@ -288,7 +288,7 @@ public class RegisterActvity extends AppCompatActivity {
         DatePickerDialog pickerDialog=new DatePickerDialog(getApplicationContext(), new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
-                txtRdate.setText(year+"/"+(monthOfYear+1)+"/"+dayOfMonth);
+                txtRdate.setText(String.format("%s/%s/%s",year,monthOfYear,dayOfMonth));
             }
         },mYear,mMonth,mDay);
         pickerDialog.show();

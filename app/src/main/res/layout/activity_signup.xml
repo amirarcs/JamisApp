@@ -49,7 +49,7 @@
             android:textCursorDrawable="@drawable/text_cursor"
             android:hint="@string/password"
             android:inputType="textPassword"
-            android:maxLength="50"
+            android:maxLength="20"
             android:textSize="@dimen/text_size"
             android:textAlignment="center"/>
         <androidx.appcompat.widget.AppCompatEditText
@@ -62,7 +62,7 @@
             android:textCursorDrawable="@drawable/text_cursor"
             android:hint="@string/Confirmpassword"
             android:inputType="textPassword"
-            android:maxLength="50"
+            android:maxLength="20"
             android:textSize="@dimen/text_size"
             android:textAlignment="center"/>
         <androidx.appcompat.widget.AppCompatButton

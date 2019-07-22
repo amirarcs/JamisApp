@@ -23,13 +23,23 @@
     <string name="camera">Camera</string>
     <string name="showImage">Show</string>
     <string name="remove">Remove</string>
+    <string name="update">Update Info</string>
+    <string name="export">Export Data</string>
+    <string name="newPassword">New Password</string>
     <!--Messages-->
     <string name="tapToClose">Press Back Again To Exit!</string>
+    <string name="askToUpdate">Are you sure to update your information?</string>
+    <string name="askToExport">Are you sure to export patients information?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="noImagetoShow">There\'s no image to show</string>
     <string name="givePermissions">Please give permissions to continue</string>
     <string name="enterAllfields">Enter All Fields And Try Again!</string>
     <string name="successMessage">Operation Completed Successfully!</string>
     <string name="failureMessage">Operation Failed By Error!</string>
+    <string name="editNote">Note:National Code is used as your username to login to app</string>
+    <string name="exportNote">You can always make a copy of your patient\'s data as a CSV file and use it in your pc or phone</string>
+    <string name="passwordnotMatch">Passwords do not match</string>
     <!--Hints-->
     <string name="patientInfo">Patient Info</string>
     <string name="faceArgs">Patient\'s Face Args</string>
