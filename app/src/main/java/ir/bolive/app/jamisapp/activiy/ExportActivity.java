@@ -1,6 +1,7 @@
 package ir.bolive.app.jamisapp.activiy;
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -80,6 +81,10 @@ public class ExportActivity extends AppCompatActivity {
         toolbarTitle.setText(getString(R.string.menuBackUp));
         dialogUtil=new DialogUtil(ExportActivity.this,R.style.AlertDialogStyle);
         showProgress(false);
+        AnimationDrawable animDrawable=(AnimationDrawable)coordinatorLayout.getBackground();
+        animDrawable.setEnterFadeDuration(500);
+        animDrawable.setExitFadeDuration(5000);
+        animDrawable.start();
     }
     private void showProgress(boolean shouldshow){
         if (shouldshow){
