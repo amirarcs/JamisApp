@@ -79,6 +79,7 @@ public class ExportActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbarTitle.setText(getString(R.string.menuBackUp));
         dialogUtil=new DialogUtil(ExportActivity.this,R.style.AlertDialogStyle);
+        showProgress(false);
     }
     private void showProgress(boolean shouldshow){
         if (shouldshow){

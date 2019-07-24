@@ -10,4 +10,11 @@
         android:layout_height="match_parent"
         android:layout_marginTop="?actionBarSize">
     </androidx.recyclerview.widget.RecyclerView>
+    <ImageView
+        android:id="@+id/display_img_nothing"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
+        android:visibility="gone"
+        android:src="@drawable/nothing"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

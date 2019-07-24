@@ -99,8 +99,9 @@
                     android:hint="@string/patientRefDate"
                     android:id="@+id/reg_rdate"
                     android:background="@drawable/text_back"
-                    android:inputType="none"/>
-
+                    android:inputType="none"
+                    android:focusableInTouchMode="false"
+                    />
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -19,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -70,7 +71,7 @@ public class RegisterActvity extends AppCompatActivity {
     @BindView(R.id.reg_personal_info)
     LinearLayout layoutPersonalInfo;
     @BindView(R.id.reg_face_info)
-    LinearLayout layoutFaceInfo;
+    ScrollView layoutFaceInfo;
     @BindView(R.id.reg_face_img)
     LinearLayout layoutImageInfo;
     @BindView(R.id.reg_coordiantor)
@@ -285,7 +286,7 @@ public class RegisterActvity extends AppCompatActivity {
         mYear=calendar.get(Calendar.YEAR);
         mMonth=calendar.get(Calendar.MONTH);
         mDay=calendar.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog pickerDialog=new DatePickerDialog(getApplicationContext(), new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog pickerDialog=new DatePickerDialog(RegisterActvity.this, R.style.AlertDialogStyle,new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int monthOfYear, int dayOfMonth) {
                 txtRdate.setText(String.format("%s/%s/%s",year,monthOfYear,dayOfMonth));
@@ -339,6 +340,7 @@ public class RegisterActvity extends AppCompatActivity {
     void init(){
         setSupportActionBar(toolbar);
         toolbarTitle.setText(getString(R.string.menuRegister));
+        showPanel(1);
         // *********setup spinner**************
         chinModes.add("-Select Chin Mode -");
         chinModes.add("M");
@@ -444,7 +446,7 @@ public class RegisterActvity extends AppCompatActivity {
         txtPname.requestFocus();
     }
     void bottomSheet(){
-        BottomSheetMenuDialog dialog=new BottomSheetBuilder(getApplicationContext(),R.style.AppTheme_BottomSheetDialog)
+        BottomSheetMenuDialog dialog=new BottomSheetBuilder(RegisterActvity.this,R.style.AppTheme_BottomSheetDialog)
                 .setMode(BottomSheetBuilder.MODE_GRID)
                 .setMenu(R.menu.menu_bottomsheet)
                 .setItemClickListener(new BottomSheetItemClickListener() {

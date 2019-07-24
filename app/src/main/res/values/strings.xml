@@ -1,6 +1,6 @@
 <resources>
     <!--Object Titles-->
-    <string name="app_name">Jami\'s App</string>
+    <string name="app_name">Doctor Face</string>
     <string name="company_brand">Version 1.0.0 \n Powered By Bipital.com</string>
     <string name="login">Login</string>
     <string name="exit">Exit</string>

@@ -39,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent=new Intent(MainActivity.this,DisplayPatientsActivity.class);
         startActivity(intent);
     }
+    @OnClick(R.id.main_btn_backup)
+    public void onBackupClick(){
+        Intent intent=new Intent(MainActivity.this,ExportActivity.class);
+        startActivity(intent);
+    }
     void init(){
 
     }

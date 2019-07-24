@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +36,9 @@ public class DisplayPatientsActivity extends AppCompatActivity {
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
 
+
+    @BindView(R.id.display_img_nothing)
+    ImageView imgNothing;
     @BindView(R.id.display_coordiantor)
     CoordinatorLayout coordinatorLayout;
     @BindView(R.id.display_recycler)
@@ -41,6 +46,8 @@ public class DisplayPatientsActivity extends AppCompatActivity {
 
     PatientsAdapter adapter;
     List<Patient> patientList;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,17 +92,33 @@ public class DisplayPatientsActivity extends AppCompatActivity {
     private void init(){
         setSupportActionBar(toolbar);
         toolbarTitle.setText(getString(R.string.menuDisplay));
-        adapter=new PatientsAdapter(patientList,DisplayPatientsActivity.this);
         recyclerView.setLayoutManager(new LinearLayoutManager(DisplayPatientsActivity.this,RecyclerView.VERTICAL,false));
-        recyclerView.setAdapter(adapter);
         loadAllData();
+    }
+    private void showNothing(boolean shouldNothing){
+        if(shouldNothing){
+            imgNothing.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }else{
+            imgNothing.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
     }
     private void loadAllData(){
         Executor executor=Executors.newSingleThreadExecutor();
         executor.execute(()->{
             DatabaseClient client=DatabaseClient.getInstance(DisplayPatientsActivity.this);
             patientList=client.getAppDatabase().patientDAO().getAll();
-            adapter.notifyDataSetChanged();
+            if(patientList!=null){
+                adapter=new PatientsAdapter(patientList,DisplayPatientsActivity.this);
+                recyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+                showNothing(false);
+            }
+            else{
+                showNothing(true);
+            }
+
         });
     }
     private void searchData(String key){
@@ -110,7 +133,14 @@ public class DisplayPatientsActivity extends AppCompatActivity {
                 //search by fullname
                 patientList=client.getAppDatabase().patientDAO().getbyName(key);
             }
-            adapter.notifyDataSetChanged();
+            if(patientList!=null){
+                adapter.notifyDataSetChanged();
+                showNothing(false);
+            }
+            else{
+                showNothing(true);
+            }
+
         });
 
     }
