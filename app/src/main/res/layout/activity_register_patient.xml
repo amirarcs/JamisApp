@@ -53,9 +53,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
+                android:textStyle="bold"
                 style="@style/TextAppearance.AppCompat.Medium"
-                android:background="@color/yellow"
+                android:background="@color/pink"
                 android:text="@string/patientInfo"/>
             <net.cachapa.expandablelayout.ExpandableLayout
                 android:id="@+id/reg_expand_layout_patient"
@@ -77,9 +78,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 style="@style/TextAppearance.AppCompat.Medium"
-                android:background="@color/yellow"
+                android:background="@color/pink"
+                android:textStyle="bold"
                 android:text="@string/faceArgs"/>
             <net.cachapa.expandablelayout.ExpandableLayout
                 android:id="@+id/reg_expand_layout_args"
@@ -99,9 +101,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 style="@style/TextAppearance.AppCompat.Medium"
-                android:background="@color/yellow"
+                android:background="@color/pink"
+                android:textStyle="bold"
                 android:text="@string/faceImage"/>
             <net.cachapa.expandablelayout.ExpandableLayout
                 android:id="@+id/reg_expand_layout_img"
@@ -118,6 +121,8 @@
             android:layout_height="wrap_content"
             android:text="@string/StoreAll"
             android:textColor="@color/white"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
             android:background="@drawable/green_round_button"/>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

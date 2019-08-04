@@ -16,7 +16,8 @@
     <color name="grey_60">#666666</color>
     <color name="grey_80">#37474F</color>
     <color name="grey_90">#263238</color>
-    <color name="pink">#c2185b</color>
+    <color name="pink">#e91e63</color>
+    <color name="lightPink">#ff6090</color>
     <color name="green">#00c853</color>
     <color name="yellow">#fdd835</color>
     <!--blue list-->
