@@ -18,6 +18,7 @@
     <color name="grey_90">#263238</color>
     <color name="pink">#c2185b</color>
     <color name="green">#00c853</color>
+    <color name="yellow">#fdd835</color>
     <!--blue list-->
     <color name="b1">#e3f2fd</color>
     <color name="b2">#bbdefb</color>

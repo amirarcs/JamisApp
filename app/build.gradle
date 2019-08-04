@@ -32,6 +32,8 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.1.0'
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
     implementation "androidx.room:room-runtime:2.2.0-alpha01"
+    implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
     annotationProcessor "androidx.room:room-compiler:2.2.0-alpha01"

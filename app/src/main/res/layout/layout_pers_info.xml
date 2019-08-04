@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/reg_personal_info"
+    android:gravity="center"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dip"
+        android:layout_marginRight="32dip"
+        android:layout_marginBottom="12dip"
+        android:hint="@string/patientFullName"
+        android:textColorHint="@color/colorPrimary"
+        app:hintAnimationEnabled="true">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/reg_pname"
+            android:inputType="text"
+            android:maxLength="30"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dip"
+        android:layout_marginRight="32dip"
+        android:layout_marginBottom="12dip"
+        android:hint="@string/nationalCode"
+        android:textColorHint="@color/colorPrimary"
+        app:hintAnimationEnabled="true">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/reg_ncode"
+            android:maxLength="10"
+            android:inputType="number"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dip"
+        android:layout_marginRight="32dip"
+        android:layout_marginBottom="12dip"
+        android:hint="@string/phoneNumber"
+        android:textColorHint="@color/colorPrimary"
+        app:hintAnimationEnabled="true">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:maxLength="10"
+            android:id="@+id/reg_phone" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dip"
+        android:layout_marginRight="32dip"
+        android:layout_marginBottom="12dip"
+        android:id="@+id/reg_rdate"
+        android:text="@string/patientRefDate"
+        android:textColor="@color/colorPrimary"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
+
+    <!--<Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reg_btn_submit"
+        android:text="@string/next"
+        android:background="@drawable/pink_round_button"
+        android:textColor="@color/white"/>-->
+
+</LinearLayout>

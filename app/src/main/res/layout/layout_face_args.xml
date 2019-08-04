@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:id="@+id/reg_face_info"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/global_padding"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dip"
+            android:layout_marginRight="32dip"
+            android:layout_marginBottom="12dip"
+            android:hint="@string/upperIncisal"
+            android:textColorHint="@color/colorPrimary"
+            app:hintAnimationEnabled="true">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:id="@+id/reg_upper_inc"
+                android:maxLength="2" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dip"
+            android:layout_marginRight="32dip"
+            android:layout_marginBottom="12dip"
+            android:hint="@string/lowerIncisal"
+            android:textColorHint="@color/colorPrimary"
+            app:hintAnimationEnabled="true">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:id="@+id/reg_lower_inc"
+                android:maxLength="3" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dip"
+            android:layout_marginRight="32dip"
+            android:layout_marginBottom="12dip"
+            android:hint="@string/uppergingival"
+            android:textColorHint="@color/colorPrimary"
+            app:hintAnimationEnabled="true">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/reg_upper_ging"
+                android:inputType="numberDecimal"
+                android:maxLength="3" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dip"
+            android:layout_marginRight="32dip"
+            android:layout_marginBottom="12dip"
+            android:hint="@string/lowergingival"
+            android:textColorHint="@color/colorPrimary"
+            app:hintAnimationEnabled="true">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/reg_lower_ging"
+                android:maxLength="3"
+                android:inputType="numberDecimal"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/reg_chinmode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dip"
+            android:layout_marginRight="32dip"
+            android:layout_marginBottom="12dip"
+            style="@style/Widget.AppCompat.Spinner.Underlined"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dip"
+            android:layout_marginRight="32dip"
+            android:layout_marginBottom="12dip"
+            android:hint="@string/earXAngle"
+            android:textColorHint="@color/colorPrimary"
+            app:hintAnimationEnabled="true">
+            <EditText
+                android:id="@+id/reg_ear_x"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="3"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dip"
+            android:layout_marginRight="32dip"
+            android:layout_marginBottom="12dip"
+            android:hint="@string/earYAngle"
+            android:textColorHint="@color/colorPrimary"
+            app:hintAnimationEnabled="true">
+            <EditText
+                android:id="@+id/reg_ear_y"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:maxLength="3"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dip"
+            android:layout_marginRight="32dip"
+            android:layout_marginBottom="12dip"
+            android:hint="@string/patientFullName"
+            android:textColorHint="@color/colorPrimary"
+            app:hintAnimationEnabled="true">
+            <EditText
+                android:id="@+id/reg_eye_x"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/eyeXAngle"
+                android:maxLength="3"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dip"
+            android:layout_marginRight="32dip"
+            android:layout_marginBottom="12dip"
+            android:hint="@string/eyeYAngle"
+            android:textColorHint="@color/colorPrimary"
+            app:hintAnimationEnabled="true">
+            <EditText
+                android:id="@+id/reg_eye_y"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="3" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dip"
+            android:layout_marginRight="32dip"
+            android:layout_marginBottom="12dip"
+            android:hint="@string/eyebrowXAngle"
+            android:textColorHint="@color/colorPrimary"
+            app:hintAnimationEnabled="true">
+            <EditText
+                android:id="@+id/reg_eyebrow_x"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="4"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dip"
+            android:layout_marginRight="32dip"
+            android:layout_marginBottom="12dip"
+            android:hint="@string/eyebrowYAngle"
+            android:textColorHint="@color/colorPrimary"
+            app:hintAnimationEnabled="true">
+            <EditText
+                android:id="@+id/reg_eyebrow_y"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="3"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dip"
+            android:layout_marginRight="32dip"
+            android:layout_marginBottom="12dip"
+            android:hint="@string/ramusBoneXAngle"
+            android:textColorHint="@color/colorPrimary"
+            app:hintAnimationEnabled="true">
+            <EditText
+                android:id="@+id/reg_ramus_x"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="3"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dip"
+            android:layout_marginRight="32dip"
+            android:layout_marginBottom="12dip"
+            android:hint="@string/ramusBoneYAngle"
+            android:textColorHint="@color/colorPrimary"
+            app:hintAnimationEnabled="true">
+            <EditText
+                android:id="@+id/reg_ramus_y"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="3"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/reg_btn_face_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_button"
+            android:text="@string/next"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</ScrollView>

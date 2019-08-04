@@ -63,6 +63,10 @@
     <string name="next">Next</string>
     <string name="submit">Submit</string>
     <string name="StoreAll">Store Patient Data</string>
+    <string name="imgBefore">Before</string>
+    <string name="imgAfter">After</string>
+    <string name="imgMask">Mask</string>
+
     <!--Titles-->
     <string name="titleRegister">Register New Patient</string>
     <string name="titleDisplay">Patients List</string>
