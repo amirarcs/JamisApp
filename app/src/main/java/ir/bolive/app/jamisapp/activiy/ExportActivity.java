@@ -23,6 +23,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +34,7 @@ import ir.bolive.app.jamisapp.database.DatabaseClient;
 import ir.bolive.app.jamisapp.models.Patient;
 import ir.bolive.app.jamisapp.util.CSVWriter;
 import ir.bolive.app.jamisapp.util.DialogUtil;
+import ir.bolive.app.jamisapp.util.Tools;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ExportActivity extends AppCompatActivity {
@@ -47,6 +50,8 @@ public class ExportActivity extends AppCompatActivity {
     @BindView(R.id.export_coordinator)
     CoordinatorLayout coordinatorLayout;
     DialogUtil dialogUtil;
+
+    List<Patient> patients;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +71,7 @@ public class ExportActivity extends AppCompatActivity {
                     @Override
                     public void OnAlertPositiveClick(AlertDialog.Builder builder) {
                         showProgress(true);
+                        getAllData();
                         exportData();
                     }
 
@@ -78,13 +84,11 @@ public class ExportActivity extends AppCompatActivity {
     //region Methods
     void init(){
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
         toolbarTitle.setText(getString(R.string.menuBackUp));
         dialogUtil=new DialogUtil(ExportActivity.this,R.style.AlertDialogStyle);
         showProgress(false);
-        AnimationDrawable animDrawable=(AnimationDrawable)coordinatorLayout.getBackground();
-        animDrawable.setEnterFadeDuration(500);
-        animDrawable.setExitFadeDuration(5000);
-        animDrawable.start();
+        Tools.loadBackgroundAnimation(coordinatorLayout);
     }
     private void showProgress(boolean shouldshow){
         if (shouldshow){
@@ -98,6 +102,13 @@ public class ExportActivity extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
         }
     }
+    private void getAllData(){
+        Executor executor= Executors.newSingleThreadExecutor();
+        executor.execute(()->{
+            DatabaseClient databaseClient=DatabaseClient.getInstance(ExportActivity.this);
+            patients = databaseClient.getAppDatabase().patientDAO().getAll();
+        });
+    }
     void exportData(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             new ExportDatabaseCSVTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -106,12 +117,10 @@ public class ExportActivity extends AppCompatActivity {
         }
     }
     public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>{
-        private DatabaseClient databaseClient;
 
         @Override
         protected void onPreExecute() {
             showProgress(true);
-           databaseClient =DatabaseClient.getInstance(ExportActivity.this);
         }
 
         @Override
@@ -135,7 +144,7 @@ public class ExportActivity extends AppCompatActivity {
                 CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
                 String[] column = {"Name","NationalCode","Phone","Reference Date"};
                 csvWrite.writeNext(column);
-                List<Patient> patients = databaseClient.getAppDatabase().patientDAO().getAll();
+
                 for(int i=0; i<patients.size(); i++){
                     String[] mySecondStringArray ={String.valueOf(patients.get(i).getFullname()), patients.get(i).getNationalcode(),patients.get(i).getPhone(),patients.get(i).getRefdate()};
                     csvWrite.writeNext(mySecondStringArray);

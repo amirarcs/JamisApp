@@ -15,7 +15,7 @@ import ir.bolive.app.jamisapp.models.FaceArgs;
 @Dao
 public interface FaceArgDAO {
     @Query("Select * from tbl_faceArgs where pid_fk= :pid")
-    List<FaceArgs> getAll(int pid);
+    FaceArgs getArgs(long pid);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertFaceArgs(FaceArgs faceArgs);

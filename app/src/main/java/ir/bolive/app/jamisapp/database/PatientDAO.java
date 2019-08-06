@@ -15,6 +15,8 @@ import ir.bolive.app.jamisapp.models.Patient;
 public interface PatientDAO {
     @Query("Select * from tbl_patient")
     List<Patient> getAll();
+    @Query("Select * from tbl_patient where pid=:pid")
+    Patient getById(long pid);
     @Query("Select * from tbl_patient where nationalcode=:ncode")
     List<Patient> getbyNationalCode(String ncode);
 

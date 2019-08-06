@@ -95,6 +95,7 @@ public class DisplayPatientsActivity extends AppCompatActivity {
     //region Methods
     private void init(){
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
         toolbarTitle.setText(getString(R.string.menuDisplay));
         recyclerView.setLayoutManager(new LinearLayoutManager(DisplayPatientsActivity.this,RecyclerView.VERTICAL,false));
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {

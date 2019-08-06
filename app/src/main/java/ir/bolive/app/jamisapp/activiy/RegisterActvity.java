@@ -60,12 +60,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class RegisterActvity extends AppCompatActivity {
 
-//    @BindView(R.id.btn_p_face)
-//    AppCompatButton btnPatientFace;
-//    @BindView(R.id.btn_p_info)
-//    AppCompatButton btnPatient;
-//    @BindView(R.id.btn_p_images)
-//    AppCompatButton btnImages;
+    //region Define Widgets
+
 
     @BindView(R.id.reg_expandButtonPatient)
     Button btnExpandPatient;
@@ -81,12 +77,7 @@ public class RegisterActvity extends AppCompatActivity {
     @BindView(R.id.reg_expand_layout_img)
     ExpandableLayout layoutImage;
 
-//    @BindView(R.id.reg_personal_info)
-//    LinearLayout layoutPersonalInfo;
-//    @BindView(R.id.reg_face_info)
-//    ScrollView layoutFaceInfo;
-//    @BindView(R.id.reg_face_img)
-//    LinearLayout layoutImageInfo;
+
     @BindView(R.id.reg_coordiantor)
     CoordinatorLayout coordinatorLayout;
 
@@ -133,7 +124,7 @@ public class RegisterActvity extends AppCompatActivity {
     @BindView(R.id.reg_img_mask)
     ImageView img_mask;
 
-//    @BindView(R.id.reg_btn_submit)
+    //    @BindView(R.id.reg_btn_submit)
 //    Button btnSubmit;
     @BindView(R.id.reg_btn_store)
     Button btnSubmit;
@@ -157,13 +148,23 @@ public class RegisterActvity extends AppCompatActivity {
     Gallery galleryAfter=new Gallery();
 
     Bitmap bitmap1=null,bitmap2=null,bitmap3=null;
+    boolean editMode;
+    Bundle bundleData;
+    //endregion
+
     //region Override Methods
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_patient);
         ButterKnife.bind(this);
+        bundleData=getIntent().getExtras();
         init();
+        if(bundleData!=null){
+            patientId=bundleData.getInt("pid");
+            editMode=true;
+            loadData();
+        }
     }
 
     @Override
@@ -192,7 +193,6 @@ public class RegisterActvity extends AppCompatActivity {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] byteArray = stream.toByteArray();
-            photo.recycle();
             switch (req_code){
                 case 1:
                     img_before.setImageBitmap(photo);
@@ -302,14 +302,51 @@ public class RegisterActvity extends AppCompatActivity {
         }
     }
     private void loadData(){
+        Executor executor=Executors.newSingleThreadExecutor();
+        executor.execute(()->{
+            DatabaseClient databaseClient=DatabaseClient.getInstance(RegisterActvity.this);
+            patient=databaseClient.getAppDatabase().patientDAO().getById(patientId);
+            faceArgs=databaseClient.getAppDatabase().faceArgDAO().getArgs(patientId);
+            galleryBefore=databaseClient.getAppDatabase().galleryDAO().getImage(patientId,1);
+            galleryMask=databaseClient.getAppDatabase().galleryDAO().getImage(patientId,2);
+            galleryAfter=databaseClient.getAppDatabase().galleryDAO().getImage(patientId,3);
+            if(galleryBefore.getImage()!=null){
+                img_before.setImageBitmap(Tools.decodeImage(galleryBefore.getImage()));
+            }
+            if(galleryBefore.getImage()!=null){
+                img_mask.setImageBitmap(Tools.decodeImage(galleryMask.getImage()));
+            }
+            if(galleryBefore.getImage()!=null){
+                img_after.setImageBitmap(Tools.decodeImage(galleryAfter.getImage()));
+            }
+            txtPname.setText(patient.getFullname());
+            txtNcode.setText(patient.getNationalcode());
+            txtPhone.setText(patient.getPhone());
+            txtRdate.setText(patient.getRefdate());
 
+            txtUpInc.setText(String.valueOf(faceArgs.getUpper_central_ans()));
+            txtLowerInc.setText(String.valueOf(faceArgs.getLower_central_ans()));
+            txtUpging.setText(String.valueOf(faceArgs.getUpper_ging()));
+            txtLowerging.setText(String.valueOf(faceArgs.getLower_ging()));
+            txtEye_x.setText(String.valueOf(faceArgs.getX_eye()));
+            txtEye_y.setText(String.valueOf(faceArgs.getY_eye()));
+            txtEar_x.setText(String.valueOf(faceArgs.getX_ear()));
+            txtEar_y.setText(String.valueOf(faceArgs.getY_ear()));
+            txtEyebrow_x.setText(String.valueOf(faceArgs.getX_eyebrow()));
+            txtEyebrow_y.setText(String.valueOf(faceArgs.getX_eyebrow()));
+            txtRamus_x.setText(String.valueOf(faceArgs.getX_ramus()));
+            txtRamus_y.setText(String.valueOf(faceArgs.getY_ramus()));
+            sp_chinmode.setSelection(faceArgs.getChinMode()-1);
+        });
     }
     //endregion
     //region Methods
     void init(){
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
         toolbarTitle.setText(getString(R.string.menuRegister));
         showPanel(1);
+        Tools.loadBackgroundAnimation(coordinatorLayout);
         // *********setup spinner**************
         chinModes.add("-Select Chin Mode -");
         chinModes.add("M");
@@ -330,9 +367,11 @@ public class RegisterActvity extends AppCompatActivity {
                 chinmode=0;
             }
         });
+        galleryBefore.setImgMode(1);
+        galleryMask.setImgMode(2);
+        galleryAfter.setImgMode(3);
         //*****************************
         checkPermission();
-
     }
     void checkPermission(){
         final  List<String> permission_needed = new ArrayList<>();
@@ -464,16 +503,19 @@ public class RegisterActvity extends AppCompatActivity {
         switch (req_code){
             case 1:
                 bitmap1=null;
+                galleryBefore.setImage(null);
                 img_before.setImageResource(R.drawable.ic_image);
                 break;
 
             case 2:
                 bitmap2=null;
+                galleryMask.setImage(null);
                 img_mask.setImageResource(R.drawable.ic_image);
                 break;
 
             case 3:
                 bitmap3=null;
+                galleryAfter.setImage(null);
                 img_after.setImageResource(R.drawable.ic_image);
                 break;
 

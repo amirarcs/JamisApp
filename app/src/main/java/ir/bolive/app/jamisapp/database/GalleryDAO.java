@@ -13,8 +13,11 @@ import ir.bolive.app.jamisapp.models.Gallery;
 
 @Dao
 public interface GalleryDAO {
-    @Query("Select * from tbl_Gallery where pid_fk = :id")
-    List<Gallery> getAll(int id);
+    @Query("Select * from tbl_Gallery where pid_fk = :pid")
+    List<Gallery> getAll(long pid);
+
+    @Query("Select * from tbl_Gallery where pid_fk = :pid and imgMode=:imgMode")
+    Gallery getImage(long pid,int imgMode);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertGallery(Gallery gallery);

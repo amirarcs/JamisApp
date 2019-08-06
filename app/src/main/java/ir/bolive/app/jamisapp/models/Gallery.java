@@ -14,6 +14,16 @@ public class Gallery {
 
     private long pid_fk;
     private String title;
+    private int imgMode;
+
+    public int getImgMode() {
+        return imgMode;
+    }
+
+    public void setImgMode(int imgMode) {
+        this.imgMode = imgMode;
+    }
+
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
     private byte[] image;
 

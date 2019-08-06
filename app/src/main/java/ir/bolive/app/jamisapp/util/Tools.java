@@ -1,6 +1,10 @@
 package ir.bolive.app.jamisapp.util;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.AnimationDrawable;
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import java.io.ByteArrayOutputStream;
 
@@ -9,8 +13,8 @@ public class Tools {
         int width = image.getWidth();
         int height = image.getHeight();
 
-        int maxWidth=800;
-        int maxHeight=800;
+        int maxWidth=1000;
+        int maxHeight=1000;
 
         if(width>maxWidth && height>maxHeight){
             double ratio;
@@ -32,5 +36,15 @@ public class Tools {
         }
 
         return Bitmap.createScaledBitmap(image, width, height, true);
+    }
+    public static void loadBackgroundAnimation(CoordinatorLayout coordinatorLayout){
+        AnimationDrawable animDrawable=(AnimationDrawable)coordinatorLayout.getBackground();
+        animDrawable.setEnterFadeDuration(500);
+        animDrawable.setExitFadeDuration(5000);
+        animDrawable.start();
+    }
+    public static Bitmap decodeImage(byte[] imgData){
+         Bitmap bitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length);
+        return bitmap;
     }
 }
