@@ -43,7 +43,7 @@
         Default Export Path: \n PhoneStorage/jamiExport/Patients.csv
     </string>
     <string name="passwordnotMatch">Passwords do not match</string>
-    <string name="noCameraAvailable">Device Camera Not Found!</string>
+    <string name="noCameraAvailable">No Camera Detected!</string>
     <!--Hints-->
     <string name="patientInfo">Patient Info</string>
     <string name="faceArgs">Patient\'s Face Args</string>
