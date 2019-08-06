@@ -223,12 +223,12 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
-        <Button
-            android:id="@+id/reg_btn_face_submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/round_button"
-            android:text="@string/next"
-            android:textColor="@color/white" />
+        <!--<Button-->
+            <!--android:id="@+id/reg_btn_face_submit"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@drawable/round_button"-->
+            <!--android:text="@string/next"-->
+            <!--android:textColor="@color/white" />-->
     </LinearLayout>
 </ScrollView>

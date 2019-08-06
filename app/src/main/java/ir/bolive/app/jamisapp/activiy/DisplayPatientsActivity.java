@@ -1,13 +1,17 @@
 package ir.bolive.app.jamisapp.activiy;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
@@ -93,6 +97,39 @@ public class DisplayPatientsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbarTitle.setText(getString(R.string.menuDisplay));
         recyclerView.setLayoutManager(new LinearLayoutManager(DisplayPatientsActivity.this,RecyclerView.VERTICAL,false));
+        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            GestureDetector gestureDetector=new GestureDetector(DisplayPatientsActivity.this,new GestureDetector.SimpleOnGestureListener(){
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    return true;
+                }
+
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    super.onLongPress(e);
+                }
+
+            });
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                View child=rv.findChildViewUnder(e.getX(),e.getY());
+                if(child!=null && gestureDetector.onTouchEvent(e)){
+                    int position=rv.getChildAdapterPosition(child);
+                    goToRegActivity(patientList.get(position).getPid());
+                }
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
         loadAllData();
     }
     private void showNothing(boolean shouldNothing){
@@ -109,7 +146,7 @@ public class DisplayPatientsActivity extends AppCompatActivity {
         executor.execute(()->{
             DatabaseClient client=DatabaseClient.getInstance(DisplayPatientsActivity.this);
             patientList=client.getAppDatabase().patientDAO().getAll();
-            if(patientList!=null){
+            if(patientList!=null && patientList.size()>0){
                 adapter=new PatientsAdapter(patientList,DisplayPatientsActivity.this);
                 recyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
@@ -142,7 +179,11 @@ public class DisplayPatientsActivity extends AppCompatActivity {
             }
 
         });
-
+    }
+    private void goToRegActivity(long pid){
+        Intent intent=new Intent(DisplayPatientsActivity.this,RegisterActvity.class);
+        intent.putExtra("pid",pid);
+        startActivity(intent);
     }
     //endregion
 }

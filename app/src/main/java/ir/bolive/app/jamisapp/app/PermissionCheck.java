@@ -26,4 +26,7 @@ public class PermissionCheck {
     public static boolean needRequestPermission() {
         return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
     }
+    public static boolean isCameraAvailable(Context context){
+        return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
+    }
 }

@@ -7,113 +7,117 @@
     android:orientation="vertical"
     android:background="@drawable/gradient_animation">
     <include layout="@layout/toolbar"/>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="?actionBarSize">
-        <!--<LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/green_round_button"
-                android:textColor="@color/white"
-                android:id="@+id/btn_p_info"
-                android:layout_margin="2dp"
-                android:text="@string/patientInfo"/>
-            <Button
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/green_round_button"
-                android:textColor="@color/white"
-                android:id="@+id/btn_p_face"
-                android:layout_margin="2dp"
-                android:text="@string/faceArgs"/>
-            <Button
-                android:layout_width="0dip"
-                android:layout_height="match_parent"
-                android:background="@drawable/green_round_button"
-                android:textColor="@color/white"
-                android:layout_weight="1"
-                android:layout_margin="2dp"
-                android:id="@+id/btn_p_images"
-                android:text="@string/faceImage"/>
-        </LinearLayout>-->
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <Button
-                android:id="@+id/reg_expandButton1"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="?actionBarSize">
+            <!--<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                style="@style/TextAppearance.AppCompat.Medium"
-                android:background="@color/pink"
-                android:text="@string/patientInfo"/>
-            <net.cachapa.expandablelayout.ExpandableLayout
-                android:id="@+id/reg_expand_layout_patient"
+                android:orientation="horizontal">
+                <Button
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_round_button"
+                    android:textColor="@color/white"
+                    android:id="@+id/btn_p_info"
+                    android:layout_margin="2dp"
+                    android:text="@string/patientInfo"/>
+                <Button
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/green_round_button"
+                    android:textColor="@color/white"
+                    android:id="@+id/btn_p_face"
+                    android:layout_margin="2dp"
+                    android:text="@string/faceArgs"/>
+                <Button
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/green_round_button"
+                    android:textColor="@color/white"
+                    android:layout_weight="1"
+                    android:layout_margin="2dp"
+                    android:id="@+id/btn_p_images"
+                    android:text="@string/faceImage"/>
+            </LinearLayout>-->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:el_duration="500"
-                app:el_expanded="true">
-                <include layout="@layout/layout_pers_info"/>
-            </net.cachapa.expandablelayout.ExpandableLayout>
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/reg_expandButtonPatient"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:background="@color/pink"
+                    android:text="@string/patientInfo"/>
+                <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/reg_expand_layout_patient"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:el_duration="500"
+                    app:el_expanded="true">
+                    <include layout="@layout/layout_pers_info"/>
+                </net.cachapa.expandablelayout.ExpandableLayout>
 
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <Button
-                android:id="@+id/reg_expandButton2"
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/white"
-                style="@style/TextAppearance.AppCompat.Medium"
-                android:background="@color/pink"
-                android:textStyle="bold"
-                android:text="@string/faceArgs"/>
-            <net.cachapa.expandablelayout.ExpandableLayout
-                android:id="@+id/reg_expand_layout_args"
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/reg_expandButtonArg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:background="@color/pink"
+                    android:textStyle="bold"
+                    android:text="@string/faceArgs"/>
+                <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/reg_expand_layout_args"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:el_expanded="false"
+                    app:el_duration="500">
+                    <include layout="@layout/layout_face_args"/>
+                </net.cachapa.expandablelayout.ExpandableLayout>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:el_expanded="false"
-                app:el_duration="500">
-                <include layout="@layout/layout_face_args"/>
-            </net.cachapa.expandablelayout.ExpandableLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <Button
-                android:id="@+id/reg_expandButton3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/white"
-                style="@style/TextAppearance.AppCompat.Medium"
-                android:background="@color/pink"
-                android:textStyle="bold"
-                android:text="@string/faceImage"/>
-            <net.cachapa.expandablelayout.ExpandableLayout
-                android:id="@+id/reg_expand_layout_img"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:el_expanded="false"
-                app:el_duration="500">
-                <include layout="@layout/layout_face_image"/>
-            </net.cachapa.expandablelayout.ExpandableLayout>
+                android:orientation="vertical">
+                <Button
+                    android:id="@+id/reg_expandButtonImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:background="@color/pink"
+                    android:textStyle="bold"
+                    android:text="@string/faceImage"/>
+                <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/reg_expand_layout_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:el_expanded="false"
+                    app:el_duration="500">
+                    <include layout="@layout/layout_face_image"/>
+                </net.cachapa.expandablelayout.ExpandableLayout>
+            </LinearLayout>
         </LinearLayout>
         <Button
             android:id="@+id/reg_btn_store"
@@ -123,6 +127,8 @@
             android:textColor="@color/white"
             style="@style/TextAppearance.AppCompat.Medium"
             android:textStyle="bold"
+            android:layout_alignParentBottom="true"
             android:background="@drawable/green_round_button"/>
-    </LinearLayout>
+    </RelativeLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
