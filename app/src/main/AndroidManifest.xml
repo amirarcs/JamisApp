@@ -39,6 +39,8 @@
         </activity>
         <activity android:name=".activiy.ExportActivity"
             android:theme="@style/AppTheme"/>
+        <activity android:name=".activiy.CameraActiviy"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>

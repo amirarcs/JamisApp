@@ -1,6 +1,7 @@
 package ir.bolive.app.jamisapp.activiy;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
@@ -8,8 +9,10 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +33,9 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
     Button btnRecapture;
     SurfaceHolder surfaceHolder;
     Camera camera;
+    @BindView(R.id.camera_overlay)
+    ImageView imgOverlay;
+    byte[] imgData;
     boolean isPreview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +47,7 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         surfaceView.setBackground(getResources().getDrawable(R.drawable.grid));
+        hideCapture(false);
 
     }
     @OnClick(R.id.camera_button)
@@ -49,6 +56,41 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
             camera.takePicture(myShutterCallback,myPictureCallback_RAW,myPictureCallback);
         }
     }
+    @OnClick(R.id.camera_reCapture)
+    public void onRecaptureClick(){
+
+    }
+    @OnClick(R.id.camera_done)
+    public void onDoneClick() {
+        Intent intent=new Intent();
+        intent.putExtra("img",imgData);
+        setResult(RESULT_OK,intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        setResult(RESULT_CANCELED);
+        finish();
+    }
+
+    //region Methods
+    private void hideCapture(boolean shouldHide){
+        if (shouldHide){
+            btnCapture.setVisibility(View.GONE);
+            btnDone.setVisibility(View.VISIBLE);
+            btnRecapture.setVisibility(View.VISIBLE);
+            imgOverlay.setVisibility(View.VISIBLE);
+        }
+        else{
+            btnCapture.setVisibility(View.VISIBLE);
+            btnDone.setVisibility(View.GONE);
+            btnRecapture.setVisibility(View.GONE);
+            imgOverlay.setVisibility(View.GONE);
+        }
+    }
+    //endregion
     Camera.PictureCallback myPictureCallback_RAW = new Camera.PictureCallback(){
 
         public void onPictureTaken(byte[] arg0, Camera arg1) {
@@ -64,8 +106,11 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
         @Override
         public void onPictureTaken(byte[] bytes, Camera camera) {
             Bitmap bitmapPicture = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-
             Bitmap correctBmp = Bitmap.createBitmap(bitmapPicture, 0, 0, bitmapPicture.getWidth(), bitmapPicture.getHeight(), null, true);
+            isPreview=true;
+            imgOverlay.setImageBitmap(correctBmp);
+            imgData=bytes;
+            hideCapture(true);
         }
     };
     @Override

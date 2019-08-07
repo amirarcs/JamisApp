@@ -47,4 +47,10 @@ public class Tools {
          Bitmap bitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length);
         return bitmap;
     }
+    public static ByteArrayOutputStream bitmapToByteArray(Bitmap imgBitmap){
+        Bitmap photo=image_resize(imgBitmap);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream;
+    }
 }

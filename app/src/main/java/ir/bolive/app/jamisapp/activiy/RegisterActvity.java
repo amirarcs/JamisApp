@@ -32,6 +32,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 
+import com.github.chrisbanes.photoview.PhotoView;
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder;
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetMenuDialog;
 import com.github.rubensousa.bottomsheetbuilder.adapter.BottomSheetItemClickListener;
@@ -150,6 +151,7 @@ public class RegisterActvity extends AppCompatActivity {
     Bitmap bitmap1=null,bitmap2=null,bitmap3=null;
     boolean editMode;
     Bundle bundleData;
+    private static final int MASK_CAMERA_REQUEST=300;
     //endregion
 
     //region Override Methods
@@ -183,30 +185,35 @@ public class RegisterActvity extends AppCompatActivity {
             }
         }
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Bitmap photo=null;
         if (requestCode==CAMERA_REQUEST && resultCode== Activity.RESULT_OK){
-            Bitmap photo=null;
             photo=(Bitmap)data.getExtras().get("data");
             photo=Tools.image_resize(photo);
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            ByteArrayOutputStream stream = Tools.bitmapToByteArray(photo);
             byte[] byteArray = stream.toByteArray();
             switch (req_code){
                 case 1:
                     img_before.setImageBitmap(photo);
                     galleryBefore.setImage(byteArray);
                     break;
-                case 2:
-                    img_mask.setImageBitmap(photo);
-                    galleryMask.setImage(byteArray);
-                    break;
+//                case 2:
+//                    img_mask.setImageBitmap(photo);
+//                    galleryMask.setImage(byteArray);
+//                    break;
                 case 3:
                     img_after.setImageBitmap(photo);
                     galleryAfter.setImage(byteArray);
                     break;
             }
+        }
+        if(requestCode==MASK_CAMERA_REQUEST && resultCode==Activity.RESULT_OK){
+            byte[] maskImg=data.getExtras().getByteArray("img");
+            photo=Tools.decodeImage(maskImg);
+            photo=Tools.image_resize(photo);
+            img_mask.setImageBitmap(photo);
+            galleryMask.setImage(maskImg);
         }
     }
 
@@ -232,7 +239,9 @@ public class RegisterActvity extends AppCompatActivity {
     @OnClick(R.id.reg_img_mask)
     public void onImgMaskClick(){
         req_code=2;
-        bottomSheet();
+        //bottomSheet();
+        Intent intent=new Intent(RegisterActvity.this,CameraActiviy.class);
+        startActivityForResult(intent,MASK_CAMERA_REQUEST);
     }
     @OnClick(R.id.reg_img_after)
     public void onImgAfterClick(){
@@ -495,7 +504,7 @@ public class RegisterActvity extends AppCompatActivity {
         Dialog dialog=new Dialog(RegisterActvity.this);
         dialog.setCancelable(true);
         dialog.setContentView(R.layout.dialog_show);
-        ImageView imageView =(ImageView)dialog.findViewById(R.id.dialog_img);
+        PhotoView imageView =dialog.findViewById(R.id.dialog_img);
         imageView.setImageDrawable(drawable);
         dialog.show();
     }
