@@ -38,7 +38,10 @@ public class CameraSurface extends SurfaceView implements SurfaceHolder.Callback
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-
+        mCamera.stopPreview();
+        mCamera.release();
+        mCamera=null;
+        surfaceHolder=null;
     }
     public void refreshCamera(Camera camera){
         if(mSurfaceHolder.getSurface()==null) {
