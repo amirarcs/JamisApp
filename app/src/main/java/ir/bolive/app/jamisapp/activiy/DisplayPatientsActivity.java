@@ -83,6 +83,16 @@ public class DisplayPatientsActivity extends AppCompatActivity {
                     return false;
                 }
             });
+            searchView.setOnSearchClickListener(view -> {
+                toolbarTitle.setVisibility(View.GONE);
+            });
+            searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+                @Override
+                public boolean onClose() {
+                    toolbarTitle.setVisibility(View.VISIBLE);
+                    return false;
+                }
+            });
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -147,17 +157,16 @@ public class DisplayPatientsActivity extends AppCompatActivity {
         executor.execute(()->{
             DatabaseClient client=DatabaseClient.getInstance(DisplayPatientsActivity.this);
             patientList=client.getAppDatabase().patientDAO().getAll();
-            if(patientList!=null && patientList.size()>0){
-                adapter=new PatientsAdapter(patientList,DisplayPatientsActivity.this);
-                recyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-                showNothing(false);
-            }
-            else{
-                showNothing(true);
-            }
-
         });
+        if(patientList!=null && patientList.size()>0){
+            adapter=new PatientsAdapter(patientList,DisplayPatientsActivity.this);
+            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            showNothing(false);
+        }
+        else{
+            showNothing(true);
+        }
     }
     private void searchData(String key){
         Executor executor=Executors.newSingleThreadExecutor();

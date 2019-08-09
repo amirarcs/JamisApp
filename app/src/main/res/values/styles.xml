@@ -29,4 +29,5 @@
     <style name="AppTheme.BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppTheme.BottomSheetStyle</item>
     </style>
+
 </resources>

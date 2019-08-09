@@ -126,14 +126,13 @@
             android:layout_marginLeft="32dip"
             android:layout_marginRight="32dip"
             android:layout_marginBottom="12dip"
-            android:hint="@string/patientFullName"
+            android:hint="@string/eyeXAngle"
             android:textColorHint="@color/colorPrimary"
             app:hintAnimationEnabled="true">
             <EditText
                 android:id="@+id/reg_eye_x"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/eyeXAngle"
                 android:maxLength="3"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -151,6 +150,7 @@
                 android:id="@+id/reg_eye_y"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
                 android:maxLength="3" />
         </com.google.android.material.textfield.TextInputLayout>
 

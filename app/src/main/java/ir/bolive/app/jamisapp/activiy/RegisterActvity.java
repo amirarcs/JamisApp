@@ -195,6 +195,7 @@ public class RegisterActvity extends AppCompatActivity {
             byte[] byteArray = stream.toByteArray();
             switch (req_code){
                 case 1:
+                    bitmap1=photo;
                     img_before.setImageBitmap(photo);
                     galleryBefore.setImage(byteArray);
                     break;
@@ -203,6 +204,7 @@ public class RegisterActvity extends AppCompatActivity {
 //                    galleryMask.setImage(byteArray);
 //                    break;
                 case 3:
+                    bitmap3=photo;
                     img_after.setImageBitmap(photo);
                     galleryAfter.setImage(byteArray);
                     break;
@@ -212,6 +214,7 @@ public class RegisterActvity extends AppCompatActivity {
             byte[] maskImg=data.getExtras().getByteArray("img");
             photo=Tools.decodeImage(maskImg);
             photo=Tools.image_resize(photo);
+            bitmap3=photo;
             img_mask.setImageBitmap(photo);
             galleryMask.setImage(maskImg);
         }
@@ -239,9 +242,8 @@ public class RegisterActvity extends AppCompatActivity {
     @OnClick(R.id.reg_img_mask)
     public void onImgMaskClick(){
         req_code=2;
-        //bottomSheet();
-        Intent intent=new Intent(RegisterActvity.this,CameraActiviy.class);
-        startActivityForResult(intent,MASK_CAMERA_REQUEST);
+        bottomSheet();
+
     }
     @OnClick(R.id.reg_img_after)
     public void onImgAfterClick(){
@@ -500,13 +502,14 @@ public class RegisterActvity extends AppCompatActivity {
             Snackbar.make(coordinatorLayout,R.string.noImagetoShow,Snackbar.LENGTH_SHORT).show();
             return;
         }
-
-        Dialog dialog=new Dialog(RegisterActvity.this);
-        dialog.setCancelable(true);
-        dialog.setContentView(R.layout.dialog_show);
-        PhotoView imageView =dialog.findViewById(R.id.dialog_img);
-        imageView.setImageDrawable(drawable);
-        dialog.show();
+        else{
+            Dialog dialog=new Dialog(RegisterActvity.this);
+            dialog.setCancelable(true);
+            dialog.setContentView(R.layout.dialog_show);
+            PhotoView imageView =dialog.findViewById(R.id.dialog_img);
+            imageView.setImageDrawable(drawable);
+            dialog.show();
+        }
     }
     void delImage(){
         switch (req_code){
@@ -531,8 +534,15 @@ public class RegisterActvity extends AppCompatActivity {
         }
     }
     void startCamera(){
-        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, CAMERA_REQUEST);
+        if(req_code==2){
+            Intent intent=new Intent(RegisterActvity.this,CameraActiviy.class);
+            startActivityForResult(intent,MASK_CAMERA_REQUEST);
+        }
+        else{
+            Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(cameraIntent, CAMERA_REQUEST);
+        }
+
     }
     boolean checkPatientData(){
         if(!txtPname.getText().toString().isEmpty()&&

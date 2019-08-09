@@ -15,6 +15,7 @@
         android:layout_marginBottom="12dip"
         android:hint="@string/patientFullName"
         android:textColorHint="@color/colorPrimary"
+        app:counterTextAppearance="@color/black"
         app:hintAnimationEnabled="true">
 
         <EditText
