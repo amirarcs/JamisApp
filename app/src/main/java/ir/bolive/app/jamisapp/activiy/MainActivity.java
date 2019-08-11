@@ -44,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent=new Intent(MainActivity.this,ExportActivity.class);
         startActivity(intent);
     }
+    @OnClick(R.id.main_btn_edit)
+    public void onEditClick(){
+        Intent intent=new Intent(MainActivity.this,EditActivity.class);
+        startActivity(intent);
+    }
     void init(){
 
     }

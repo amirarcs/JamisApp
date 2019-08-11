@@ -9,6 +9,7 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -20,7 +21,10 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.IOException;
+
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.bolive.app.jamisapp.R;
 
@@ -40,18 +44,23 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
     ImageView imgOverlay;
     byte[] imgData;
     boolean isPreview;
+    private String TAG = "CameraPreview";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camera);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         getWindow().setFormat(PixelFormat.UNKNOWN);
+        setContentView(R.layout.activity_camera);
+        ButterKnife.bind(this);
+        hideCapture(false);
+        openCamera();
+        //surfaceView.setBackground(getResources().getDrawable(R.drawable.grid));
+    }
+    public void openCamera(){
+        camera=Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
         surfaceHolder= surfaceView.getHolder();
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
-        surfaceView.setBackground(getResources().getDrawable(R.drawable.grid));
-        hideCapture(false);
-
     }
     @OnClick(R.id.camera_button)
     public void onCameraClick(){
@@ -118,30 +127,47 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
     };
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        camera=Camera.open();
+        try{
+            imgOverlay.setVisibility(View.VISIBLE);
+            camera.setPreviewDisplay(surfaceHolder);
+            camera.setDisplayOrientation(90);
+            camera.startPreview();
+        }catch (IOException e) {
+            Log.d(TAG, "Error setting camera preview: " + e.getMessage());
+        }
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int i, int i1, int i2) {
-        if(isPreview){
-            camera.stopPreview();
-            isPreview=false;
-        }
-        if(camera==null){
+        if(!isPreview && holder.getSurface()!=null){
             try{
-                camera.setPreviewDisplay(surfaceHolder);
-                camera.startPreview();
-                isPreview=true;
+                camera.stopPreview();
             }catch (Exception e){
-                e.printStackTrace();
+                Log.e(TAG,e.getMessage());
             }
         }
+        else{
+            return;
+        }
+        StartPreview();
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-        camera.stopPreview();
-        camera.release();
-        camera=null;
+        try{
+            camera.stopPreview();
+            camera.release();
+            camera=null;
+        }catch (Exception e) {
+            //ignore
+        }
+    }
+    public void StartPreview() {
+        try {
+            camera.setPreviewDisplay(surfaceHolder);
+            camera.startPreview();
+        } catch (Exception e) {
+            Log.d(TAG, "Error starting camera preview: " + e.getMessage());
+        }
     }
 }

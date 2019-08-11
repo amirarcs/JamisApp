@@ -52,6 +52,12 @@ public class LoginActivity extends AppCompatActivity {
         this.finish();
         startActivity(intent);
     }
+    @OnClick(R.id.login_btnSignUp)
+    public void onSignUpClick()
+    {
+        Intent intent=new Intent(LoginActivity.this,SignupActivity.class);
+        startActivity(intent);
+    }
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
