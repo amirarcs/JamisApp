@@ -14,11 +14,11 @@ import ir.bolive.app.jamisapp.models.FaceArgs;
 
 @Dao
 public interface FaceArgDAO {
-    @Query("Select * from tbl_faceArgs where pid_fk= :pid")
+    @Query("Select * from faceArgs where pid_fk=:pid")
     FaceArgs getArgs(long pid);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertFaceArgs(FaceArgs faceArgs);
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    long insertFaceArgs(FaceArgs faceArgs);
 
     @Delete
     void deleteFaceArg(FaceArgs faceArgs);

@@ -53,4 +53,11 @@ public class Tools {
         photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
         return stream;
     }
+    public static byte[] bitmapToByte(Bitmap imgBitmap){
+        Bitmap photo=image_resize(imgBitmap);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] data=stream.toByteArray();
+        return data;
+    }
 }

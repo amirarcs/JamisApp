@@ -3,6 +3,7 @@ package ir.bolive.app.jamisapp.activiy;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +21,6 @@ import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -29,7 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ir.bolive.app.jamisapp.R;
 import ir.bolive.app.jamisapp.adapter.PatientsAdapter;
-import ir.bolive.app.jamisapp.database.DatabaseClient;
+import ir.bolive.app.jamisapp.database.FacesDatabase;
 import ir.bolive.app.jamisapp.models.Patient;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -51,6 +51,7 @@ public class DisplayPatientsActivity extends AppCompatActivity {
     PatientsAdapter adapter;
     List<Patient> patientList;
 
+    static final String TAG=DisplayPatientsActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class DisplayPatientsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display_patients);
         ButterKnife.bind(this);
         init();
+        loadAllData();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -69,8 +71,10 @@ public class DisplayPatientsActivity extends AppCompatActivity {
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-                    if(query!=""){
-                        searchData(query);
+                    if(patientList!=null && patientList.size()>0){
+                        if(query!=""){
+                            searchData(query);
+                        }
                     }
                     return false;
                 }
@@ -141,7 +145,6 @@ public class DisplayPatientsActivity extends AppCompatActivity {
 
             }
         });
-        loadAllData();
     }
     private void showNothing(boolean shouldNothing){
         if(shouldNothing){
@@ -155,30 +158,26 @@ public class DisplayPatientsActivity extends AppCompatActivity {
     private void loadAllData(){
         Executor executor=Executors.newSingleThreadExecutor();
         executor.execute(()->{
-            DatabaseClient client=DatabaseClient.getInstance(DisplayPatientsActivity.this);
-            patientList=client.getAppDatabase().patientDAO().getAll();
+            //DatabaseClient client=DatabaseClient.getInstance(DisplayPatientsActivity.this);
+            //patientList=client.getAppDatabase().patientDAO().getAll();
+            FacesDatabase db=FacesDatabase.getdatabase(DisplayPatientsActivity.this);
+            patientList=db.getInstance().patientDAO().getAll();
+            Log.i(TAG,"patient size:"+patientList.size());
+            setList(patientList);
         });
-        if(patientList!=null && patientList.size()>0){
-            adapter=new PatientsAdapter(patientList,DisplayPatientsActivity.this);
-            recyclerView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-            showNothing(false);
-        }
-        else{
-            showNothing(true);
-        }
+
     }
     private void searchData(String key){
         Executor executor=Executors.newSingleThreadExecutor();
         executor.execute(()->{
-            DatabaseClient client=DatabaseClient.getInstance(DisplayPatientsActivity.this);
+            //DatabaseClient client=DatabaseClient.getInstance(DisplayPatientsActivity.this);
             if(Character.isDigit(key.charAt(0))){
                 //search by national code
-                patientList=client.getAppDatabase().patientDAO().getbyNationalCode(key);
+                //patientList=client.getAppDatabase().patientDAO().getbyNationalCode(key);
             }
             else{
                 //search by fullname
-                patientList=client.getAppDatabase().patientDAO().getbyName(key);
+                //patientList=client.getAppDatabase().patientDAO().getbyName(key);
             }
             if(patientList!=null){
                 adapter.notifyDataSetChanged();
@@ -194,6 +193,22 @@ public class DisplayPatientsActivity extends AppCompatActivity {
         Intent intent=new Intent(DisplayPatientsActivity.this,RegisterActvity.class);
         intent.putExtra("pid",pid);
         startActivity(intent);
+    }
+    private void setList(List<Patient> patients){
+        patientList=patients;
+        loadToAdapter();
+    }
+    private void loadToAdapter(){
+        Log.i(TAG,"(load adaptor)patient size:"+patientList.size());
+        if(patientList!=null && patientList.size()>0){
+            adapter=new PatientsAdapter(patientList,DisplayPatientsActivity.this);
+            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+            showNothing(false);
+        }
+        else{
+            showNothing(true);
+        }
     }
     //endregion
 }

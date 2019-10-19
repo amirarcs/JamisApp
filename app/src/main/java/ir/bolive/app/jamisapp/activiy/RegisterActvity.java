@@ -8,8 +8,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.media.FaceDetector;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.appcompat.widget.Toolbar;
@@ -51,11 +54,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.bolive.app.jamisapp.R;
+import ir.bolive.app.jamisapp.app.BitmapHelper;
 import ir.bolive.app.jamisapp.app.PermissionCheck;
-import ir.bolive.app.jamisapp.database.DatabaseClient;
+import ir.bolive.app.jamisapp.database.FacesDatabase;
 import ir.bolive.app.jamisapp.models.FaceArgs;
 import ir.bolive.app.jamisapp.models.Gallery;
 import ir.bolive.app.jamisapp.models.Patient;
+import ir.bolive.app.jamisapp.util.DialogUtil;
 import ir.bolive.app.jamisapp.util.Tools;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -125,8 +130,6 @@ public class RegisterActvity extends AppCompatActivity {
     @BindView(R.id.reg_img_mask)
     ImageView img_mask;
 
-    //    @BindView(R.id.reg_btn_submit)
-//    Button btnSubmit;
     @BindView(R.id.reg_btn_store)
     Button btnSubmit;
 
@@ -135,6 +138,8 @@ public class RegisterActvity extends AppCompatActivity {
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
 
+    DialogUtil dialogUtil;
+    static final String TAG=RegisterActvity.class.getSimpleName();
     int req_code = 0;
     int CAMERA_REQUEST=200;
     List<String> chinModes=new ArrayList<String>();
@@ -160,12 +165,15 @@ public class RegisterActvity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_patient);
         ButterKnife.bind(this);
-        bundleData=getIntent().getExtras();
         init();
+        bundleData=getIntent().getExtras();
         if(bundleData!=null){
             patientId=bundleData.getInt("pid");
             editMode=true;
             loadData();
+        }
+        else{
+            editMode=false;
         }
     }
 
@@ -199,10 +207,6 @@ public class RegisterActvity extends AppCompatActivity {
                     img_before.setImageBitmap(photo);
                     galleryBefore.setImage(byteArray);
                     break;
-//                case 2:
-//                    img_mask.setImageBitmap(photo);
-//                    galleryMask.setImage(byteArray);
-//                    break;
                 case 3:
                     bitmap3=photo;
                     img_after.setImageBitmap(photo);
@@ -211,12 +215,14 @@ public class RegisterActvity extends AppCompatActivity {
             }
         }
         if(requestCode==MASK_CAMERA_REQUEST && resultCode==Activity.RESULT_OK){
-            byte[] maskImg=data.getExtras().getByteArray("img");
-            photo=Tools.decodeImage(maskImg);
-            photo=Tools.image_resize(photo);
-            bitmap3=photo;
-            img_mask.setImageBitmap(photo);
-            galleryMask.setImage(maskImg);
+            //byte[] maskImg=data.getExtras().getByteArray("img");
+            /*photo=Tools.decodeImage(maskImg);
+            photo=Tools.image_resize(photo);*/
+            //bitmap3=Tools.decodeImage(maskImg);
+            //img_mask.setImageBitmap(bitmap3);
+            String imgPath = data.getStringExtra("img");
+            displayImage(imgPath);
+            galleryMask.setImage(Tools.bitmapToByte(bitmap2));
         }
     }
 
@@ -224,15 +230,31 @@ public class RegisterActvity extends AppCompatActivity {
     //region Events
     @OnClick(R.id.reg_expandButtonPatient)
     public void onExpandPatient(){
-        showPanel(1);
+        if(layoutPatient.isExpanded()){
+            layoutPatient.collapse(true);
+        }
+        else{
+            showPanel(1);
+        }
+
     }
     @OnClick(R.id.reg_expandButtonArg)
     public void onExpandArg(){
-        showPanel(2);
+        if(layoutArg.isExpanded()){
+            layoutArg.collapse(true);
+        }
+        else{
+            showPanel(2);
+        }
     }
     @OnClick(R.id.reg_expandButtonImage)
     public void onExpandImage(){
-        showPanel(3);
+        if(layoutImage.isExpanded()){
+            layoutImage.collapse(true);
+        }
+        else{
+            showPanel(3);
+        }
     }
     @OnClick(R.id.reg_img_before)
     public void onImgBeforeClick(){
@@ -253,8 +275,20 @@ public class RegisterActvity extends AppCompatActivity {
     @OnClick(R.id.reg_btn_store)
     public void onFaceSubmit(){
         if(checkPatientData()){
-            if(checkArgData()){
-                SaveData();
+            if(!checkArgData()){
+                final AlertDialog.Builder builder = dialogUtil.createAlert(getResources().getString(R.string.askToSave), getResources().getString(R.string.yes)
+                        , getResources().getString(R.string.no), new DialogUtil.CallbackAlertDialog() {
+                            @Override
+                            public void OnAlertPositiveClick(AlertDialog.Builder builder) {
+                                SaveData();
+                            }
+
+                            @Override
+                            public void OnAlertNegativeClick(AlertDialog.Builder builder) {
+
+                            }
+                        });
+                builder.show();
             }
             else{
                 Snackbar.make(coordinatorLayout,R.string.enterArgfields,Snackbar.LENGTH_SHORT).show();
@@ -263,9 +297,7 @@ public class RegisterActvity extends AppCompatActivity {
         else{
             Snackbar.make(coordinatorLayout,R.string.enterPatientFields,Snackbar.LENGTH_SHORT).show();
         }
-
     }
-
     @OnClick(R.id.reg_rdate)
     public void onRefDateClick(){
         final Calendar calendar=Calendar.getInstance();
@@ -286,21 +318,18 @@ public class RegisterActvity extends AppCompatActivity {
         try{
             Executor executor= Executors.newSingleThreadExecutor();
             executor.execute(() -> {
-                DatabaseClient databaseClient=DatabaseClient.getInstance(getApplicationContext());
-                patientId=databaseClient.getAppDatabase().patientDAO().insertPatient(patient);
+                FacesDatabase db=FacesDatabase.getdatabase(RegisterActvity.this);
+                patientId=db.getInstance().patientDAO().insertPatient(patient);
+
                 faceArgs.setPid_fk(patientId);
-                databaseClient.getAppDatabase().faceArgDAO().insertFaceArgs(faceArgs);
                 if(galleryBefore.getImage()!=null){
                     galleryBefore.setPid_fk(patientId);
-                    databaseClient.getAppDatabase().galleryDAO().insertGallery(galleryBefore);
                 }
                 if(galleryAfter.getImage()!=null){
                     galleryAfter.setPid_fk(patientId);
-                    databaseClient.getAppDatabase().galleryDAO().insertGallery(galleryMask);
                 }
                 if(galleryMask.getImage()!=null){
                     galleryMask.setPid_fk(patientId);
-                    databaseClient.getAppDatabase().galleryDAO().insertGallery(galleryAfter);
                 }
             });
             Snackbar.make(coordinatorLayout,R.string.successMessage,Snackbar.LENGTH_SHORT).show();
@@ -315,39 +344,13 @@ public class RegisterActvity extends AppCompatActivity {
     private void loadData(){
         Executor executor=Executors.newSingleThreadExecutor();
         executor.execute(()->{
-            DatabaseClient databaseClient=DatabaseClient.getInstance(RegisterActvity.this);
-            patient=databaseClient.getAppDatabase().patientDAO().getById(patientId);
-            faceArgs=databaseClient.getAppDatabase().faceArgDAO().getArgs(patientId);
-            galleryBefore=databaseClient.getAppDatabase().galleryDAO().getImage(patientId,1);
-            galleryMask=databaseClient.getAppDatabase().galleryDAO().getImage(patientId,2);
-            galleryAfter=databaseClient.getAppDatabase().galleryDAO().getImage(patientId,3);
-            if(galleryBefore.getImage()!=null){
-                img_before.setImageBitmap(Tools.decodeImage(galleryBefore.getImage()));
-            }
-            if(galleryBefore.getImage()!=null){
-                img_mask.setImageBitmap(Tools.decodeImage(galleryMask.getImage()));
-            }
-            if(galleryBefore.getImage()!=null){
-                img_after.setImageBitmap(Tools.decodeImage(galleryAfter.getImage()));
-            }
-            txtPname.setText(patient.getFullname());
-            txtNcode.setText(patient.getNationalcode());
-            txtPhone.setText(patient.getPhone());
-            txtRdate.setText(patient.getRefdate());
-
-            txtUpInc.setText(String.valueOf(faceArgs.getUpper_central_ans()));
-            txtLowerInc.setText(String.valueOf(faceArgs.getLower_central_ans()));
-            txtUpging.setText(String.valueOf(faceArgs.getUpper_ging()));
-            txtLowerging.setText(String.valueOf(faceArgs.getLower_ging()));
-            txtEye_x.setText(String.valueOf(faceArgs.getX_eye()));
-            txtEye_y.setText(String.valueOf(faceArgs.getY_eye()));
-            txtEar_x.setText(String.valueOf(faceArgs.getX_ear()));
-            txtEar_y.setText(String.valueOf(faceArgs.getY_ear()));
-            txtEyebrow_x.setText(String.valueOf(faceArgs.getX_eyebrow()));
-            txtEyebrow_y.setText(String.valueOf(faceArgs.getX_eyebrow()));
-            txtRamus_x.setText(String.valueOf(faceArgs.getX_ramus()));
-            txtRamus_y.setText(String.valueOf(faceArgs.getY_ramus()));
-            sp_chinmode.setSelection(faceArgs.getChinMode()-1);
+            FacesDatabase db=FacesDatabase.getdatabase(RegisterActvity.this);
+            patient=db.getInstance().patientDAO().getById(patientId);
+            faceArgs=db.getInstance().faceArgDAO().getArgs(patientId);
+            galleryBefore=db.getInstance().galleryDAO().getImage(patientId,1);
+            galleryMask=db.getInstance().galleryDAO().getImage(patientId,2);
+            galleryAfter=db.getInstance().galleryDAO().getImage(patientId,3);
+            fillData(patient,faceArgs,galleryBefore,galleryMask,galleryAfter);
         });
     }
     //endregion
@@ -357,7 +360,8 @@ public class RegisterActvity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         toolbarTitle.setText(getString(R.string.menuRegister));
         showPanel(1);
-        Tools.loadBackgroundAnimation(coordinatorLayout);
+        dialogUtil=new DialogUtil(RegisterActvity.this,R.style.AlertDialogStyle);
+        //Tools.loadBackgroundAnimation(coordinatorLayout);
         // *********setup spinner**************
         chinModes.add("-Select Chin Mode -");
         chinModes.add("M");
@@ -409,6 +413,7 @@ public class RegisterActvity extends AppCompatActivity {
         layoutPatient.collapse();
         layoutImage.collapse();
         layoutArg.collapse();
+        btnSubmit.setVisibility(View.GONE);
     }
 
     void showPanel(int which){
@@ -424,6 +429,7 @@ public class RegisterActvity extends AppCompatActivity {
             case 3:
                 hideAll();
                 layoutImage.expand(true);
+                btnSubmit.setVisibility(View.VISIBLE);
                 break;
         }
     }
@@ -591,11 +597,45 @@ public class RegisterActvity extends AppCompatActivity {
             faceArgs.setY_ramus(Float.parseFloat(txtRamus_y.getText().toString()));
             faceArgs.setMidLine(0f);
             faceArgs.setChinMode(chinmode);
-            return false;
+            return true;
         }
         else{
             return false;
         }
+    }
+    private void displayImage(String path) {
+        bitmap2=BitmapHelper.decodeSampledBitmap(path, 600, 400);
+        img_mask.setImageBitmap(bitmap2);
+        galleryMask.setImage(Tools.bitmapToByte(bitmap2));
+    }
+    private void fillData(Patient patients, FaceArgs faceArgs,Gallery gBefore,Gallery gMask,Gallery gAfter){
+        if(galleryBefore.getImage()!=null){
+            img_before.setImageBitmap(Tools.decodeImage(galleryBefore.getImage()));
+        }
+        if(galleryMask.getImage()!=null){
+            img_mask.setImageBitmap(Tools.decodeImage(galleryMask.getImage()));
+        }
+        if(galleryAfter.getImage()!=null){
+            img_after.setImageBitmap(Tools.decodeImage(galleryAfter.getImage()));
+        }
+        txtPname.setText(patient.getFullname());
+        txtNcode.setText(patient.getNationalcode());
+        txtPhone.setText(patient.getPhone());
+        txtRdate.setText(patient.getRefdate());
+
+        txtUpInc.setText(String.valueOf(faceArgs.getUpper_central_ans()));
+        txtLowerInc.setText(String.valueOf(faceArgs.getLower_central_ans()));
+        txtUpging.setText(String.valueOf(faceArgs.getUpper_ging()));
+        txtLowerging.setText(String.valueOf(faceArgs.getLower_ging()));
+        txtEye_x.setText(String.valueOf(faceArgs.getX_eye()));
+        txtEye_y.setText(String.valueOf(faceArgs.getY_eye()));
+        txtEar_x.setText(String.valueOf(faceArgs.getX_ear()));
+        txtEar_y.setText(String.valueOf(faceArgs.getY_ear()));
+        txtEyebrow_x.setText(String.valueOf(faceArgs.getX_eyebrow()));
+        txtEyebrow_y.setText(String.valueOf(faceArgs.getX_eyebrow()));
+        txtRamus_x.setText(String.valueOf(faceArgs.getX_ramus()));
+        txtRamus_y.setText(String.valueOf(faceArgs.getY_ramus()));
+        sp_chinmode.setSelection(faceArgs.getChinMode()-1);
     }
     //endregion
 }

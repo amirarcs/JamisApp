@@ -25,7 +25,7 @@ public class EditActivity extends AppCompatActivity {
     Toolbar toolbar;
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
-    @BindView(R.id.export_coordinator)
+    @BindView(R.id.edit_coordinator)
     CoordinatorLayout coordinatorLayout;
 
     @BindView(R.id.edit_name)
@@ -65,8 +65,10 @@ public class EditActivity extends AppCompatActivity {
     }
     //region Methods
     void init(){
-        preferences=new Preferences(EditActivity.this);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        toolbarTitle.setText(getString(R.string.menuEdit));
+        preferences=new Preferences(EditActivity.this);
         toolbarTitle.setText(getString(R.string.menuEdit));
         txtname.setText(preferences.getKeyFullname());
         txtNcode.setText(preferences.getKeyUsername());

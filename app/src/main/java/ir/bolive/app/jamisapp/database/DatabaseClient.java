@@ -1,29 +1,24 @@
 package ir.bolive.app.jamisapp.database;
 
-import android.content.Context;
-
-import androidx.room.Room;
+import androidx.annotation.NonNull;
+import androidx.room.Database;
 import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
-public class DatabaseClient {
-    Context context;
-    private static DatabaseClient mInstance;
+import ir.bolive.app.jamisapp.models.FaceArgs;
+import ir.bolive.app.jamisapp.models.Gallery;
+import ir.bolive.app.jamisapp.models.Patient;
 
-    private AppDatabase appDatabase;
-    private final String DB_NAME="DentalDb";
+@Database(entities = {Gallery.class, Patient.class, FaceArgs.class},version = 1)
+public abstract class DatabaseClient extends RoomDatabase {
+    public abstract GalleryDAO galleryDAO();
+    public abstract PatientDAO patientDAO();
+    public abstract FaceArgDAO faceArgDAO();
 
-    private DatabaseClient(Context context){
-        this.context=context;
-        appDatabase= Room.databaseBuilder(context,AppDatabase.class,DB_NAME).build();
-    }
-    public static synchronized DatabaseClient getInstance(Context context){
-        if (mInstance==null){
-            mInstance=new DatabaseClient(context);
+    public static RoomDatabase.Callback sfaceDatabaseCallback=new Callback() {
+        @Override
+        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+            super.onOpen(db);
         }
-        return mInstance;
-    }
-    public AppDatabase getAppDatabase(){
-        return appDatabase;
-    }
-
+    };
 }

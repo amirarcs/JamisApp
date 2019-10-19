@@ -17,14 +17,15 @@
             android:layout_marginRight="32dip"
             android:layout_marginBottom="12dip"
             android:hint="@string/upperIncisal"
-            android:textColorHint="@color/colorPrimary"
-            app:hintAnimationEnabled="true">
+            app:hintTextAppearance="@style/HintText"
+            app:hintAnimationEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:id="@+id/reg_upper_inc"
-                android:maxLength="2" />
+                android:maxLength="5" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -34,14 +35,15 @@
             android:layout_marginRight="32dip"
             android:layout_marginBottom="12dip"
             android:hint="@string/lowerIncisal"
-            android:textColorHint="@color/colorPrimary"
-            app:hintAnimationEnabled="true">
+            app:hintTextAppearance="@style/HintText"
+            app:hintAnimationEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:id="@+id/reg_lower_inc"
-                android:maxLength="3" />
+                android:maxLength="5" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -51,14 +53,15 @@
             android:layout_marginRight="32dip"
             android:layout_marginBottom="12dip"
             android:hint="@string/uppergingival"
-            android:textColorHint="@color/colorPrimary"
-            app:hintAnimationEnabled="true">
+            app:hintTextAppearance="@style/HintText"
+            app:hintAnimationEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/reg_upper_ging"
                 android:inputType="numberDecimal"
-                android:maxLength="3" />
+                android:maxLength="5" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -68,13 +71,14 @@
             android:layout_marginRight="32dip"
             android:layout_marginBottom="12dip"
             android:hint="@string/lowergingival"
-            android:textColorHint="@color/colorPrimary"
-            app:hintAnimationEnabled="true">
+            app:hintTextAppearance="@style/HintText"
+            app:hintAnimationEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/reg_lower_ging"
-                android:maxLength="3"
+                android:maxLength="5"
                 android:inputType="numberDecimal"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,13 +98,14 @@
             android:layout_marginRight="32dip"
             android:layout_marginBottom="12dip"
             android:hint="@string/earXAngle"
-            android:textColorHint="@color/colorPrimary"
-            app:hintAnimationEnabled="true">
+            app:hintTextAppearance="@style/HintText"
+            app:hintAnimationEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <EditText
                 android:id="@+id/reg_ear_x"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="3"
+                android:maxLength="5"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
@@ -110,14 +115,15 @@
             android:layout_marginRight="32dip"
             android:layout_marginBottom="12dip"
             android:hint="@string/earYAngle"
-            android:textColorHint="@color/colorPrimary"
-            app:hintAnimationEnabled="true">
+            app:hintTextAppearance="@style/HintText"
+            app:hintAnimationEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <EditText
                 android:id="@+id/reg_ear_y"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
-                android:maxLength="3"/>
+                android:maxLength="5"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -127,13 +133,14 @@
             android:layout_marginRight="32dip"
             android:layout_marginBottom="12dip"
             android:hint="@string/eyeXAngle"
-            android:textColorHint="@color/colorPrimary"
-            app:hintAnimationEnabled="true">
+            app:hintTextAppearance="@style/HintText"
+            app:hintAnimationEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <EditText
                 android:id="@+id/reg_eye_x"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="3"
+                android:maxLength="5"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -144,14 +151,15 @@
             android:layout_marginRight="32dip"
             android:layout_marginBottom="12dip"
             android:hint="@string/eyeYAngle"
-            android:textColorHint="@color/colorPrimary"
-            app:hintAnimationEnabled="true">
+            app:hintTextAppearance="@style/HintText"
+            app:hintAnimationEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <EditText
                 android:id="@+id/reg_eye_y"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
-                android:maxLength="3" />
+                android:maxLength="5" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -161,13 +169,14 @@
             android:layout_marginRight="32dip"
             android:layout_marginBottom="12dip"
             android:hint="@string/eyebrowXAngle"
-            android:textColorHint="@color/colorPrimary"
-            app:hintAnimationEnabled="true">
+            app:hintTextAppearance="@style/HintText"
+            app:hintAnimationEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <EditText
                 android:id="@+id/reg_eyebrow_x"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="4"
+                android:maxLength="5"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -178,13 +187,14 @@
             android:layout_marginRight="32dip"
             android:layout_marginBottom="12dip"
             android:hint="@string/eyebrowYAngle"
-            android:textColorHint="@color/colorPrimary"
-            app:hintAnimationEnabled="true">
+            app:hintTextAppearance="@style/HintText"
+            app:hintAnimationEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <EditText
                 android:id="@+id/reg_eyebrow_y"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="3"
+                android:maxLength="5"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -195,13 +205,14 @@
             android:layout_marginRight="32dip"
             android:layout_marginBottom="12dip"
             android:hint="@string/ramusBoneXAngle"
-            android:textColorHint="@color/colorPrimary"
-            app:hintAnimationEnabled="true">
+            app:hintTextAppearance="@style/HintText"
+            app:hintAnimationEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <EditText
                 android:id="@+id/reg_ramus_x"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="3"
+                android:maxLength="5"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -212,23 +223,16 @@
             android:layout_marginRight="32dip"
             android:layout_marginBottom="12dip"
             android:hint="@string/ramusBoneYAngle"
-            android:textColorHint="@color/colorPrimary"
-            app:hintAnimationEnabled="true">
+            app:hintTextAppearance="@style/HintText"
+            app:hintAnimationEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <EditText
                 android:id="@+id/reg_ramus_y"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="3"
+                android:maxLength="5"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
-
-        <!--<Button-->
-            <!--android:id="@+id/reg_btn_face_submit"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@drawable/round_button"-->
-            <!--android:text="@string/next"-->
-            <!--android:textColor="@color/white" />-->
     </LinearLayout>
 </ScrollView>

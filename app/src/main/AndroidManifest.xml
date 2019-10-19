@@ -2,8 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ir.bolive.app.jamisapp">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-feature android:name="android.hardware.camera"/>
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-sdk  android:maxSdkVersion="28"/>
@@ -15,7 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activiy.SplashActivity">
+        <activity android:name=".activiy.SplashActivity" android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,7 +45,7 @@
         <activity android:name=".activiy.ExportActivity"
             android:theme="@style/AppTheme"/>
         <activity android:name=".activiy.CameraActiviy"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme.FullScreen"/>
         <activity android:name=".activiy.EditActivity"
             android:theme="@style/AppTheme"/>
     </application>

@@ -2,15 +2,69 @@ package ir.bolive.app.jamisapp.models;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 
-@Entity(tableName = "tbl_faceArgs")
+@Entity(tableName = "faceArgs")
 public class FaceArgs {
     //نوک انسیزال بالا و پایین
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "fid")
+    @NonNull
     private int fid;
+
+    @ColumnInfo(name = "upper_central_ans")
+    private float upper_central_ans;
+
+    @ColumnInfo(name = "lower_central_ans")
+    private float lower_central_ans;
+    //نوک جینجوال بالا و پایین
+    @ColumnInfo(name = "upper_ging")
+    private float upper_ging;
+
+    @ColumnInfo(name = "lower_ging")
+    private float lower_ging;
+
+    @ColumnInfo(name = "midLine")
+    private float midLine=0;
+
+    @ColumnInfo(name = "chinMode")
+    //حالت چانه
+    private  int chinMode;
+
+    @ColumnInfo(name = "x_ear")
+    // زاویه گوش
+    private float x_ear;
+
+    @ColumnInfo(name = "y_ear")
+    private float y_ear;
+
+    @ColumnInfo(name = "x_eye")
+    //زاویه چشم
+    private float x_eye;
+
+    @ColumnInfo(name = "y_eye")
+    private float y_eye;
+
+    @ColumnInfo(name = "x_eyebrow")
+    //زاویه ابرو
+    private float x_eyebrow;
+
+    @ColumnInfo(name = "y_eyebrow")
+    private float y_eyebrow;
+
+    @ColumnInfo(name = "x_ramus")
+    //نوک استخوان راموس
+    private float x_ramus;
+
+    @ColumnInfo(name = "y_ramus")
+    private float y_ramus;
+
+    @ColumnInfo(name = "pid_fk")
+    private long pid_fk;
 
     public int getFid() {
         return fid;
@@ -27,30 +81,6 @@ public class FaceArgs {
     public void setChinMode(int chinMode) {
         this.chinMode = chinMode;
     }
-
-    private float upper_central_ans;
-
-    private float lower_central_ans;
-    //نوک جینجوال بالا و پایین
-    private float upper_ging, lower_ging;
-
-    private float midLine=0;
-
-    //حالت چانه
-    private  int chinMode;
-    // زاویه گوش
-    private float x_ear,y_ear;
-
-    //زاویه چشم
-    private float x_eye,y_eye;
-
-    //زاویه ابرو
-    private float x_eyebrow,y_eyebrow;
-
-    //نوک استخوان راموس
-    private float x_ramus,y_ramus;
-
-    private long pid_fk;
 
     public long getPid_fk() {
         return pid_fk;

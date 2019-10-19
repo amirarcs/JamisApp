@@ -28,8 +28,11 @@
     <string name="newPassword">New Password</string>
     <!--Messages-->
     <string name="tapToClose">Press Back Again To Exit!</string>
+    <string name="noNetwork">You are not connected to network</string>
     <string name="askToUpdate">Are you sure to update your information?</string>
     <string name="askToExport">Are you sure to export patients information?</string>
+    <string name="askToSave">Are you sure to save patient information?</string>
+    <string name="askToLogout">Do you really want to log out?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="noImagetoShow">There\'s no image to show</string>
@@ -42,6 +45,7 @@
     <string name="exportNote">You can always make a copy of your patient\'s data as a CSV file and use it in your pc or phone \n
         Default Export Path: \n PhoneStorage/jamiExport/Patients.csv
     </string>
+    <string name="exportNoData">You have no patients data to export!</string>
     <string name="passwordnotMatch">Passwords do not match</string>
     <string name="noCameraAvailable">No Camera Detected!</string>
     <!--Hints-->
@@ -76,4 +80,5 @@
     <string name="titleDisplay">Patients List</string>
     <string name="titleEdit">Edit User</string>
     <string name="titleExport">Export Data</string>
+    <string name="logout">Log out</string>
 </resources>

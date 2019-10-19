@@ -2,18 +2,24 @@ package ir.bolive.app.jamisapp.models;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "tbl_Gallery")
+@Entity(tableName = "gallery")
 public class Gallery {
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "gid")
+    @NonNull
     private int gid;
 
+    @ColumnInfo(name = "pid_fk")
     private long pid_fk;
+    @ColumnInfo(name = "title")
     private String title;
+    @ColumnInfo(name = "imgMode")
     private int imgMode;
 
     public int getImgMode() {

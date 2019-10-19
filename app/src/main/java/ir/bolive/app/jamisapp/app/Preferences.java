@@ -2,6 +2,7 @@ package ir.bolive.app.jamisapp.app;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.security.keystore.KeyNotYetValidException;
 
 public class Preferences  {
     private static final String PREF_NAME="Preferences";
@@ -50,6 +51,13 @@ public class Preferences  {
     }
     public void setKeyPass(String pass){
         editor.putString(KEY_PASSWORD,pass);
+        editor.commit();
+    }
+    public void logout(){
+        editor.remove(KEY_USERNAME);
+        editor.remove(KEY_PASSWORD);
+        editor.remove(KEY_FULLNAME);
+        setKeyIsloggedin(false);
         editor.commit();
     }
 

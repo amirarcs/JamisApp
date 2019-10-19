@@ -2,18 +2,29 @@ package ir.bolive.app.jamisapp.models;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName ="tbl_patient")
+@Entity(tableName ="patient")
 public class Patient {
 
     @PrimaryKey(autoGenerate =true)
+    @ColumnInfo(name = "pid")
+    @NonNull
     private int pid;
 
+    @ColumnInfo(name="fullname")
     private String fullname;
+
+    @ColumnInfo(name="nationalcode")
     private String nationalcode;
+
+    @ColumnInfo(name="phone")
     private String phone;
+
+    @ColumnInfo(name="refdate")
     private String refdate;
 
     public int getPid() {

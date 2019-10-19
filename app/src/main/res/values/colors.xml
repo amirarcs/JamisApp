@@ -19,7 +19,9 @@
     <color name="pink">#e91e63</color>
     <color name="lightPink">#ff6090</color>
     <color name="green">#00c853</color>
+    <color name="teal">#00bfa5</color>
     <color name="yellow">#fdd835</color>
+    <color name="lightYellow">#fff176</color>
     <!--blue list-->
     <color name="b1">#e3f2fd</color>
     <color name="b2">#bbdefb</color>

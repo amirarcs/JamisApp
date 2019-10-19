@@ -14,10 +14,9 @@
         android:layout_marginRight="32dip"
         android:layout_marginBottom="12dip"
         android:hint="@string/patientFullName"
-        android:textColorHint="@color/colorPrimary"
-        app:counterTextAppearance="@color/black"
+        app:hintTextAppearance="@style/HintText"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:hintAnimationEnabled="true">
-
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,8 +32,9 @@
         android:layout_marginRight="32dip"
         android:layout_marginBottom="12dip"
         android:hint="@string/nationalCode"
-        android:textColorHint="@color/colorPrimary"
-        app:hintAnimationEnabled="true">
+        app:hintTextAppearance="@style/HintText"
+        app:hintAnimationEnabled="true"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,7 +44,6 @@
             />
     </com.google.android.material.textfield.TextInputLayout>
 
-
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,17 +51,16 @@
         android:layout_marginRight="32dip"
         android:layout_marginBottom="12dip"
         android:hint="@string/phoneNumber"
-        android:textColorHint="@color/colorPrimary"
-        app:hintAnimationEnabled="true">
+        app:hintTextAppearance="@style/HintText"
+        app:hintAnimationEnabled="true"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="phone"
-            android:maxLength="10"
+            android:maxLength="11"
             android:id="@+id/reg_phone" />
     </com.google.android.material.textfield.TextInputLayout>
-
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -71,16 +69,8 @@
         android:layout_marginBottom="12dip"
         android:id="@+id/reg_rdate"
         android:text="@string/patientRefDate"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/grey_80"
         android:focusable="false"
         android:focusableInTouchMode="false"/>
-
-    <!--<Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/reg_btn_submit"
-        android:text="@string/next"
-        android:background="@drawable/pink_round_button"
-        android:textColor="@color/white"/>-->
 
 </LinearLayout>

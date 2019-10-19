@@ -48,6 +48,7 @@
             android:layout_height="@dimen/thumb_height"
             android:scaleType="fitXY"
             android:src="@drawable/ic_image"
+            android:layout_margin="@dimen/tiny_Margin"
             android:layout_weight="1"/>
         <ImageView
             android:id="@+id/reg_img_mask"
@@ -55,6 +56,7 @@
             android:layout_height="@dimen/thumb_height"
             android:layout_weight="1"
             android:src="@drawable/ic_image"
+            android:layout_margin="@dimen/tiny_Margin"
             android:scaleType="fitXY"/>
         <ImageView
             android:id="@+id/reg_img_after"
@@ -62,6 +64,7 @@
             android:layout_height="@dimen/thumb_height"
             android:layout_weight="1"
             android:src="@drawable/ic_image"
+            android:layout_margin="@dimen/tiny_Margin"
             android:scaleType="fitXY"/>
     </LinearLayout>
 </LinearLayout>

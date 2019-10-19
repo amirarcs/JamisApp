@@ -1,7 +1,6 @@
 package ir.bolive.app.jamisapp.activiy;
 
 import android.content.Context;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,7 +29,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.bolive.app.jamisapp.R;
-import ir.bolive.app.jamisapp.database.DatabaseClient;
 import ir.bolive.app.jamisapp.models.Patient;
 import ir.bolive.app.jamisapp.util.CSVWriter;
 import ir.bolive.app.jamisapp.util.DialogUtil;
@@ -72,7 +70,13 @@ public class ExportActivity extends AppCompatActivity {
                     public void OnAlertPositiveClick(AlertDialog.Builder builder) {
                         showProgress(true);
                         getAllData();
-                        exportData();
+                        if(patients!=null && patients.size()>0) {
+                            exportData();
+                        }
+                        else{
+                            Snackbar.make(coordinatorLayout, R.string.exportNoData, Snackbar.LENGTH_LONG).show();
+                            showProgress(false);
+                        }
                     }
 
                     @Override
@@ -105,8 +109,8 @@ public class ExportActivity extends AppCompatActivity {
     private void getAllData(){
         Executor executor= Executors.newSingleThreadExecutor();
         executor.execute(()->{
-            DatabaseClient databaseClient=DatabaseClient.getInstance(ExportActivity.this);
-            patients = databaseClient.getAppDatabase().patientDAO().getAll();
+            //DatabaseClient databaseClient=DatabaseClient.getInstance(ExportActivity.this);
+            //patients = databaseClient.getAppDatabase().patientDAO().getAll();
         });
     }
     void exportData(){
@@ -144,13 +148,18 @@ public class ExportActivity extends AppCompatActivity {
                 CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
                 String[] column = {"Name","NationalCode","Phone","Reference Date"};
                 csvWrite.writeNext(column);
-
-                for(int i=0; i<patients.size(); i++){
-                    String[] mySecondStringArray ={String.valueOf(patients.get(i).getFullname()), patients.get(i).getNationalcode(),patients.get(i).getPhone(),patients.get(i).getRefdate()};
-                    csvWrite.writeNext(mySecondStringArray);
+                if(patients!=null && patients.size()>0){
+                    for(int i=0; i<patients.size(); i++){
+                        String[] mySecondStringArray ={String.valueOf(patients.get(i).getFullname()), patients.get(i).getNationalcode(),patients.get(i).getPhone(),patients.get(i).getRefdate()};
+                        csvWrite.writeNext(mySecondStringArray);
+                    }
+                    csvWrite.close();
+                    return true;
                 }
-                csvWrite.close();
-                return true;
+                else{
+                    return false;
+                }
+
             } catch (IOException e) {
                 return false;
             }

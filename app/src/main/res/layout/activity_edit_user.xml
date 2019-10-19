@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/edit_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,55 +13,95 @@
         android:gravity="center"
         android:layout_gravity="center_vertical"
         android:orientation="vertical">
-        <EditText
-            android:id="@+id/edit_name"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dip"
             android:layout_marginRight="32dip"
             android:layout_marginBottom="12dip"
-            android:background="@drawable/text_back"
-            android:hint="@string/drname"
-            android:maxLength="30"
-            android:inputType="text"/>
-        <EditText
-            android:id="@+id/edit_nationalCode"
+            app:hintTextAppearance="@style/HintText"
+            app:hintAnimationEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <EditText
+                android:id="@+id/edit_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/drname"
+                android:maxLength="30"
+                android:inputType="text"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dip"
             android:layout_marginRight="32dip"
             android:layout_marginBottom="12dip"
-            android:background="@drawable/text_back"
-            android:hint="@string/nationalCode"
-            android:maxLength="30"
-            android:inputType="text"/>
-        <EditText
-            android:id="@+id/edit_password"
+            app:counterEnabled="true"
+            app:counterMaxLength="10"
+            app:hintTextAppearance="@style/HintText"
+            app:hintAnimationEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <EditText
+                android:id="@+id/edit_nationalCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/nationalCode"
+                android:maxLength="10"
+                android:inputType="text"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dip"
             android:layout_marginRight="32dip"
             android:layout_marginBottom="12dip"
-            android:background="@drawable/text_back"
-            android:hint="@string/newPassword"
-            android:maxLength="20"
-            android:inputType="textPassword"/>
-        <EditText
-            android:id="@+id/edit_passwordconfirm"
+            app:hintTextAppearance="@style/HintText"
+            app:hintAnimationEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="32dip"
             android:layout_marginRight="32dip"
-            android:layout_marginBottom="@dimen/big_margin"
-            android:background="@drawable/text_back"
-            android:hint="@string/Confirmpassword"
-            android:maxLength="20"
-            android:inputType="textPassword"/>
+            android:layout_marginBottom="12dip"
+            app:hintTextAppearance="@style/HintText"
+            app:hintAnimationEnabled="true"
+            app:passwordToggleEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <EditText
+                android:id="@+id/edit_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/newPassword"
+                android:maxLength="20"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dip"
+            android:layout_marginRight="32dip"
+            android:layout_marginBottom="12dip"
+            app:hintTextAppearance="@style/HintText"
+            app:passwordToggleEnabled="true"
+            app:hintAnimationEnabled="true"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            <EditText
+                android:id="@+id/edit_passwordconfirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/Confirmpassword"
+                android:maxLength="20"
+                android:inputType="textPassword"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
         <Button
             android:id="@+id/edit_btnChange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/round_button"
+            android:padding="@dimen/global_padding"
             android:text="@string/update"
             android:textColor="@color/white"/>
     </LinearLayout>
