@@ -8,10 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.media.FaceDetector;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -226,6 +225,28 @@ public class RegisterActvity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_register,menu);
+        if(!editMode){
+            for (int i=0;i<menu.size();i++){
+                menu.getItem(i).setVisible(false);
+            }
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.mnu_reg_delete:
+                deleteData(patientId);
+                break;
+        }
+        return false;
+    }
+
     //endregion
     //region Events
     @OnClick(R.id.reg_expandButtonPatient)
@@ -295,7 +316,7 @@ public class RegisterActvity extends AppCompatActivity {
             }
         }
         else{
-            Snackbar.make(coordinatorLayout,R.string.enterPatientFields,Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(coordinatorLayout,R.string.enterAllFields,Snackbar.LENGTH_SHORT).show();
         }
     }
     @OnClick(R.id.reg_rdate)
@@ -314,22 +335,42 @@ public class RegisterActvity extends AppCompatActivity {
     }
     //endregion
     //region DBMethods
+    private void deleteData(long patientId){
+        Executor executor=Executors.newSingleThreadExecutor();
+        executor.execute(()->{
+            FacesDatabase db=FacesDatabase.getdatabase(RegisterActvity.this);
+            Patient p=db.getInstance().patientDAO().getById(patientId);
+            FaceArgs f=db.getInstance().faceArgDAO().getArgs(patientId);
+            Gallery g1=db.getInstance().galleryDAO().getImage(patientId,1);
+            Gallery g2=db.getInstance().galleryDAO().getImage(patientId,2);
+            Gallery g3=db.getInstance().galleryDAO().getImage(patientId,3);
+            db.getInstance().patientDAO().deletePatient(p);
+            db.getInstance().faceArgDAO().deleteFaceArg(f);
+            db.getInstance().galleryDAO().delete(g1);
+            db.getInstance().galleryDAO().delete(g2);
+            db.getInstance().galleryDAO().delete(g3);
+            exitMe();
+        });
+    }
     private void SaveData(){
         try{
             Executor executor= Executors.newSingleThreadExecutor();
             executor.execute(() -> {
                 FacesDatabase db=FacesDatabase.getdatabase(RegisterActvity.this);
                 patientId=db.getInstance().patientDAO().insertPatient(patient);
-
                 faceArgs.setPid_fk(patientId);
+                db.getInstance().faceArgDAO().insertFaceArgs(faceArgs);
                 if(galleryBefore.getImage()!=null){
                     galleryBefore.setPid_fk(patientId);
+                    db.getInstance().galleryDAO().insertGallery(galleryBefore);
                 }
                 if(galleryAfter.getImage()!=null){
                     galleryAfter.setPid_fk(patientId);
+                    db.getInstance().galleryDAO().insertGallery(galleryMask);
                 }
                 if(galleryMask.getImage()!=null){
                     galleryMask.setPid_fk(patientId);
+                    db.getInstance().galleryDAO().insertGallery(galleryAfter);
                 }
             });
             Snackbar.make(coordinatorLayout,R.string.successMessage,Snackbar.LENGTH_SHORT).show();
@@ -415,7 +456,9 @@ public class RegisterActvity extends AppCompatActivity {
         layoutArg.collapse();
         btnSubmit.setVisibility(View.GONE);
     }
-
+    void exitMe(){
+        this.finish();
+    }
     void showPanel(int which){
         switch (which){
             case 1:
@@ -609,19 +652,19 @@ public class RegisterActvity extends AppCompatActivity {
         galleryMask.setImage(Tools.bitmapToByte(bitmap2));
     }
     private void fillData(Patient patients, FaceArgs faceArgs,Gallery gBefore,Gallery gMask,Gallery gAfter){
-        if(galleryBefore.getImage()!=null){
-            img_before.setImageBitmap(Tools.decodeImage(galleryBefore.getImage()));
+        if(gBefore!=null && gBefore.getImage()!=null){
+            img_before.setImageBitmap(Tools.decodeImage(gBefore.getImage()));
         }
-        if(galleryMask.getImage()!=null){
-            img_mask.setImageBitmap(Tools.decodeImage(galleryMask.getImage()));
+        if(gMask!=null && gMask.getImage()!=null){
+            img_mask.setImageBitmap(Tools.decodeImage(gMask.getImage()));
         }
-        if(galleryAfter.getImage()!=null){
-            img_after.setImageBitmap(Tools.decodeImage(galleryAfter.getImage()));
+        if(gAfter!=null && gAfter.getImage()!=null){
+            img_after.setImageBitmap(Tools.decodeImage(gAfter.getImage()));
         }
-        txtPname.setText(patient.getFullname());
-        txtNcode.setText(patient.getNationalcode());
-        txtPhone.setText(patient.getPhone());
-        txtRdate.setText(patient.getRefdate());
+        txtPname.setText(patients.getFullname());
+        txtNcode.setText(patients.getNationalcode());
+        txtPhone.setText(patients.getPhone());
+        txtRdate.setText(patients.getRefdate());
 
         txtUpInc.setText(String.valueOf(faceArgs.getUpper_central_ans()));
         txtLowerInc.setText(String.valueOf(faceArgs.getLower_central_ans()));

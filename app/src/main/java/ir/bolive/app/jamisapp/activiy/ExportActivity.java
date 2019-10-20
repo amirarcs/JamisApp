@@ -29,6 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.bolive.app.jamisapp.R;
+import ir.bolive.app.jamisapp.database.FacesDatabase;
 import ir.bolive.app.jamisapp.models.Patient;
 import ir.bolive.app.jamisapp.util.CSVWriter;
 import ir.bolive.app.jamisapp.util.DialogUtil;
@@ -70,13 +71,7 @@ public class ExportActivity extends AppCompatActivity {
                     public void OnAlertPositiveClick(AlertDialog.Builder builder) {
                         showProgress(true);
                         getAllData();
-                        if(patients!=null && patients.size()>0) {
-                            exportData();
-                        }
-                        else{
-                            Snackbar.make(coordinatorLayout, R.string.exportNoData, Snackbar.LENGTH_LONG).show();
-                            showProgress(false);
-                        }
+
                     }
 
                     @Override
@@ -109,22 +104,33 @@ public class ExportActivity extends AppCompatActivity {
     private void getAllData(){
         Executor executor= Executors.newSingleThreadExecutor();
         executor.execute(()->{
-            //DatabaseClient databaseClient=DatabaseClient.getInstance(ExportActivity.this);
-            //patients = databaseClient.getAppDatabase().patientDAO().getAll();
+            FacesDatabase db=FacesDatabase.getdatabase(ExportActivity.this);
+            patients = db.getInstance().patientDAO().getAll();
+            setData(patients);
         });
+    }
+    private void setData(List<Patient> patientsList){
+        this.patients=patientsList;
+        if(patients!=null && patients.size()>0) {
+            exportData();
+        }
+        else{
+            Snackbar.make(coordinatorLayout, R.string.exportNoData, Snackbar.LENGTH_LONG).show();
+            showProgress(false);
+        }
     }
     void exportData(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             new ExportDatabaseCSVTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
             new ExportDatabaseCSVTask().execute();
+            showProgress(false);
         }
     }
     public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>{
 
         @Override
         protected void onPreExecute() {
-            showProgress(true);
         }
 
         @Override
@@ -134,7 +140,6 @@ public class ExportActivity extends AppCompatActivity {
             } else {
                 Snackbar.make(coordinatorLayout, R.string.failureMessage, Snackbar.LENGTH_SHORT).show();
             }
-            showProgress(false);
         }
 
         @Override

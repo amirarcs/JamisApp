@@ -71,17 +71,17 @@
                 android:maxLength="20"
                 android:textSize="@dimen/text_size"
                 android:textAlignment="center"/>
-            <Button
-                android:id="@+id/signup_btnSignup"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/signup"
-                android:textColor="@color/white"
-                android:layout_gravity="center"
-                android:textSize="@dimen/text_size"
-                android:textStyle="bold"
-                android:background="@drawable/green_round_button" />
-            <!--<include layout="@layout/progress_button" />-->
+            <!--<Button-->
+                <!--android:id="@+id/signup_btnSignup"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/signup"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:textSize="@dimen/text_size"-->
+                <!--android:textStyle="bold"-->
+                <!--android:background="@drawable/green_round_button" />-->
+            <include layout="@layout/progress_button" />
             <Button
                 android:id="@+id/signup_btnLogin"
                 android:layout_width="match_parent"

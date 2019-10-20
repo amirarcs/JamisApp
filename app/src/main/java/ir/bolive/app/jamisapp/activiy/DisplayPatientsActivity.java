@@ -29,6 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ir.bolive.app.jamisapp.R;
 import ir.bolive.app.jamisapp.adapter.PatientsAdapter;
+import ir.bolive.app.jamisapp.database.DatabaseClient;
 import ir.bolive.app.jamisapp.database.FacesDatabase;
 import ir.bolive.app.jamisapp.models.Patient;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -170,23 +171,16 @@ public class DisplayPatientsActivity extends AppCompatActivity {
     private void searchData(String key){
         Executor executor=Executors.newSingleThreadExecutor();
         executor.execute(()->{
-            //DatabaseClient client=DatabaseClient.getInstance(DisplayPatientsActivity.this);
+            FacesDatabase db=FacesDatabase.getdatabase(DisplayPatientsActivity.this);
             if(Character.isDigit(key.charAt(0))){
                 //search by national code
-                //patientList=client.getAppDatabase().patientDAO().getbyNationalCode(key);
+                patientList=db.getInstance().patientDAO().getbyNationalCode(key);
             }
             else{
                 //search by fullname
-                //patientList=client.getAppDatabase().patientDAO().getbyName(key);
+                patientList=db.getInstance().patientDAO().getbyName(key);
             }
-            if(patientList!=null){
-                adapter.notifyDataSetChanged();
-                showNothing(false);
-            }
-            else{
-                showNothing(true);
-            }
-
+            onSearchResult(patientList);
         });
     }
     private void goToRegActivity(long pid){
@@ -198,8 +192,17 @@ public class DisplayPatientsActivity extends AppCompatActivity {
         patientList=patients;
         loadToAdapter();
     }
+    private void onSearchResult(List<Patient> patientList){
+        this.patientList=patientList;
+        if(patientList!=null){
+            adapter.notifyDataSetChanged();
+            showNothing(false);
+        }
+        else{
+            showNothing(true);
+        }
+    }
     private void loadToAdapter(){
-        Log.i(TAG,"(load adaptor)patient size:"+patientList.size());
         if(patientList!=null && patientList.size()>0){
             adapter=new PatientsAdapter(patientList,DisplayPatientsActivity.this);
             recyclerView.setAdapter(adapter);

@@ -13,4 +13,8 @@ public interface Auth {
     @POST("/user/login")
     Call<LoginResponse> login(@Field("username")String username,@Field("password")String password);
 
+    @FormUrlEncoded
+    @POST("/user/create")
+    Call<LoginResponse> create(@Field("username")String username,@Field("password")String password,@Field("fullname")String fullname);
+
 }

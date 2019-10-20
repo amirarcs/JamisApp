@@ -86,8 +86,9 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
     @OnClick(R.id.camera_reCapture)
     public void onRecaptureClick(){
         hideCapture(false);
-        camera.stopPreview();
+        StopPreview();
         openCamera();
+        StartPreview();
     }
     @OnClick(R.id.camera_done)
     public void onDoneClick() {
@@ -147,28 +148,7 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
     };
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        try{
-            imgOverlay.setVisibility(View.VISIBLE);
-            camera.setPreviewDisplay(surfaceHolder);
-            camera.setDisplayOrientation(90);
-            camera.startPreview();
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    camera.autoFocus(new Camera.AutoFocusCallback() {
-                        @Override
-                        public void onAutoFocus(boolean success, Camera camera) {
-                            if(success){
-                                enableCapture(true);
-                            }
-                        }
-                    });
-                }
-            },1000);
-
-        }catch (IOException e) {
-            Log.d(TAG, "Error setting camera preview: " + e.getMessage());
-        }
+        StartPreview();
     }
 
     @Override
@@ -200,12 +180,27 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
         }
     }
     public void StartPreview() {
-        try {
+        try{
             imgOverlay.setVisibility(View.VISIBLE);
             camera.setPreviewDisplay(surfaceHolder);
+            camera.setDisplayOrientation(90);
             camera.startPreview();
-        } catch (Exception e) {
-            Log.d(TAG, "Error starting camera preview: " + e.getMessage());
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    camera.autoFocus(new Camera.AutoFocusCallback() {
+                        @Override
+                        public void onAutoFocus(boolean success, Camera camera) {
+                            if(success){
+                                enableCapture(true);
+                            }
+                        }
+                    });
+                }
+            },1000);
+
+        }catch (IOException e) {
+            Log.d(TAG, "Error setting camera preview: " + e.getMessage());
         }
     }
     public void enableCapture(boolean shouldEnable){

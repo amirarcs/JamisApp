@@ -33,14 +33,16 @@
     <string name="askToExport">Are you sure to export patients information?</string>
     <string name="askToSave">Are you sure to save patient information?</string>
     <string name="askToLogout">Do you really want to log out?</string>
+    <string name="passwordsnotmatch">Passwords are not match.Enter password correctly and try again</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="noImagetoShow">There\'s no image to show</string>
     <string name="givePermissions">Please give permissions to continue</string>
-    <string name="enterPatientFields">Enter All Fields And Try Again!</string>
+    <string name="enterAllFields">Enter All Fields And Try Again!</string>
     <string name="enterArgfields">Enter All Face Arg Fields And Try Again!</string>
     <string name="successMessage">Operation Completed Successfully!</string>
     <string name="failureMessage">Operation Failed By Error!</string>
+    <string name="noResponse">No Response received from server</string>
     <string name="editNote">Note:National Code is used as your username to login to app</string>
     <string name="exportNote">You can always make a copy of your patient\'s data as a CSV file and use it in your pc or phone \n
         Default Export Path: \n PhoneStorage/jamiExport/Patients.csv
