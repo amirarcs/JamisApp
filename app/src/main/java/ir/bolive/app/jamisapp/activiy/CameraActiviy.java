@@ -43,10 +43,17 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
     Button btnDone;
     @BindView(R.id.camera_reCapture)
     Button btnRecapture;
+    @BindView(R.id.camera_face)
+    Button btnFace;
+    @BindView(R.id.camera_ear)
+    Button btnEar;
+    @BindView(R.id.camera_arrow)
+    Button btnArrow;
 
     SurfaceHolder surfaceHolder;
     Camera camera;
 
+    boolean isClicked=false;
     @BindView(R.id.camera_overlay)
     ImageView imgOverlay;
     byte[] imgData;
@@ -96,6 +103,26 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
         intent.putExtra("img",path);
         setResult(RESULT_OK,intent);
         killMe();
+    }
+
+    @OnClick(R.id.camera_face)
+    public void onFaceClick() {
+        setImgOverlay(1);
+    }
+    @OnClick(R.id.camera_ear)
+    public void onEarClick() {
+        setImgOverlay(2);
+    }
+    @OnClick(R.id.camera_arrow)
+    public void onArrowClick() {
+        if (isClicked){
+            showOverlays(false);
+            isClicked=false;
+        }
+        else{
+            showOverlays(true);
+            isClicked=true;
+        }
     }
 
     @Override
@@ -211,6 +238,28 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
         else{
             btnCapture.setBackground(getResources().getDrawable(R.drawable.yellow_circle_button));
             btnCapture.setEnabled(false);
+        }
+    }
+    private void setImgOverlay(int img){
+        switch (img){
+            case 1:
+                imgOverlay.setImageDrawable(getResources().getDrawable(R.drawable.gridface));
+                break;
+            case 2:
+                imgOverlay.setImageDrawable(getResources().getDrawable(R.drawable.gridface2));
+                break;
+        }
+    }
+    private void showOverlays(boolean shouldshow){
+        if (shouldshow){
+            btnFace.setVisibility(View.VISIBLE);
+            btnEar.setVisibility(View.VISIBLE);
+            btnArrow.setBackground(getResources().getDrawable(R.drawable.ic_arrowback));
+        }
+        else{
+            btnFace.setVisibility(View.GONE);
+            btnEar.setVisibility(View.GONE);
+            btnArrow.setBackground(getResources().getDrawable(R.drawable.ic_arrow));
         }
     }
     private static String savePictureToFileSystem(byte[] data) {

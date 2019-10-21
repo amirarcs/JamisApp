@@ -1,6 +1,7 @@
 package ir.bolive.app.jamisapp.network;
 
 import ir.bolive.app.jamisapp.models.LoginResponse;
+import ir.bolive.app.jamisapp.models.Response;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.http.Field;
@@ -17,4 +18,7 @@ public interface Auth {
     @POST("/user/create")
     Call<LoginResponse> create(@Field("username")String username,@Field("password")String password,@Field("fullname")String fullname);
 
+    @FormUrlEncoded
+    @POST("/user/changePass")
+    Call<Response> changeInfo(@Field("username")String username,@Field("password")String password,@Field("fullname")String fullname);
 }

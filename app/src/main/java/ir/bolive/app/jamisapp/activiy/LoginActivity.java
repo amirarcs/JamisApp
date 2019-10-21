@@ -76,13 +76,13 @@ public class LoginActivity extends AppCompatActivity {
                 call.enqueue(new Callback<LoginResponse>() {
                     @Override
                     public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                        //Log.i(LoginActivity.class.getSimpleName(),"Response :"+response.body().getMessage());
                         showProgress(false);
                         switch (response.code()) {
                             case 200:
                                 onloginSuccess();
                                 break;
                             default:
-                                Log.i(LoginActivity.class.getSimpleName(),"Response:"+response.code());
                                 LoginResponse rp=response.body();
                                 if(rp!=null){
                                     Snackbar.make(coordinatorLayout,rp.getMessage(),Snackbar.LENGTH_LONG).show();

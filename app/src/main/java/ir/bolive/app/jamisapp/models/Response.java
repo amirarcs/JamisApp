@@ -2,26 +2,22 @@ package ir.bolive.app.jamisapp.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class LoginResponse {
+public class Response {
     @SerializedName("success")
-    boolean success;
+    private boolean success;
 
     @SerializedName("message")
-    String message;
+    private String message;
 
-    @SerializedName("user")
-    User user;
-
-    public LoginResponse() {
+    public Response() {
     }
 
-    public LoginResponse(boolean success, String message, User user) {
+    public Response(boolean success, String message) {
         this.success = success;
         this.message = message;
-        this.user = user;
     }
 
-    public boolean isSuccess() {
+    public boolean getSuccess() {
         return success;
     }
 
@@ -35,13 +31,5 @@ public class LoginResponse {
 
     public void setMessage(String message) {
         this.message = message;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
     }
 }

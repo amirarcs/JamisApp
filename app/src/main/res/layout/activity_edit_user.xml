@@ -36,8 +36,6 @@
             android:layout_marginLeft="32dip"
             android:layout_marginRight="32dip"
             android:layout_marginBottom="12dip"
-            app:counterEnabled="true"
-            app:counterMaxLength="10"
             app:hintTextAppearance="@style/HintText"
             app:hintAnimationEnabled="true"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
@@ -47,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/nationalCode"
                 android:maxLength="10"
-                android:inputType="text"/>
+                android:inputType="none"/>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -96,13 +94,7 @@
                 android:inputType="textPassword"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/edit_btnChange"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/round_button"
-            android:padding="@dimen/global_padding"
-            android:text="@string/update"
-            android:textColor="@color/white"/>
+        <include layout="@layout/progress_button"/>
+
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

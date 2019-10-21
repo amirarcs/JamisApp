@@ -3,6 +3,7 @@ package ir.bolive.app.jamisapp.activiy;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -111,10 +112,10 @@ public class SignupActivity extends AppCompatActivity {
         if(NetworkChecker.isConnected(SignupActivity.this)){
             Call<LoginResponse> call= Network.getInstance().authService.create(txtNationalCode.getText().toString()
                     ,txtPassword.getText().toString(),txtFullname.getText().toString());
-            showProgress(false);
             call.enqueue(new Callback<LoginResponse>() {
                 @Override
                 public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                    showProgress(false);
                     switch (response.code()) {
                         case 200:
                             onCreateSuccess();

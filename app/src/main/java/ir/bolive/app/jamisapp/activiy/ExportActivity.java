@@ -120,12 +120,10 @@ public class ExportActivity extends AppCompatActivity {
         }
     }
     void exportData(){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            new ExportDatabaseCSVTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        } else {
-            new ExportDatabaseCSVTask().execute();
-            showProgress(false);
-        }
+        new ExportDatabaseCSVTask().execute();
+    }
+    void callReset(){
+        showProgress(false);
     }
     public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean>{
 
@@ -135,6 +133,7 @@ public class ExportActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean aBoolean) {
+            callReset();
             if (aBoolean) {
                 Snackbar.make(coordinatorLayout, R.string.successMessage, Snackbar.LENGTH_SHORT).show();
             } else {
