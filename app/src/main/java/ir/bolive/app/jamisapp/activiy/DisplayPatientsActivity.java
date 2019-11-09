@@ -159,14 +159,12 @@ public class DisplayPatientsActivity extends AppCompatActivity {
     private void loadAllData(){
         Executor executor=Executors.newSingleThreadExecutor();
         executor.execute(()->{
-            //DatabaseClient client=DatabaseClient.getInstance(DisplayPatientsActivity.this);
-            //patientList=client.getAppDatabase().patientDAO().getAll();
             FacesDatabase db=FacesDatabase.getdatabase(DisplayPatientsActivity.this);
-            patientList=db.getInstance().patientDAO().getAll();
-            Log.i(TAG,"patient size:"+patientList.size());
-            setList(patientList);
+            List<Patient> plist=db.getInstance().patientDAO().getAll();
+            this.patientList=plist;
+            //Log.i(TAG,"patient size:"+patientList.size());
+            setList(plist);
         });
-
     }
     private void searchData(String key){
         Executor executor=Executors.newSingleThreadExecutor();
@@ -189,8 +187,12 @@ public class DisplayPatientsActivity extends AppCompatActivity {
         startActivity(intent);
     }
     private void setList(List<Patient> patients){
-        patientList=patients;
-        loadToAdapter();
+        try{
+            this.patientList=patients;
+            loadToAdapter();
+        }catch (Exception ex) {
+
+        }
     }
     private void onSearchResult(List<Patient> patientList){
         this.patientList=patientList;
@@ -203,6 +205,8 @@ public class DisplayPatientsActivity extends AppCompatActivity {
         }
     }
     private void loadToAdapter(){
+        //Log.i(TAG,"load to adapter");
+        //Log.i(TAG,"psize:"+patientList.size());
         if(patientList!=null && patientList.size()>0){
             adapter=new PatientsAdapter(patientList,DisplayPatientsActivity.this);
             recyclerView.setAdapter(adapter);

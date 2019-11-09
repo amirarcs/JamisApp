@@ -34,10 +34,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:el_duration="500"
-                    app:el_expanded="true">
+                    app:el_expanded="false">
                     <include layout="@layout/layout_pers_info"/>
                 </net.cachapa.expandablelayout.ExpandableLayout>
-
 
             </LinearLayout>
             <LinearLayout
@@ -58,9 +57,9 @@
                     android:id="@+id/reg_expand_layout_args"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:el_expanded="false"
+                    app:el_expanded="true"
                     app:el_duration="500">
-                    <include layout="@layout/layout_face_args"/>
+                    <include  layout="@layout/layout_face_args"/>
                 </net.cachapa.expandablelayout.ExpandableLayout>
             </LinearLayout>
             <LinearLayout
@@ -88,6 +87,16 @@
             </LinearLayout>
         </LinearLayout>
         <Button
+            android:id="@+id/reg_btn_face_arg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/AddFaceArg"
+            android:textColor="@color/white"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/yellow_round_button"/>
+        <Button
             android:id="@+id/reg_btn_store"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,6 +104,7 @@
             android:textColor="@color/white"
             style="@style/TextAppearance.AppCompat.Medium"
             android:textStyle="bold"
+            android:visibility="gone"
             android:layout_alignParentBottom="true"
             android:background="@drawable/green_round_button"/>
     </RelativeLayout>

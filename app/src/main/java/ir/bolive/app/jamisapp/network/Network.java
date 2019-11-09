@@ -16,7 +16,7 @@ public class Network {
 
     private Network() {
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://faceapp.liara.run/")
+                .baseUrl("https://doctorface.liara.run")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         authService = retrofit.create(Auth.class);

@@ -1,9 +1,46 @@
 package ir.bolive.app.jamisapp.models;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class User {
-    private String username,fullname;
+    @SerializedName("username")
+    @Expose
+    private String username;
+
+    @SerializedName("fullname")
+    @Expose
+    private String fullname;
+
+    @SerializedName("activated")
+    @Expose
     private boolean activated;
 
+    @SerializedName("createdAt")
+    @Expose
+    private String createdAt;
+
+    @SerializedName("isLoggedIn")
+    @Expose
+    private boolean isLoggedIn;
+
+
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        isLoggedIn = loggedIn;
+    }
 
     public User(String username, String fullname, boolean activated) {
         this.username = username;

@@ -1,12 +1,22 @@
 package ir.bolive.app.jamisapp.util;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import java.io.ByteArrayOutputStream;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class Tools {
     public static Bitmap image_resize(Bitmap image) {
@@ -43,6 +53,21 @@ public class Tools {
         animDrawable.setExitFadeDuration(5000);
         animDrawable.start();
     }
+    public static Bitmap rotateImage(Bitmap image){
+        Matrix matrix=new Matrix();
+        matrix.postRotate(270);
+        return Bitmap.createBitmap(image,0,0,image.getWidth(),image.getHeight(),matrix,true);
+    }
+    public static Bitmap combineImages(Bitmap img1,Bitmap img2){
+        Bitmap imgOverlay=Bitmap.createBitmap(img1.getWidth(),img1.getWidth(),img1.getConfig());
+        Canvas canvas=new Canvas(imgOverlay);
+        canvas.drawBitmap(img1,new Matrix(),null);
+        canvas.drawBitmap(img2,0,0,null);
+        return imgOverlay;
+    }
+    public static Bitmap convertDrawableToBitmap(ImageView imageView){
+         return ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+    }
     public static Bitmap decodeImage(byte[] imgData){
          Bitmap bitmap = BitmapFactory.decodeByteArray(imgData, 0, imgData.length);
         return bitmap;
@@ -59,5 +84,9 @@ public class Tools {
         photo.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] data=stream.toByteArray();
         return data;
+    }
+    public static void hideKeyboard(Activity activity){
+        InputMethodManager inputMethodManager=(InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }

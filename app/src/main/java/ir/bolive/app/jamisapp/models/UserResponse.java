@@ -1,21 +1,30 @@
 package ir.bolive.app.jamisapp.models;
 
+import androidx.annotation.Nullable;
+
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class LoginResponse {
+import java.util.Map;
+
+public class UserResponse {
+
     @SerializedName("success")
+    @Expose
     boolean success;
 
     @SerializedName("message")
+    @Expose
     String message;
 
     @SerializedName("user")
+    @Expose
     User user;
 
-    public LoginResponse() {
+    public UserResponse() {
     }
 
-    public LoginResponse(boolean success, String message, User user) {
+    public UserResponse(boolean success, String message, User user) {
         this.success = success;
         this.message = message;
         this.user = user;

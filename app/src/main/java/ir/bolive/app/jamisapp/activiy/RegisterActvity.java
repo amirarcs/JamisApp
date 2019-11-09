@@ -132,6 +132,9 @@ public class RegisterActvity extends AppCompatActivity {
     @BindView(R.id.reg_btn_store)
     Button btnSubmit;
 
+    @BindView(R.id.reg_btn_face_arg)
+    Button btnAddArg;
+
     @BindView(R.id.toolbar_top)
     Toolbar toolbar;
     @BindView(R.id.toolbar_title)
@@ -147,7 +150,10 @@ public class RegisterActvity extends AppCompatActivity {
     int mYear,mMonth,mDay;
     long patientId;
     Patient patient=new Patient();
+    List<FaceArgs> faceArgsList;
     FaceArgs faceArgs=new FaceArgs();
+    FaceArgs faceArgsM=new FaceArgs();
+    FaceArgs faceArgsSwallow=new FaceArgs();
     Gallery galleryBefore=new Gallery();
     Gallery galleryMask=new Gallery();
     Gallery galleryAfter=new Gallery();
@@ -214,11 +220,7 @@ public class RegisterActvity extends AppCompatActivity {
             }
         }
         if(requestCode==MASK_CAMERA_REQUEST && resultCode==Activity.RESULT_OK){
-            //byte[] maskImg=data.getExtras().getByteArray("img");
-            /*photo=Tools.decodeImage(maskImg);
-            photo=Tools.image_resize(photo);*/
-            //bitmap3=Tools.decodeImage(maskImg);
-            //img_mask.setImageBitmap(bitmap3);
+
             String imgPath = data.getStringExtra("img");
             displayImage(imgPath);
             galleryMask.setImage(Tools.bitmapToByte(bitmap2));
@@ -249,6 +251,16 @@ public class RegisterActvity extends AppCompatActivity {
 
     //endregion
     //region Events
+    @OnClick(R.id.reg_btn_face_arg)
+    public void onAddArgClick(){
+        if(!checkArgData()){
+            Snackbar.make(coordinatorLayout,R.string.enterAllFields,Snackbar.LENGTH_SHORT).show();
+        }
+        else{
+            Snackbar.make(coordinatorLayout,R.string.addMessage,Snackbar.LENGTH_SHORT).show();
+
+        }
+    }
     @OnClick(R.id.reg_expandButtonPatient)
     public void onExpandPatient(){
         if(layoutPatient.isExpanded()){
@@ -340,12 +352,16 @@ public class RegisterActvity extends AppCompatActivity {
         executor.execute(()->{
             FacesDatabase db=FacesDatabase.getdatabase(RegisterActvity.this);
             Patient p=db.getInstance().patientDAO().getById(patientId);
-            FaceArgs f=db.getInstance().faceArgDAO().getArgs(patientId);
+            FaceArgs fsimple=db.getInstance().faceArgDAO().getArgsByChin(patientId,1);
+            FaceArgs fm=db.getInstance().faceArgDAO().getArgsByChin(patientId,2);
+            FaceArgs fswallow=db.getInstance().faceArgDAO().getArgsByChin(patientId,3);
             Gallery g1=db.getInstance().galleryDAO().getImage(patientId,1);
             Gallery g2=db.getInstance().galleryDAO().getImage(patientId,2);
             Gallery g3=db.getInstance().galleryDAO().getImage(patientId,3);
             db.getInstance().patientDAO().deletePatient(p);
-            db.getInstance().faceArgDAO().deleteFaceArg(f);
+            db.getInstance().faceArgDAO().deleteFaceArg(fsimple);
+            db.getInstance().faceArgDAO().deleteFaceArg(fswallow);
+            db.getInstance().faceArgDAO().deleteFaceArg(fm);
             db.getInstance().galleryDAO().delete(g1);
             db.getInstance().galleryDAO().delete(g2);
             db.getInstance().galleryDAO().delete(g3);
@@ -358,8 +374,18 @@ public class RegisterActvity extends AppCompatActivity {
             executor.execute(() -> {
                 FacesDatabase db=FacesDatabase.getdatabase(RegisterActvity.this);
                 patientId=db.getInstance().patientDAO().insertPatient(patient);
-                faceArgs.setPid_fk(patientId);
-                db.getInstance().faceArgDAO().insertFaceArgs(faceArgs);
+                if(faceArgs!=null){
+                    faceArgs.setPid_fk(patientId);
+                    db.getInstance().faceArgDAO().insertFaceArgs(faceArgs);
+                }
+                if(faceArgsM!=null){
+                    faceArgsM.setPid_fk(patientId);
+                    db.getInstance().faceArgDAO().insertFaceArgs(faceArgsM);
+                }
+                if(faceArgsSwallow!=null){
+                    faceArgsSwallow.setPid_fk(patientId);
+                    db.getInstance().faceArgDAO().insertFaceArgs(faceArgsSwallow);
+                }
                 if(galleryBefore.getImage()!=null){
                     galleryBefore.setPid_fk(patientId);
                     db.getInstance().galleryDAO().insertGallery(galleryBefore);
@@ -387,11 +413,13 @@ public class RegisterActvity extends AppCompatActivity {
         executor.execute(()->{
             FacesDatabase db=FacesDatabase.getdatabase(RegisterActvity.this);
             patient=db.getInstance().patientDAO().getById(patientId);
-            faceArgs=db.getInstance().faceArgDAO().getArgs(patientId);
+            FaceArgs faceArgs=db.getInstance().faceArgDAO().getArgsByChin(patientId,1);
+            FaceArgs faceArgsM=db.getInstance().faceArgDAO().getArgsByChin(patientId,2);
+            FaceArgs faceArgsSwallow=db.getInstance().faceArgDAO().getArgsByChin(patientId,2);
             galleryBefore=db.getInstance().galleryDAO().getImage(patientId,1);
             galleryMask=db.getInstance().galleryDAO().getImage(patientId,2);
             galleryAfter=db.getInstance().galleryDAO().getImage(patientId,3);
-            fillData(patient,faceArgs,galleryBefore,galleryMask,galleryAfter);
+            fillData(patient,faceArgs,faceArgsM,faceArgsSwallow,galleryBefore,galleryMask,galleryAfter);
         });
     }
     //endregion
@@ -405,9 +433,9 @@ public class RegisterActvity extends AppCompatActivity {
         //Tools.loadBackgroundAnimation(coordinatorLayout);
         // *********setup spinner**************
         chinModes.add("-Select Chin Mode -");
+        chinModes.add("Simple");
         chinModes.add("M");
         chinModes.add("Swallow");
-        chinModes.add("Simple");
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,R.layout.row,chinModes);
         sp_chinmode.setAdapter(adapter);
         sp_chinmode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -415,6 +443,7 @@ public class RegisterActvity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i!=0){
                     chinmode=i+1;
+                    loadFaceArgs(chinmode+1);
                 }
             }
 
@@ -455,6 +484,7 @@ public class RegisterActvity extends AppCompatActivity {
         layoutImage.collapse();
         layoutArg.collapse();
         btnSubmit.setVisibility(View.GONE);
+        btnAddArg.setVisibility(View.GONE);
     }
     void exitMe(){
         this.finish();
@@ -468,6 +498,7 @@ public class RegisterActvity extends AppCompatActivity {
             case 2:
                 hideAll();
                 layoutArg.expand(true);
+                btnAddArg.setVisibility(View.VISIBLE);
                 break;
             case 3:
                 hideAll();
@@ -501,6 +532,8 @@ public class RegisterActvity extends AppCompatActivity {
         showPanel(1);
         txtPname.requestFocus();
     }
+    //#region bottomsheet
+
     void bottomSheet(){
         BottomSheetMenuDialog dialog=new BottomSheetBuilder(RegisterActvity.this,R.style.AppTheme_BottomSheetDialog)
                 .setMode(BottomSheetBuilder.MODE_GRID)
@@ -593,6 +626,13 @@ public class RegisterActvity extends AppCompatActivity {
         }
 
     }
+    private void displayImage(String path) {
+        bitmap2=BitmapHelper.decodeSampledBitmap(path, 800, 600);
+
+        img_mask.setImageBitmap(bitmap2);
+        galleryMask.setImage(Tools.bitmapToByte(bitmap2));
+    }
+    //endregion
     boolean checkPatientData(){
         if(!txtPname.getText().toString().isEmpty()&&
                 !txtNcode.getText().toString().isEmpty()&&
@@ -626,32 +666,64 @@ public class RegisterActvity extends AppCompatActivity {
                 !txtEar_y.getText().toString().isEmpty()&&
                 !txtEar_x.getText().toString().isEmpty()&&
                 chinmode!=0){
-            faceArgs.setUpper_central_ans(Float.parseFloat(txtUpInc.getText().toString()));
-            faceArgs.setLower_central_ans(Float.parseFloat(txtLowerInc.getText().toString()));
-            faceArgs.setUpper_ging(Float.parseFloat(txtUpging.getText().toString()));
-            faceArgs.setLower_ging(Float.parseFloat(txtLowerging.getText().toString()));
-            faceArgs.setX_eye(Float.parseFloat(txtEye_x.getText().toString()));
-            faceArgs.setY_eye(Float.parseFloat(txtEye_y.getText().toString()));
-            faceArgs.setX_ear(Float.parseFloat(txtEar_x.getText().toString()));
-            faceArgs.setY_ear(Float.parseFloat(txtEar_y.getText().toString()));
-            faceArgs.setX_eyebrow(Float.parseFloat(txtEyebrow_x.getText().toString()));
-            faceArgs.setY_eyebrow(Float.parseFloat(txtEyebrow_y.getText().toString()));
-            faceArgs.setX_ramus(Float.parseFloat(txtRamus_x.getText().toString()));
-            faceArgs.setY_ramus(Float.parseFloat(txtRamus_y.getText().toString()));
-            faceArgs.setMidLine(0f);
-            faceArgs.setChinMode(chinmode);
+            switch (chinmode){
+                case 1:
+                    faceArgsM.setUpper_central_ans(Float.parseFloat(txtUpInc.getText().toString()));
+                    faceArgsM.setLower_central_ans(Float.parseFloat(txtLowerInc.getText().toString()));
+                    faceArgsM.setUpper_ging(Float.parseFloat(txtUpging.getText().toString()));
+                    faceArgsM.setLower_ging(Float.parseFloat(txtLowerging.getText().toString()));
+                    faceArgsM.setX_eye(Float.parseFloat(txtEye_x.getText().toString()));
+                    faceArgsM.setY_eye(Float.parseFloat(txtEye_y.getText().toString()));
+                    faceArgsM.setX_ear(Float.parseFloat(txtEar_x.getText().toString()));
+                    faceArgsM.setY_ear(Float.parseFloat(txtEar_y.getText().toString()));
+                    faceArgsM.setX_eyebrow(Float.parseFloat(txtEyebrow_x.getText().toString()));
+                    faceArgsM.setY_eyebrow(Float.parseFloat(txtEyebrow_y.getText().toString()));
+                    faceArgsM.setX_ramus(Float.parseFloat(txtRamus_x.getText().toString()));
+                    faceArgsM.setY_ramus(Float.parseFloat(txtRamus_y.getText().toString()));
+                    faceArgsM.setMidLine(0f);
+                    faceArgsM.setChinMode(chinmode);
+                    break;
+                case 2:
+                    faceArgsSwallow.setUpper_central_ans(Float.parseFloat(txtUpInc.getText().toString()));
+                    faceArgsSwallow.setLower_central_ans(Float.parseFloat(txtLowerInc.getText().toString()));
+                    faceArgsSwallow.setUpper_ging(Float.parseFloat(txtUpging.getText().toString()));
+                    faceArgsSwallow.setLower_ging(Float.parseFloat(txtLowerging.getText().toString()));
+                    faceArgsSwallow.setX_eye(Float.parseFloat(txtEye_x.getText().toString()));
+                    faceArgsSwallow.setY_eye(Float.parseFloat(txtEye_y.getText().toString()));
+                    faceArgsSwallow.setX_ear(Float.parseFloat(txtEar_x.getText().toString()));
+                    faceArgsSwallow.setY_ear(Float.parseFloat(txtEar_y.getText().toString()));
+                    faceArgsSwallow.setX_eyebrow(Float.parseFloat(txtEyebrow_x.getText().toString()));
+                    faceArgsSwallow.setY_eyebrow(Float.parseFloat(txtEyebrow_y.getText().toString()));
+                    faceArgsSwallow.setX_ramus(Float.parseFloat(txtRamus_x.getText().toString()));
+                    faceArgsSwallow.setY_ramus(Float.parseFloat(txtRamus_y.getText().toString()));
+                    faceArgsSwallow.setMidLine(0f);
+                    faceArgsSwallow.setChinMode(chinmode);
+                    break;
+                case 3:
+                    faceArgs.setUpper_central_ans(Float.parseFloat(txtUpInc.getText().toString()));
+                    faceArgs.setLower_central_ans(Float.parseFloat(txtLowerInc.getText().toString()));
+                    faceArgs.setUpper_ging(Float.parseFloat(txtUpging.getText().toString()));
+                    faceArgs.setLower_ging(Float.parseFloat(txtLowerging.getText().toString()));
+                    faceArgs.setX_eye(Float.parseFloat(txtEye_x.getText().toString()));
+                    faceArgs.setY_eye(Float.parseFloat(txtEye_y.getText().toString()));
+                    faceArgs.setX_ear(Float.parseFloat(txtEar_x.getText().toString()));
+                    faceArgs.setY_ear(Float.parseFloat(txtEar_y.getText().toString()));
+                    faceArgs.setX_eyebrow(Float.parseFloat(txtEyebrow_x.getText().toString()));
+                    faceArgs.setY_eyebrow(Float.parseFloat(txtEyebrow_y.getText().toString()));
+                    faceArgs.setX_ramus(Float.parseFloat(txtRamus_x.getText().toString()));
+                    faceArgs.setY_ramus(Float.parseFloat(txtRamus_y.getText().toString()));
+                    faceArgs.setMidLine(0f);
+                    faceArgs.setChinMode(chinmode);
+                    break;
+            }
             return true;
         }
         else{
             return false;
         }
     }
-    private void displayImage(String path) {
-        bitmap2=BitmapHelper.decodeSampledBitmap(path, 600, 400);
-        img_mask.setImageBitmap(bitmap2);
-        galleryMask.setImage(Tools.bitmapToByte(bitmap2));
-    }
-    private void fillData(Patient patients, FaceArgs faceArgs,Gallery gBefore,Gallery gMask,Gallery gAfter){
+
+    private void fillData(Patient patients, FaceArgs faceArgs,FaceArgs faceArgsM,FaceArgs faceArgsSwallow,Gallery gBefore,Gallery gMask,Gallery gAfter){
         if(gBefore!=null && gBefore.getImage()!=null){
             img_before.setImageBitmap(Tools.decodeImage(gBefore.getImage()));
         }
@@ -661,24 +733,60 @@ public class RegisterActvity extends AppCompatActivity {
         if(gAfter!=null && gAfter.getImage()!=null){
             img_after.setImageBitmap(Tools.decodeImage(gAfter.getImage()));
         }
+        if(faceArgs!=null){
+            txtUpInc.setText(String.valueOf(faceArgs.getUpper_central_ans()));
+            txtLowerInc.setText(String.valueOf(faceArgs.getLower_central_ans()));
+            txtUpging.setText(String.valueOf(faceArgs.getUpper_ging()));
+            txtLowerging.setText(String.valueOf(faceArgs.getLower_ging()));
+            txtEye_x.setText(String.valueOf(faceArgs.getX_eye()));
+            txtEye_y.setText(String.valueOf(faceArgs.getY_eye()));
+            txtEar_x.setText(String.valueOf(faceArgs.getX_ear()));
+            txtEar_y.setText(String.valueOf(faceArgs.getY_ear()));
+            txtEyebrow_x.setText(String.valueOf(faceArgs.getX_eyebrow()));
+            txtEyebrow_y.setText(String.valueOf(faceArgs.getX_eyebrow()));
+            txtRamus_x.setText(String.valueOf(faceArgs.getX_ramus()));
+            txtRamus_y.setText(String.valueOf(faceArgs.getY_ramus()));
+            sp_chinmode.setSelection(faceArgs.getChinMode()-1);
+        }
+        if(faceArgsM!=null){
+            this.faceArgsM=faceArgsM;
+        }
+        if(faceArgsSwallow!=null){
+            this.faceArgsSwallow=faceArgsSwallow;
+        }
         txtPname.setText(patients.getFullname());
         txtNcode.setText(patients.getNationalcode());
         txtPhone.setText(patients.getPhone());
         txtRdate.setText(patients.getRefdate());
-
-        txtUpInc.setText(String.valueOf(faceArgs.getUpper_central_ans()));
-        txtLowerInc.setText(String.valueOf(faceArgs.getLower_central_ans()));
-        txtUpging.setText(String.valueOf(faceArgs.getUpper_ging()));
-        txtLowerging.setText(String.valueOf(faceArgs.getLower_ging()));
-        txtEye_x.setText(String.valueOf(faceArgs.getX_eye()));
-        txtEye_y.setText(String.valueOf(faceArgs.getY_eye()));
-        txtEar_x.setText(String.valueOf(faceArgs.getX_ear()));
-        txtEar_y.setText(String.valueOf(faceArgs.getY_ear()));
-        txtEyebrow_x.setText(String.valueOf(faceArgs.getX_eyebrow()));
-        txtEyebrow_y.setText(String.valueOf(faceArgs.getX_eyebrow()));
-        txtRamus_x.setText(String.valueOf(faceArgs.getX_ramus()));
-        txtRamus_y.setText(String.valueOf(faceArgs.getY_ramus()));
-        sp_chinmode.setSelection(faceArgs.getChinMode()-1);
+    }
+    private void loadFaceArgs(int chinmode){
+        FaceArgs selecedArg=null;
+        switch (chinmode){
+            case 1:
+                selecedArg=faceArgs;
+                break;
+            case 2:
+                selecedArg=faceArgsM;
+                break;
+            case 3:
+                 selecedArg=faceArgsSwallow;
+                break;
+        }
+        if(selecedArg!=null){
+            txtUpInc.setText(String.valueOf(selecedArg.getUpper_central_ans()));
+            txtLowerInc.setText(String.valueOf(selecedArg.getLower_central_ans()));
+            txtUpging.setText(String.valueOf(selecedArg.getUpper_ging()));
+            txtLowerging.setText(String.valueOf(selecedArg.getLower_ging()));
+            txtEye_x.setText(String.valueOf(selecedArg.getX_eye()));
+            txtEye_y.setText(String.valueOf(selecedArg.getY_eye()));
+            txtEar_x.setText(String.valueOf(selecedArg.getX_ear()));
+            txtEar_y.setText(String.valueOf(selecedArg.getY_ear()));
+            txtEyebrow_x.setText(String.valueOf(selecedArg.getX_eyebrow()));
+            txtEyebrow_y.setText(String.valueOf(selecedArg.getX_eyebrow()));
+            txtRamus_x.setText(String.valueOf(selecedArg.getX_ramus()));
+            txtRamus_y.setText(String.valueOf(selecedArg.getY_ramus()));
+            sp_chinmode.setSelection(selecedArg.getChinMode()-1);
+        }
     }
     //endregion
 }

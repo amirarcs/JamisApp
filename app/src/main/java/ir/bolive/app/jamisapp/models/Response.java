@@ -1,12 +1,18 @@
 package ir.bolive.app.jamisapp.models;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Map;
+
 public class Response {
+
     @SerializedName("success")
+    @Expose
     private boolean success;
 
     @SerializedName("message")
+    @Expose
     private String message;
 
     public Response() {

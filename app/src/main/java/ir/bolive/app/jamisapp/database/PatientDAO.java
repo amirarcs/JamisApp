@@ -18,6 +18,7 @@ public interface PatientDAO {
     @Query("select * from patient")
     List<Patient> getAll();
 
+
     @Query("select * from patient where pid=:pid")
     Patient getById(long pid);
 

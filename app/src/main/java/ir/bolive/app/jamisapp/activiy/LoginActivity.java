@@ -15,21 +15,22 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
+import com.androidnetworking.AndroidNetworking;
+import com.androidnetworking.common.Priority;
+import com.androidnetworking.error.ANError;
+import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.io.IOException;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import ir.bolive.app.jamisapp.R;
 import ir.bolive.app.jamisapp.app.Preferences;
-import ir.bolive.app.jamisapp.models.LoginResponse;
-import ir.bolive.app.jamisapp.network.Auth;
+import ir.bolive.app.jamisapp.models.User;
+import ir.bolive.app.jamisapp.models.UserResponse;
 import ir.bolive.app.jamisapp.network.Network;
 import ir.bolive.app.jamisapp.network.NetworkChecker;
+import ir.bolive.app.jamisapp.util.Tools;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -57,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     Preferences preferences;
-
+    public static final String TAG=LoginActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,34 +70,42 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.btnSubmit)
     public void onLoginClick() {
+        Tools.hideKeyboard(LoginActivity.this);
         if(!txtUsername.getText().toString().isEmpty() && !txtPassword.getText().toString().isEmpty()){
             if(NetworkChecker.isConnected(LoginActivity.this)){
                 showProgress(true);
-                Call<LoginResponse> call = Network.getInstance().authService.login(txtUsername.getText().toString(), txtPassword.getText().toString());
-                call.enqueue(new Callback<LoginResponse>() {
-                    @Override
-                    public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                        //Log.i(LoginActivity.class.getSimpleName(),"Response :"+response.body().getMessage());
-                        showProgress(false);
-                        switch (response.code()) {
-                            case 200:
-                                onloginSuccess();
-                                break;
-                            default:
-                                LoginResponse rp=response.body();
-                                if(rp!=null){
-                                    Snackbar.make(coordinatorLayout,rp.getMessage(),Snackbar.LENGTH_LONG).show();
+                AndroidNetworking
+                        .post(NetworkChecker.BASE_URL+"/user/login")
+                        .addBodyParameter("username",txtUsername.getText().toString().trim())
+                        .addBodyParameter("password",txtPassword.getText().toString().trim())
+                        .setTag("Login Request")
+                        .setContentType("Content-Type:application/x-www-form-urlencoded")
+                        .setPriority(Priority.MEDIUM)
+                        .build()
+                        .getAsObject(UserResponse.class, new ParsedRequestListener<UserResponse>(){
+                            @Override
+                            public void onResponse(UserResponse response) {
+                                showProgress(false);
+                                Log.i(LoginActivity.class.getSimpleName(),"Response :"+response);
+                                if(response!=null && response.isSuccess()){
+                                    onloginSuccess(response.getUser());
                                 }
+                                else{
+                                    Snackbar.make(coordinatorLayout,R.string.noResponse,Snackbar.LENGTH_LONG).show();
+                                }
+                            }
+                            @Override
+                            public void onError(ANError anError) {
+                                showProgress(false);
+                                try{
+                                    Snackbar.make(coordinatorLayout,anError.getErrorAsObject(UserResponse.class).getMessage(),Snackbar.LENGTH_LONG).show();
+                                }catch (Exception ex){
+                                    Snackbar.make(coordinatorLayout,R.string.somethingIsWrong,Snackbar.LENGTH_LONG).show();
+                                    Log.e(TAG,ex.getMessage());
+                                }
+                            }
+                        });
 
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<LoginResponse> call, Throwable t) {
-                        showProgress(false);
-                        Snackbar.make(coordinatorLayout,R.string.noResponse,Snackbar.LENGTH_LONG).show();
-                    }
-                });
             }
             else{
                 Snackbar.make(coordinatorLayout,R.string.noNetwork,Snackbar.LENGTH_SHORT).show();
@@ -108,12 +117,23 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    void onloginSuccess() {
-        preferences.setKeyIsloggedin(true);
-        preferences.setKeyUsername(txtUsername.getText().toString());
-        Intent intent=new Intent(LoginActivity.this,MainActivity.class);
-        this.finish();
-        startActivity(intent);
+    void onloginSuccess(User user) {
+        if(user.isActivated()){
+            if(!user.isLoggedIn()){
+                preferences.setKeyIsloggedin(true);
+                preferences.setKeyUsername(user.getUsername());
+                preferences.setKeyFullname(user.getFullname());
+                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                this.finish();
+                startActivity(intent);
+            }
+            else{
+                Snackbar.make(coordinatorLayout,R.string.loggedInAccount,Snackbar.LENGTH_SHORT).show();
+            }
+        }
+        else{
+            Snackbar.make(coordinatorLayout,R.string.inactiveAccount,Snackbar.LENGTH_SHORT).show();
+        }
     }
     private void showProgress(boolean shouldshow){
         if (shouldshow){

@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Handler;
@@ -52,6 +53,7 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
 
     SurfaceHolder surfaceHolder;
     Camera camera;
+    Bitmap bmpOverlay;
 
     boolean isClicked=false;
     @BindView(R.id.camera_overlay)
@@ -76,6 +78,8 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
         surfaceHolder= surfaceView.getHolder();
         surfaceHolder.addCallback(this);
         surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+        setImgOverlay(1);
+
     }
     @OnClick(R.id.camera_button)
     public void onCameraClick(){
@@ -166,10 +170,10 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
         public void onPictureTaken(byte[] bytes, Camera camera) {
             path = savePictureToFileSystem(bytes);
             Bitmap bitmapPicture = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-            Bitmap correctBmp = Bitmap.createBitmap(bitmapPicture, 0, 0, bitmapPicture.getWidth(), bitmapPicture.getHeight(), null, true);
+            Bitmap correctBmp = Tools.combineImages(Tools.rotateImage(bitmapPicture),bmpOverlay);
             isPreview=true;
             imgOverlay.setImageBitmap(correctBmp);
-            imgData=bytes;
+            imgData=Tools.bitmapToByte(correctBmp);
             hideCapture(true);
         }
     };
@@ -220,6 +224,7 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
                         public void onAutoFocus(boolean success, Camera camera) {
                             if(success){
                                 enableCapture(true);
+
                             }
                         }
                     });
@@ -249,6 +254,7 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
                 imgOverlay.setImageDrawable(getResources().getDrawable(R.drawable.gridface2));
                 break;
         }
+        bmpOverlay = Tools.convertDrawableToBitmap(imgOverlay);
     }
     private void showOverlays(boolean shouldshow){
         if (shouldshow){
