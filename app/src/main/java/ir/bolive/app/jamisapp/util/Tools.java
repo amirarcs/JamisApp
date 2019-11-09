@@ -9,12 +9,14 @@ import android.graphics.Matrix;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
@@ -65,6 +67,29 @@ public class Tools {
         canvas.drawBitmap(img2,0,0,null);
         return imgOverlay;
     }
+
+
+//    public static Bitmap combineImages (ArrayList<Bitmap> bitmap){
+//
+//        int w = 0, h = 0;
+//        for (int i = 0; i < bitmap.size(); i++) {
+//            if (i < bitmap.size() - 1) {
+//                w = bitmap.get(i).getWidth() > bitmap.get(i + 1).getWidth() ? bitmap.get(i).getWidth() : bitmap.get(i + 1).getWidth();
+//            }
+//            h += bitmap.get(i).getHeight();
+//        }
+//
+//        Bitmap temp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+//        Canvas canvas = new Canvas(temp);
+//        int top = 0;
+//        for (int i = 0; i < bitmap.size(); i++) {
+//            Log.d("HTML", "Combine: "+i+"/"+bitmap.size()+1);
+//
+//            top = (i == 0 ? 0 : top+bitmap.get(i).getHeight());
+//            canvas.drawBitmap(bitmap.get(i), 0f, top, null);
+//        }
+//        return temp;
+//    }
     public static Bitmap convertDrawableToBitmap(ImageView imageView){
          return ((BitmapDrawable)imageView.getDrawable()).getBitmap();
     }

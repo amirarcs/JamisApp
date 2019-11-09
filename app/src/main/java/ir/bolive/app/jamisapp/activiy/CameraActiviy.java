@@ -26,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -159,11 +160,9 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
         public void onPictureTaken(byte[] arg0, Camera arg1) {
             // TODO Auto-generated method stub
         }};
-    Camera.ShutterCallback myShutterCallback = new Camera.ShutterCallback(){
-
-        public void onShutter() {
-            // TODO Auto-generated method stub
-        }};
+    Camera.ShutterCallback myShutterCallback = () -> {
+        // TODO Auto-generated method stub
+    };
 
     Camera.PictureCallback myPictureCallback=new Camera.PictureCallback() {
         @Override
@@ -171,6 +170,7 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
             path = savePictureToFileSystem(bytes);
             Bitmap bitmapPicture = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             Bitmap correctBmp = Tools.combineImages(Tools.rotateImage(bitmapPicture),bmpOverlay);
+
             isPreview=true;
             imgOverlay.setImageBitmap(correctBmp);
             imgData=Tools.bitmapToByte(correctBmp);

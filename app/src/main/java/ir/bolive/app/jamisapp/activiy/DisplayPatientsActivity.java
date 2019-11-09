@@ -131,7 +131,9 @@ public class DisplayPatientsActivity extends AppCompatActivity {
                 View child=rv.findChildViewUnder(e.getX(),e.getY());
                 if(child!=null && gestureDetector.onTouchEvent(e)){
                     int position=rv.getChildAdapterPosition(child);
+                    Log.i(TAG, "onInterceptTouchEvent:"+patientList.get(position).getPid());
                     goToRegActivity(patientList.get(position).getPid());
+
                 }
                 return false;
             }
