@@ -4,7 +4,7 @@
     android:id="@+id/signup_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    android:background="@drawable/gradient6">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -44,6 +44,20 @@
                 android:hint="@string/nationalCode"
                 android:inputType="number"
                 android:maxLength="10"
+                android:textSize="@dimen/text_size"
+                android:textAlignment="center"/>
+            <EditText
+                android:id="@+id/signup_txtPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/tiny_Margin"
+                android:background="@drawable/text_back"
+                android:textColorHint="@color/white"
+                android:textColor="@color/white"
+                android:textCursorDrawable="@drawable/text_cursor"
+                android:hint="@string/phoneNumber"
+                android:inputType="number"
+                android:maxLength="11"
                 android:textSize="@dimen/text_size"
                 android:textAlignment="center"/>
             <EditText

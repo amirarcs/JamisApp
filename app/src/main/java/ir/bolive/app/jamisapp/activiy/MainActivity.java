@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
     void doLogout(){
         if(NetworkChecker.isConnected(MainActivity.this)){
             ProgressModal modal =new ProgressModal(MainActivity.this,"Sending Data.Please wait...");
-            Dialog dialog= modal.getProgress();
+            final Dialog dialog= modal.getProgress();
             dialog.show();
                     AndroidNetworking
                     .post(NetworkChecker.BASE_URL+"/user/logout")

@@ -146,12 +146,14 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
             btnDone.setVisibility(View.VISIBLE);
             btnRecapture.setVisibility(View.VISIBLE);
             imgOverlay.setVisibility(View.GONE);
+            btnArrow.setVisibility(View.GONE);
         }
         else{
             btnCapture.setVisibility(View.VISIBLE);
             btnDone.setVisibility(View.GONE);
             btnRecapture.setVisibility(View.GONE);
             imgOverlay.setVisibility(View.VISIBLE);
+            btnArrow.setVisibility(View.VISIBLE);
         }
     }
     //endregion
@@ -167,10 +169,10 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
     Camera.PictureCallback myPictureCallback=new Camera.PictureCallback() {
         @Override
         public void onPictureTaken(byte[] bytes, Camera camera) {
-            path = savePictureToFileSystem(bytes);
             Bitmap bitmapPicture = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-            Bitmap correctBmp = Tools.combineImages(Tools.rotateImage(bitmapPicture),bmpOverlay);
-
+            bitmapPicture=Bitmap.createScaledBitmap(bitmapPicture,800,600,false);
+            Bitmap correctBmp = Tools.combineImages(Tools.rotateImage(bitmapPicture,0f),bmpOverlay);
+            path = savePictureToFileSystem(Tools.bitmapToByte(correctBmp));
             isPreview=true;
             imgOverlay.setImageBitmap(correctBmp);
             imgData=Tools.bitmapToByte(correctBmp);
@@ -254,7 +256,7 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
                 imgOverlay.setImageDrawable(getResources().getDrawable(R.drawable.gridface2));
                 break;
         }
-        bmpOverlay = Tools.convertDrawableToBitmap(imgOverlay);
+        bmpOverlay = Bitmap.createScaledBitmap(Tools.convertDrawableToBitmap(imgOverlay),800,600,false);
     }
     private void showOverlays(boolean shouldshow){
         if (shouldshow){

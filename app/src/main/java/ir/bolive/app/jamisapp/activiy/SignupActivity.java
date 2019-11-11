@@ -25,10 +25,7 @@ import butterknife.OnClick;
 import ir.bolive.app.jamisapp.R;
 import ir.bolive.app.jamisapp.models.Response;
 import ir.bolive.app.jamisapp.models.UserResponse;
-import ir.bolive.app.jamisapp.network.Network;
 import ir.bolive.app.jamisapp.network.NetworkChecker;
-import retrofit2.Call;
-import retrofit2.Callback;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class SignupActivity extends AppCompatActivity {
@@ -40,6 +37,8 @@ public class SignupActivity extends AppCompatActivity {
     AppCompatEditText txtFullname;
     @BindView(R.id.signup_txtNationalCode)
     AppCompatEditText txtNationalCode;
+    @BindView(R.id.signup_txtPhone)
+    AppCompatEditText txtPhoneNumber;
     @BindView(R.id.signup_txtPassword)
     AppCompatEditText txtPassword;
     @BindView(R.id.signup_txtConfirmPass)
@@ -80,8 +79,11 @@ public class SignupActivity extends AppCompatActivity {
     public void onButtonClick(View view){
         if(checkFields()){
             if(txtPassword.getText().toString().equals(txtConfirmPass.getText().toString())){
-                showProgress(true);
-                doSignUp();
+                if(txtPhoneNumber.getText().length()==11){
+                    showProgress(true);
+                    doSignUp();
+                }
+
             }
             else{
                 Snackbar.make(coordinatorLayout,R.string.passwordnotMatch,Snackbar.LENGTH_LONG).show();
@@ -105,7 +107,8 @@ public class SignupActivity extends AppCompatActivity {
     }
     private boolean checkFields(){
         if(!txtNationalCode.getText().toString().isEmpty() && !txtFullname.getText().toString().isEmpty()
-        && !txtPassword.getText().toString().isEmpty() && !txtConfirmPass.getText().toString().isEmpty()){
+        && !txtPassword.getText().toString().isEmpty() && !txtConfirmPass.getText().toString().isEmpty()
+        && !txtPhoneNumber.getText().toString().isEmpty()){
             return true;
         }
         else{
@@ -114,32 +117,12 @@ public class SignupActivity extends AppCompatActivity {
     }
     private void doSignUp(){
         if(NetworkChecker.isConnected(SignupActivity.this)){
-            /*Call<UserResponse> call= Network.getInstance().authService.create(txtNationalCode.getText().toString()
-                    ,txtPassword.getText().toString(),txtFullname.getText().toString());
-            call.enqueue(new Callback<UserResponse>() {
-                @Override
-                public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
-
-                    switch (response.code()) {
-                        case 200:
-
-                            break;
-                        default:
-                            UserResponse rp=response.body();
-                            Snackbar.make(coordinatorLayout,rp.getMessage(),Snackbar.LENGTH_LONG).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<UserResponse> call, Throwable t) {
-
-                }
-            });*/
             AndroidNetworking
                     .post(NetworkChecker.BASE_URL+"/user/create")
                     .addBodyParameter("username",txtNationalCode.getText().toString())
                     .addBodyParameter("password",txtPassword.getText().toString().trim())
                     .addBodyParameter("fullname",txtFullname.getText().toString().trim())
+                    .addBodyParameter("phone",txtPhoneNumber.getText().toString().trim())
                     .setTag("Signup Request")
                     .setContentType("Content-Type:application/x-www-form-urlencoded")
                     .setPriority(Priority.MEDIUM)

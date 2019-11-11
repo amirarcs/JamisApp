@@ -55,9 +55,9 @@ public class Tools {
         animDrawable.setExitFadeDuration(5000);
         animDrawable.start();
     }
-    public static Bitmap rotateImage(Bitmap image){
+    public static Bitmap rotateImage(Bitmap image,float angle){
         Matrix matrix=new Matrix();
-        matrix.postRotate(270);
+        matrix.postRotate(angle);
         return Bitmap.createBitmap(image,0,0,image.getWidth(),image.getHeight(),matrix,true);
     }
     public static Bitmap combineImages(Bitmap img1,Bitmap img2){

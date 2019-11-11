@@ -28,11 +28,8 @@ import ir.bolive.app.jamisapp.R;
 import ir.bolive.app.jamisapp.app.Preferences;
 import ir.bolive.app.jamisapp.models.Response;
 import ir.bolive.app.jamisapp.models.UserResponse;
-import ir.bolive.app.jamisapp.network.Network;
 import ir.bolive.app.jamisapp.network.NetworkChecker;
 import ir.bolive.app.jamisapp.util.DialogUtil;
-import retrofit2.Call;
-import retrofit2.Callback;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class EditActivity extends AppCompatActivity {
@@ -105,6 +102,9 @@ public class EditActivity extends AppCompatActivity {
             }
 
         }
+        else{
+            Snackbar.make(coordinatorLayout,R.string.enterAllFields,Snackbar.LENGTH_SHORT).show();
+        }
     }
     //region Methods
     void init(){
@@ -132,32 +132,6 @@ public class EditActivity extends AppCompatActivity {
         }
     }
     private void doUpdate(){
-        /*Call < Response > changeInfoCall = Network.getInstance().authService.changeInfo(txtNcode.getText().toString(), txtPass.getText().toString(), txtname.getText().toString());
-        changeInfoCall.enqueue(new Callback<Response>() {
-            @Override
-            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                showProgress(false);
-                Response rp=response.body();
-                if(rp!=null){
-                    if(rp.getSuccess()){
-                        preferences.setKeyUsername(txtNcode.getText().toString().trim());
-                        preferences.setKeyFullname(txtname.getText().toString().trim());
-                        preferences.setKeyPass(txtPass.getText().toString().trim());
-                        Snackbar.make(coordinatorLayout,R.string.successMessage,Snackbar.LENGTH_LONG).show();
-                    }
-                    else{
-                        String msg=rp.getMessage();
-                        Snackbar.make(coordinatorLayout,msg,Snackbar.LENGTH_LONG).show();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Response> call, Throwable t) {
-                showProgress(false);
-                Snackbar.make(coordinatorLayout,R.string.noResponse,Snackbar.LENGTH_LONG).show();
-            }
-        });*/
         showProgress(true);
         AndroidNetworking
                 .post(NetworkChecker.BASE_URL+"/user/changePass")

@@ -28,12 +28,8 @@ import ir.bolive.app.jamisapp.R;
 import ir.bolive.app.jamisapp.app.Preferences;
 import ir.bolive.app.jamisapp.models.User;
 import ir.bolive.app.jamisapp.models.UserResponse;
-import ir.bolive.app.jamisapp.network.Network;
 import ir.bolive.app.jamisapp.network.NetworkChecker;
 import ir.bolive.app.jamisapp.util.Tools;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LoginActivity extends AppCompatActivity {

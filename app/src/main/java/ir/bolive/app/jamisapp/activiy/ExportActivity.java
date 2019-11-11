@@ -110,7 +110,9 @@ public class ExportActivity extends AppCompatActivity {
             FacesDatabase db=FacesDatabase.getdatabase(ExportActivity.this);
             patients = db.getInstance().patientDAO().getAll();
             faceArgs=db.getInstance().faceArgDAO().getAll();
-            setData(patients,faceArgs);
+            runOnUiThread(()->{
+                setData(patients,faceArgs);
+            });
         });
     }
     private void setData(List<Patient> patientsList,List<FaceArgs> faceArgs){
