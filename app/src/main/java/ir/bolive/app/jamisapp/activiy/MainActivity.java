@@ -8,7 +8,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,11 +28,10 @@ import butterknife.OnClick;
 import ir.bolive.app.jamisapp.R;
 import ir.bolive.app.jamisapp.app.Preferences;
 import ir.bolive.app.jamisapp.models.Response;
-import ir.bolive.app.jamisapp.models.User;
 import ir.bolive.app.jamisapp.models.UserResponse;
 import ir.bolive.app.jamisapp.network.NetworkChecker;
 import ir.bolive.app.jamisapp.util.DialogUtil;
-import ir.bolive.app.jamisapp.util.ProgressModal;
+import ir.bolive.app.jamisapp.util.ProgressView;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     DialogUtil dialogUtil;
 
     Preferences preferences;
+    ProgressView progressView;
 
     public static final String TAG=MainActivity.class.getSimpleName();
     @Override
@@ -127,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
         toolbarTitle.setText(getString(R.string.app_name));
         dialogUtil=new DialogUtil(MainActivity.this,R.style.AlertDialogStyle);
         preferences=new Preferences(MainActivity.this);
+        progressView=new ProgressView(this,"Sending Data.Please wait...");
     }
     void askToLogout(){
         final AlertDialog.Builder builder =dialogUtil.createAlert(getResources().getString(R.string.askToLogout), getResources().getString(R.string.yes), getResources().getString(R.string.no),
@@ -145,9 +145,8 @@ public class MainActivity extends AppCompatActivity {
     }
     void doLogout(){
         if(NetworkChecker.isConnected(MainActivity.this)){
-            ProgressModal modal =new ProgressModal(MainActivity.this,"Sending Data.Please wait...");
-            final Dialog dialog= modal.getProgress();
-            dialog.show();
+
+            progressView.showProgress();
                     AndroidNetworking
                     .post(NetworkChecker.BASE_URL+"/user/logout")
                     .addBodyParameter("username",preferences.getKeyUsername())
@@ -159,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Response response) {
                             if(response!=null && response.getSuccess()){
-                                dialog.dismiss();
+                                progressView.hideProgress();
                                 preferences.logout();
                                 Intent intent=new Intent(MainActivity.this,LoginActivity.class);
                                 startActivity(intent);
@@ -172,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
 
                         @Override
                         public void onError(ANError anError) {
-                            dialog.dismiss();
+                            progressView.hideProgress();
                             try{
                                 Toast.makeText(getApplicationContext(),anError.getErrorAsObject(UserResponse.class).getMessage(),Snackbar.LENGTH_LONG).show();
                             }catch (Exception ex){
