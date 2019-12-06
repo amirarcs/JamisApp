@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,6 +23,8 @@ import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.ParsedRequestListener;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -127,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
         dialogUtil=new DialogUtil(MainActivity.this,R.style.AlertDialogStyle);
         preferences=new Preferences(MainActivity.this);
         progressView=new ProgressView(this,"Sending Data.Please wait...");
+        loadAnimation();
     }
     void askToLogout(){
         final AlertDialog.Builder builder =dialogUtil.createAlert(getResources().getString(R.string.askToLogout), getResources().getString(R.string.yes), getResources().getString(R.string.no),
@@ -142,6 +147,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
         builder.show();
+    }
+    void loadAnimation(){
+        Animation fadeAnimation= AnimationUtils.loadAnimation(this,R.anim.fade_in);
+        fadeAnimation.setStartOffset(200);
+        btnReg.startAnimation(fadeAnimation);
+        btnSearch.startAnimation(fadeAnimation);
+        btnEdit.startAnimation(fadeAnimation);
+        btnBackup.startAnimation(fadeAnimation);
     }
     void doLogout(){
         if(NetworkChecker.isConnected(MainActivity.this)){

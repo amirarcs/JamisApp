@@ -69,39 +69,10 @@ public class LoginActivity extends AppCompatActivity {
         Tools.hideKeyboard(LoginActivity.this);
         if(!txtUsername.getText().toString().isEmpty() && !txtPassword.getText().toString().isEmpty()){
             if(NetworkChecker.isConnected(LoginActivity.this)){
-                showProgress(true);
-                AndroidNetworking
-                        .post(NetworkChecker.BASE_URL+"/user/login")
-                        .addBodyParameter("username",txtUsername.getText().toString().trim())
-                        .addBodyParameter("password",txtPassword.getText().toString().trim())
-                        .setTag("Login Request")
-                        .setContentType("Content-Type:application/x-www-form-urlencoded")
-                        .setPriority(Priority.MEDIUM)
-                        .build()
-                        .getAsObject(UserResponse.class, new ParsedRequestListener<UserResponse>(){
-                            @Override
-                            public void onResponse(UserResponse response) {
-                                showProgress(false);
-                                Log.i(LoginActivity.class.getSimpleName(),"Response :"+response);
-                                if(response!=null && response.isSuccess()){
-                                    onloginSuccess(response.getUser());
-                                }
-                                else{
-                                    Snackbar.make(coordinatorLayout,R.string.noResponse,Snackbar.LENGTH_LONG).show();
-                                }
-                            }
-                            @Override
-                            public void onError(ANError anError) {
-                                showProgress(false);
-                                try{
-                                    Snackbar.make(coordinatorLayout,anError.getErrorAsObject(UserResponse.class).getMessage(),Snackbar.LENGTH_LONG).show();
-                                }catch (Exception ex){
-                                    Snackbar.make(coordinatorLayout,R.string.somethingIsWrong,Snackbar.LENGTH_LONG).show();
-                                    Log.e(TAG,ex.getMessage());
-                                }
-                            }
-                        });
-
+                //doLogin();
+                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                this.finish();
+                startActivity(intent);
             }
             else{
                 Snackbar.make(coordinatorLayout,R.string.noNetwork,Snackbar.LENGTH_SHORT).show();
@@ -112,7 +83,40 @@ public class LoginActivity extends AppCompatActivity {
         }
 
     }
-
+    void doLogin(){
+        showProgress(true);
+        AndroidNetworking
+                .post(NetworkChecker.BASE_URL+"/user/login")
+                .addBodyParameter("username",txtUsername.getText().toString().trim())
+                .addBodyParameter("password",txtPassword.getText().toString().trim())
+                .setTag("Login Request")
+                .setContentType("Content-Type:application/x-www-form-urlencoded")
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsObject(UserResponse.class, new ParsedRequestListener<UserResponse>(){
+                    @Override
+                    public void onResponse(UserResponse response) {
+                        showProgress(false);
+                        Log.i(LoginActivity.class.getSimpleName(),"Response :"+response);
+                        if(response!=null && response.isSuccess()){
+                            onloginSuccess(response.getUser());
+                        }
+                        else{
+                            Snackbar.make(coordinatorLayout,R.string.noResponse,Snackbar.LENGTH_LONG).show();
+                        }
+                    }
+                    @Override
+                    public void onError(ANError anError) {
+                        showProgress(false);
+                        try{
+                            Snackbar.make(coordinatorLayout,anError.getErrorAsObject(UserResponse.class).getMessage(),Snackbar.LENGTH_LONG).show();
+                        }catch (Exception ex){
+                            Snackbar.make(coordinatorLayout,R.string.somethingIsWrong,Snackbar.LENGTH_LONG).show();
+                            Log.e(TAG,ex.getMessage());
+                        }
+                    }
+                });
+    }
     void onloginSuccess(User user) {
         if(user.isActivated()){
             if(!user.isLoggedIn()){
