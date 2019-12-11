@@ -171,7 +171,7 @@ public class CameraActiviy extends AppCompatActivity implements SurfaceHolder.Ca
         public void onPictureTaken(byte[] bytes, Camera camera) {
             Bitmap bitmapPicture = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             bitmapPicture=Bitmap.createScaledBitmap(bitmapPicture,800,600,false);
-            Bitmap correctBmp = Tools.combineImages(Tools.rotateImage(bitmapPicture,0f),bmpOverlay);
+            Bitmap correctBmp = Tools.combineImages(Tools.rotateImage(bitmapPicture,90f),bmpOverlay);
             path = savePictureToFileSystem(Tools.bitmapToByte(correctBmp));
             isPreview=true;
             imgOverlay.setImageBitmap(correctBmp);

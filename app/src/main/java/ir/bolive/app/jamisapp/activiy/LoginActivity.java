@@ -69,10 +69,10 @@ public class LoginActivity extends AppCompatActivity {
         Tools.hideKeyboard(LoginActivity.this);
         if(!txtUsername.getText().toString().isEmpty() && !txtPassword.getText().toString().isEmpty()){
             if(NetworkChecker.isConnected(LoginActivity.this)){
-                //doLogin();
-                Intent intent=new Intent(LoginActivity.this,MainActivity.class);
+                doLogin();
+                /*Intent intent=new Intent(LoginActivity.this,MainActivity.class);
                 this.finish();
-                startActivity(intent);
+                startActivity(intent);*/
             }
             else{
                 Snackbar.make(coordinatorLayout,R.string.noNetwork,Snackbar.LENGTH_SHORT).show();

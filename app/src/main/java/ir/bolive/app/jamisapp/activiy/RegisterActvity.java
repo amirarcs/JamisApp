@@ -679,67 +679,70 @@ public class RegisterActvity extends AppCompatActivity {
     }
 
     boolean checkArgData() {
-        if (!txtUpInc.getText().toString().isEmpty() &&
-                !txtLowerInc.getText().toString().isEmpty() &&
-                !txtUpging.getText().toString().isEmpty() &&
-                !txtLowerging.getText().toString().isEmpty() &&
-                !txtEye_x.getText().toString().isEmpty() &&
-                !txtEye_y.getText().toString().isEmpty() &&
-                !txtEyebrow_y.getText().toString().isEmpty() &&
-                !txtEyebrow_x.getText().toString().isEmpty() &&
-                !txtRamus_y.getText().toString().isEmpty() &&
-                !txtRamus_x.getText().toString().isEmpty() &&
-                !txtEar_y.getText().toString().isEmpty() &&
-                !txtEar_x.getText().toString().isEmpty() &&
-                chinmode != 0) {
+        float upper_ans,lower_ans,upper_ging,lower_ging,x_eye,y_eye,x_ear,y_ear,x_eyebrow,y_eyebrow,x_ramus,y_ramus;
+        if (chinmode != 0)
+        {
+            upper_ans=txtUpInc.getText().toString().isEmpty()?0f:Float.parseFloat(txtUpInc.getText().toString());
+            lower_ans=txtLowerInc.getText().toString().isEmpty()?0f:Float.parseFloat(txtLowerInc.getText().toString());
+            upper_ging=txtUpging.getText().toString().isEmpty()?0f:Float.parseFloat(txtUpging.getText().toString());
+            lower_ging=txtLowerging.getText().toString().isEmpty()?0f:Float.parseFloat(txtLowerging.getText().toString());
+            x_eye=txtEye_x.getText().toString().isEmpty()?0f:Float.parseFloat(txtEye_x.getText().toString());
+            y_eye=txtEye_y.getText().toString().isEmpty()?0f:Float.parseFloat(txtEye_y.getText().toString());
+            x_ear=txtEar_x.getText().toString().isEmpty()?0f:Float.parseFloat(txtEar_x.getText().toString());
+            y_ear=txtEar_y.getText().toString().isEmpty()?0f:Float.parseFloat(txtEar_y.getText().toString());
+            x_eyebrow=txtEyebrow_x.getText().toString().isEmpty()?0f:Float.parseFloat(txtEyebrow_x.getText().toString());
+            y_eyebrow=txtEyebrow_y.getText().toString().isEmpty()?0f:Float.parseFloat(txtEyebrow_y.getText().toString());
+            x_ramus=txtRamus_x.getText().toString().isEmpty()?0f:Float.parseFloat(txtRamus_x.getText().toString());
+            y_ramus=txtRamus_y.getText().toString().isEmpty()?0f:Float.parseFloat(txtRamus_y.getText().toString());
             switch (chinmode) {
                 case 1:
-                    faceArgsM.setUpper_central_ans(Float.parseFloat(txtUpInc.getText().toString()));
-                    faceArgsM.setLower_central_ans(Float.parseFloat(txtLowerInc.getText().toString()));
-                    faceArgsM.setUpper_ging(Float.parseFloat(txtUpging.getText().toString()));
-                    faceArgsM.setLower_ging(Float.parseFloat(txtLowerging.getText().toString()));
-                    faceArgsM.setX_eye(Float.parseFloat(txtEye_x.getText().toString()));
-                    faceArgsM.setY_eye(Float.parseFloat(txtEye_y.getText().toString()));
-                    faceArgsM.setX_ear(Float.parseFloat(txtEar_x.getText().toString()));
-                    faceArgsM.setY_ear(Float.parseFloat(txtEar_y.getText().toString()));
-                    faceArgsM.setX_eyebrow(Float.parseFloat(txtEyebrow_x.getText().toString()));
-                    faceArgsM.setY_eyebrow(Float.parseFloat(txtEyebrow_y.getText().toString()));
-                    faceArgsM.setX_ramus(Float.parseFloat(txtRamus_x.getText().toString()));
-                    faceArgsM.setY_ramus(Float.parseFloat(txtRamus_y.getText().toString()));
-                    faceArgsM.setMidLine(0f);
-                    faceArgsM.setChinMode(chinmode);
-                    break;
-                case 2:
-                    faceArgsSwallow.setUpper_central_ans(Float.parseFloat(txtUpInc.getText().toString()));
-                    faceArgsSwallow.setLower_central_ans(Float.parseFloat(txtLowerInc.getText().toString()));
-                    faceArgsSwallow.setUpper_ging(Float.parseFloat(txtUpging.getText().toString()));
-                    faceArgsSwallow.setLower_ging(Float.parseFloat(txtLowerging.getText().toString()));
-                    faceArgsSwallow.setX_eye(Float.parseFloat(txtEye_x.getText().toString()));
-                    faceArgsSwallow.setY_eye(Float.parseFloat(txtEye_y.getText().toString()));
-                    faceArgsSwallow.setX_ear(Float.parseFloat(txtEar_x.getText().toString()));
-                    faceArgsSwallow.setY_ear(Float.parseFloat(txtEar_y.getText().toString()));
-                    faceArgsSwallow.setX_eyebrow(Float.parseFloat(txtEyebrow_x.getText().toString()));
-                    faceArgsSwallow.setY_eyebrow(Float.parseFloat(txtEyebrow_y.getText().toString()));
-                    faceArgsSwallow.setX_ramus(Float.parseFloat(txtRamus_x.getText().toString()));
-                    faceArgsSwallow.setY_ramus(Float.parseFloat(txtRamus_y.getText().toString()));
-                    faceArgsSwallow.setMidLine(0f);
-                    faceArgsSwallow.setChinMode(chinmode);
-                    break;
-                case 3:
-                    faceArgs.setUpper_central_ans(Float.parseFloat(txtUpInc.getText().toString()));
-                    faceArgs.setLower_central_ans(Float.parseFloat(txtLowerInc.getText().toString()));
-                    faceArgs.setUpper_ging(Float.parseFloat(txtUpging.getText().toString()));
-                    faceArgs.setLower_ging(Float.parseFloat(txtLowerging.getText().toString()));
-                    faceArgs.setX_eye(Float.parseFloat(txtEye_x.getText().toString()));
-                    faceArgs.setY_eye(Float.parseFloat(txtEye_y.getText().toString()));
-                    faceArgs.setX_ear(Float.parseFloat(txtEar_x.getText().toString()));
-                    faceArgs.setY_ear(Float.parseFloat(txtEar_y.getText().toString()));
-                    faceArgs.setX_eyebrow(Float.parseFloat(txtEyebrow_x.getText().toString()));
-                    faceArgs.setY_eyebrow(Float.parseFloat(txtEyebrow_y.getText().toString()));
-                    faceArgs.setX_ramus(Float.parseFloat(txtRamus_x.getText().toString()));
-                    faceArgs.setY_ramus(Float.parseFloat(txtRamus_y.getText().toString()));
+                    faceArgs.setUpper_central_ans(upper_ans);
+                    faceArgs.setLower_central_ans(lower_ans);
+                    faceArgs.setUpper_ging(upper_ging);
+                    faceArgs.setLower_ging(lower_ging);
+                    faceArgs.setX_eye(x_eye);
+                    faceArgs.setY_eye(y_eye);
+                    faceArgs.setX_ear(x_ear);
+                    faceArgs.setY_ear(y_ear);
+                    faceArgs.setX_eyebrow(x_eyebrow);
+                    faceArgs.setY_eyebrow(y_eyebrow);
+                    faceArgs.setX_ramus(x_ramus);
+                    faceArgs.setY_ramus(y_ramus);
                     faceArgs.setMidLine(0f);
                     faceArgs.setChinMode(chinmode);
+                    break;
+                case 2:
+                    faceArgsM.setUpper_central_ans(upper_ans);
+                    faceArgsM.setLower_central_ans(lower_ans);
+                    faceArgsM.setUpper_ging(upper_ging);
+                    faceArgsM.setLower_ging(lower_ging);
+                    faceArgsM.setX_eye(x_eye);
+                    faceArgsM.setY_eye(y_eye);
+                    faceArgsM.setX_ear(x_ear);
+                    faceArgsM.setY_ear(y_ear);
+                    faceArgsM.setX_eyebrow(x_eyebrow);
+                    faceArgsM.setY_eyebrow(y_eyebrow);
+                    faceArgsM.setX_ramus(x_ramus);
+                    faceArgsM.setY_ramus(y_ramus);
+                    faceArgsM.setMidLine(0f);
+                    faceArgsM.setChinMode(chinmode);
+
+                    break;
+                case 3:
+                    faceArgsSwallow.setUpper_central_ans(upper_ans);
+                    faceArgsSwallow.setLower_central_ans(lower_ans);
+                    faceArgsSwallow.setUpper_ging(upper_ging);
+                    faceArgsSwallow.setLower_ging(lower_ging);
+                    faceArgsSwallow.setX_eye(x_eye);
+                    faceArgsSwallow.setY_eye(y_eye);
+                    faceArgsSwallow.setX_ear(x_ear);
+                    faceArgsSwallow.setY_ear(y_ear);
+                    faceArgsSwallow.setX_eyebrow(x_eyebrow);
+                    faceArgsSwallow.setY_eyebrow(y_eyebrow);
+                    faceArgsSwallow.setX_ramus(x_ramus);
+                    faceArgsSwallow.setY_ramus(y_ramus);
+                    faceArgsSwallow.setMidLine(0f);
+                    faceArgsSwallow.setChinMode(chinmode);
                     break;
             }
             return true;
